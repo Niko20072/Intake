@@ -1,6 +1,8 @@
 #pragma once
 #include <windows.h>
 #include "worldState.h"
+#include <bitset>
+#include <SDL_scancode.h>
 namespace Tmpl8
 {
 	namespace Buttons
@@ -9,10 +11,6 @@ namespace Tmpl8
 		extern bool ePressed;
 		extern bool rPressed;
 		extern bool leftPressed;
-		bool KeyR();
-		bool KeyQ();
-		bool KeyE();
-		bool LeftClick();
-		void CheckClick();
+		void Update();
 	}
 };

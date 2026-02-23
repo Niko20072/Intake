@@ -11,14 +11,20 @@ namespace Tmpl8
 	{
 		return frame;
 	}
+	int House::MainScreenOpen()
+	{
+		if(IsOpen() && frame == 0 && !nightstandisopen)
+			return 1;
+		return 0;
+	}
 	void House::HouseLogic()
 	{
 		// Check if player clicked on house door and is in reach
 		bool houseInReach = WorldState::reachX2 >= 196 && WorldState::reachX1 <= 233 && WorldState::reachY2 >= 183 && WorldState::reachY1 <= 232;
-		bool clicekdOnDoor = WorldState::worldX >= 196 && WorldState::worldX <= 233 && WorldState::worldY >= 183 && WorldState::worldY <= 234;
+		bool hoverOnDoor = WorldState::mouseWorldX >= 196 && WorldState::mouseWorldX <= 233 && WorldState::mouseWorldY >= 183 && WorldState::mouseWorldY <= 234;
 
 		// Open house if left mouse button is clicked while in reach of door
-		if (Buttons::leftPressed && houseInReach && clicekdOnDoor)
+		if (Buttons::leftPressed && houseInReach && hoverOnDoor)
 		{
 			Buttons::leftPressed = false;
 			houseisopen = true;
@@ -80,7 +86,7 @@ namespace Tmpl8
 		// Handle bed menu interactions
 		if (bedisopen)
 		{
-			if (ConfirmedToSleep()) // Player confirmed to sleep
+			if (clickedYes && frame == 1) // Player confirmed to sleep
 			{
 				frame = 2;
 				dayCounter++;

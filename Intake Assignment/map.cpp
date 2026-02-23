@@ -16,6 +16,12 @@ namespace Tmpl8
 		//return true if tile is blocked/ false if not
 		return map[ty][tx * 3 + 2] == 'X';
 	}
+	void Map::Draw(Surface*screen)
+	{
+		tiles.CopyTo(screen, -cameraX, -cameraY);
+		return;
+	}
+	/*
 	void Map::DrawTile(Surface* screen, int tx, int ty, int x, int y)
 	{
 		
@@ -57,8 +63,7 @@ namespace Tmpl8
 	}
 	void Map::DrawMap(Surface* screen)
 	{
-		tiles.CopyTo(screen, -cameraX, -cameraY); //!!
-		return;
+		
 		// Draw all tiles in the map
 		for (int y = 0; y < MapHeight; y++)
 		{
@@ -69,5 +74,5 @@ namespace Tmpl8
 				DrawTile(screen, tx, ty, x * TileSize - int(cameraX), y * TileSize - int(cameraY)); // Draw tile at correct position with camera offset
 			}
 		}
-	}
+	}*/
 };

@@ -17,6 +17,7 @@ namespace Tmpl8
 		Crafting& hCrafting() { return crafting; } // Reference to crafting system
 		int IsOpen();
 		int getFrame();
+		int MainScreenOpen();
 		bool getClickedYes() { return clickedYes; }
 		void HouseLogic(); // Handle house interactions (opening/closing, crafting menu)
 		void Craftinglogic(); // Handle crafting menu interactions

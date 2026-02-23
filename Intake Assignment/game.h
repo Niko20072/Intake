@@ -19,10 +19,8 @@
 #include "worldState.h"
 #include "player.h"
 #include "car.h"
-
-#include <bitset>
-#include <SDL_scancode.h>
-
+#include "SDL_scancode.h"
+#include "input.h"
 
 namespace Tmpl8
 {
@@ -35,14 +33,12 @@ namespace Tmpl8
 		void Init();
 		void Shutdown();
 		void Tick(float deltaTime);
-		void MouseUp(int button) {  /*implement if you want to detect mouse button presses  */ }
-		void MouseDown(int button) {  /*implement if you want to detect mouse button presses  */ }
+		void MouseUp(int button) { Input::onMouseButtonUp(button); }
+		void MouseDown(int button) { Input::onMouseButtonDown(button); }
 		void MouseMove(int x, int y) { /*implement if you want to detect mouse movement */ }
-		void KeyUp(SDL_Scancode key) { keys.reset(key); }
-		void KeyDown(SDL_Scancode key) { keys.set(key); } //use this (bool pt mouse). muta din buttons aici (vezi ce face functia asta). uitate in template cpp (int bitset)
-		bool GetKey(SDL_Scancode key) const { return held.test(key); } // returns true if the key is currently held down
-		bool GetKeyPressed(SDL_Scancode key) const { return pressed.test(key); } // returns true if the key was pressed since the last Tick
-		bool GetKeyReleased(SDL_Scancode key) const { return released.test(key); } // returns true if the key was released since the last Tick
+		void KeyUp(SDL_Scancode key) { Input::onKeyUp(key); }
+		void KeyDown(SDL_Scancode key) { Input::onKeyDown(key); }
+		
 	private:
 		Surface* screen;
 		Map gameMap;
@@ -59,6 +55,8 @@ namespace Tmpl8
 		bool AllInventoriesClosed(); // Check if all inventories are closed
 		void InventoryText();
 		void DrawInventory();
+		void HoverOutsideObjects();
+		void HoverInsideObjects();
 		bool CheckCollision(float x, float y);
 		void HandleInput();
 		void HandleMovement(float deltaTime);
@@ -70,10 +68,9 @@ namespace Tmpl8
 		void UpdateWorld();
 		void DrawUI();
 		void DrawGame();
-		std::bitset<SDL_NUM_SCANCODES> keys; // store key states here
-		std::bitset<SDL_NUM_SCANCODES> held; // store key states from the previous tick here
-		std::bitset<SDL_NUM_SCANCODES> pressed; // store key press events here (set to true on key down, reset to false after processing in Tick)
-		std::bitset<SDL_NUM_SCANCODES> released; // store key release events here (set to true on key up, reset to false after processing in Tick)
+
+		//how to use mouse?
+		//how to use in other files?
 	};
 
 }; // namespace Tmpl8

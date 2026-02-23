@@ -10,12 +10,11 @@ namespace Tmpl8
 		int right = left + 46;
 		int bottom = top + 22;
 
-		/*
 		//check all corners for collision
-		if (gameMap.IsBlocked(left, top)) return false;
-		if (gameMap.IsBlocked(right, top)) return false;
-		if (gameMap.IsBlocked(left, bottom)) return false;
-		if (gameMap.IsBlocked(right, bottom)) return false;*/
+		if (map.IsBlocked(left, top)) return false;
+		if (map.IsBlocked(right, top)) return false;
+		if (map.IsBlocked(left, bottom)) return false;
+		if (map.IsBlocked(right, bottom)) return false;
 
 		return true; //no collision
 	}

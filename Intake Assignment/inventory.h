@@ -9,6 +9,7 @@
 #include "buttons.h"
 #include "wateringCan.h"
 #include <unordered_map>
+#include "input.h"
 
 namespace Tmpl8
 {

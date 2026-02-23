@@ -4,19 +4,25 @@ namespace Tmpl8
 	namespace WorldState
 	{
 		const int playerX = 648 / 2 + 46, playerY = 512 / 2 + 22; //player position
-		float mouseX = 0, mouseY = 0;
-		float worldX, worldY, worldPlayerX, worldPlayerY, reachX1, reachY1, reachX2, reachY2;
+		float mouseX = 0, mouseY = 0; //mouse position on screen
+		float mouseWorldX, mouseWorldY; //mouse position in world coordinates
+		float worldX, worldY; //world coordinates
+		float worldPlayerX, worldPlayerY; //player position in world coordinates
+		float reachX1, reachY1, reachX2, reachY2; //player reach area (rectangle around player)
 		const float cameraSpeed = 360.0f;
 		void UpdateWorldState()
 		{
+			worldX = Map::cameraX;
+			worldY = Map::cameraY;
+
 			// Transform screen coordinates -> world coordinates -> mouse screen position
-			worldX = Map::cameraX + mouseX;
-			worldY = Map::cameraY + mouseY;
+			mouseWorldX = worldX + mouseX;
+			mouseWorldY = worldY + mouseY;
 			//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
 
 			// Player world position
-			worldPlayerX = Map::cameraX + playerX;
-			worldPlayerY = Map::cameraY + playerY;
+			worldPlayerX = worldX + playerX;
+			worldPlayerY = worldY + playerY;
 			//std::cout << "Player world position: X=" << worldPlayerX << ", Y=" << worldPlayerY << std::endl;
 
 			// Player reach area

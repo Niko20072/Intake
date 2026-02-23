@@ -14,16 +14,10 @@ namespace Tmpl8
 		static const int MapSize = 1264; // Width of the tileset image in pixels
 		static float cameraX, cameraY; // Map offset
 
-		int getMapWidth() { return MapWidth; }
-		int getMapHeight() { return MapHeight; }
-		int getTileSize() { return TileSize; }
-		int getMapSize() { return MapSize; }
-		int getCameraX() { return cameraX; }
-		int getCameraY() { return cameraY; }
-
 		bool IsBlocked(int x, int y); // Check if tile at (x,y) is blocked
-		void DrawTile(Surface* screen, int tx, int ty, int x, int y); // Draw a single tile at (x,y) on the screen
-		void DrawMap(Surface* screen); // Draw the entire map on the screen'
+		void Draw(Surface* screen);
+		//void DrawTile(Surface* screen, int tx, int ty, int x, int y); // Draw a single tile at (x,y) on the screen
+		//void DrawMap(Surface* screen); // Draw the entire map on the screen'
 	private:
 	
 		char map[MapHeight][79] =

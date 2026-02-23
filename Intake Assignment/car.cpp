@@ -71,11 +71,11 @@ namespace Tmpl8
 		bool clickedOnShopButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 345 && WorldState::mouseX <= 389 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
 		bool clickedOnOrdersButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 399 && WorldState::mouseX <= 444 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
 		bool playerCloseToCar = WorldState::reachX2 >= 528 && WorldState::reachX1 <= 686 && WorldState::reachY2 >= 175 && WorldState::reachY1 <= 220;
-		bool clickedOnCar = WorldState::worldX >= 528 && WorldState::worldX <= 686 && WorldState::worldY >= 175 && WorldState::worldY <= 220;
+		bool mouseOnCar = WorldState::mouseWorldX >= 528 && WorldState::mouseWorldX <= 686 && WorldState::mouseWorldY >= 175 && WorldState::mouseWorldY <= 220;
 		bool moved = GetAsyncKeyState('W') || GetAsyncKeyState('A') || GetAsyncKeyState('S') || GetAsyncKeyState('D');
 
 		//Toggle car inventory
-		if (Buttons::leftPressed && clickedOnCar && playerCloseToCar && !carisopen)
+		if (Buttons::leftPressed && mouseOnCar && playerCloseToCar && !carisopen)
 		{
 			Buttons::leftPressed = false; // Reset left click state to avoid multiple clicks
 			//inventoryisopen = false;

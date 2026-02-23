@@ -12,6 +12,11 @@
 //change map
 //improve buttons
 //make namespace class
+
+//change crafting frame
+//change tiles hover box
+//add hovering for all obsects
+
 namespace Tmpl8
 {
 	//ask:
@@ -38,14 +43,15 @@ namespace Tmpl8
 	}*/
 
 	//use buttons template from jeremiah
+	//add state
 	//learn aabb cuz its important
 	//modify crafting recepie 18 feb update on discord
 
-	Game::Game() : player(), house(player.pInventory()), car(player.pInventory())
+	Game::Game() : player(gameMap), house(player.pInventory()), car(player.pInventory())
 	{
 	}
 
-	//---new--- crafting,inv,car,orders
+	//---new--- 
 	bool Game::AllInventoriesClosed()
 	{
 		// Check if all inventories are closed
@@ -140,9 +146,32 @@ namespace Tmpl8
 			car.Draw(screen);
 		InventoryText();
 	}
+	void Game::HoverOutsideObjects()
+	{
+		bool carHover = WorldState::mouseWorldX >= 528 && WorldState::mouseWorldX <= 686 && WorldState::mouseWorldY >= 175 && WorldState::mouseWorldY <= 220;
+		bool houseHover = WorldState::mouseWorldX >= 196 && WorldState::mouseWorldX <= 233 && WorldState::mouseWorldY >= 183 && WorldState::mouseWorldY <= 234;
+		if (carHover)
+			screen->Box(528 - WorldState::worldX, 175 - WorldState::worldY, 686 - WorldState::worldX, 230 - WorldState::worldY, 0xffff00);
+		if (houseHover)
+			screen->Box(196 - WorldState::worldX, 183 - WorldState::worldY, 233 - WorldState::worldX, 234 - WorldState::worldY, 0xffff00); 
+	}
+	void Game::HoverInsideObjects()
+	{
+		bool craftingTableHover = WorldState::mouseX >= 103 && WorldState::mouseX <= 294 && WorldState::mouseY >= 331 && WorldState::mouseY <= 476;
+		bool bedHover = WorldState::mouseX >= 511 && WorldState::mouseX <= 742 && WorldState::mouseY >= 320 && WorldState::mouseY <= 565;
+		bool nightstandHover = WorldState::mouseX >= 386 && WorldState::mouseX <= 497 && WorldState::mouseY >= 351 && WorldState::mouseY <= 454;
+		if (craftingTableHover)
+			screen->Box(103, 331, 294, 476, 0xffff00);
+		if (bedHover)
+			screen->Box(511, 320, 742, 565, 0xffff00);
+		if (nightstandHover)
+			screen->Box(386, 351, 497, 454, 0xffff00);
+	}
 	//---new---
 	void Game::HandleInput()
 	{
+		Input::Update(); // Update input states
+
 		// Mouse coordinates
 		POINT mousePos;
 
@@ -156,8 +185,9 @@ namespace Tmpl8
 			//std::cout << "Mouse X: " << mouseX << ", Y: " << mouseY << std::endl;
 		}
 
-		// Buttons
-		Buttons::CheckClick();
+		//Buttons
+		Buttons::Update();
+		//Update();
 
 	}
 	void Game::PlantSeed(Surface* screen, int tileNumber)
@@ -179,7 +209,6 @@ namespace Tmpl8
 				farmTiles[tileNumber].CreatePlant(0); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedSunblossom, -1);
 				player.pInventory().setSeedState(false);
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple plantings
 			}
 			// Planting Moonleaf seed
 			if (button2 && player.pInventory().GetItemCount(Inventory::Item::SeedMoonleaf) > 0)
@@ -187,7 +216,6 @@ namespace Tmpl8
 				farmTiles[tileNumber].CreatePlant(1); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedMoonleaf, -1);
 				player.pInventory().setSeedState(false);
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple plantings
 			}
 			// Planting Emberroot seed
 			if (button3 && player.pInventory().GetItemCount(Inventory::Item::SeedEmberroot) > 0)
@@ -195,7 +223,6 @@ namespace Tmpl8
 				farmTiles[tileNumber].CreatePlant(2); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedEmberroot, -1);
 				player.pInventory().setSeedState(false);
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple plantings
 			}
 			// Planting Frostmint seed
 			if (button4 && player.pInventory().GetItemCount(Inventory::Item::SeedFrostmint) > 0)
@@ -203,7 +230,6 @@ namespace Tmpl8
 				farmTiles[tileNumber].CreatePlant(3); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedFrostmint, -1);
 				player.pInventory().setSeedState(false);
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple plantings
 			}
 			// Planting Nightshade Berry seed
 			if (button5 && player.pInventory().GetItemCount(Inventory::Item::SeedBerry) > 0)
@@ -211,7 +237,6 @@ namespace Tmpl8
 				farmTiles[tileNumber].CreatePlant(4); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedBerry, -1);
 				player.pInventory().setSeedState(false);
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple plantings
 			}
 			
 		}
@@ -244,6 +269,7 @@ namespace Tmpl8
 	}
 	void Game::ProgressToNextDay()
 	{
+
 		for (auto& x : farmTiles)
 		{
 			x.UpdatePlant();
@@ -313,8 +339,9 @@ namespace Tmpl8
 		screen->Clear(0);
 		if (!house.IsOpen()) // Outside
 		{
-			gameMap.DrawMap(screen);
-
+			gameMap.Draw(screen);
+			if(AllInventoriesClosed())
+				HoverOutsideObjects();
 			// Tiles & Plants
 			for (auto& x : farmTiles)
 			{
@@ -334,9 +361,11 @@ namespace Tmpl8
 			house.Draw(screen);
 			if (house.hCrafting().CraftingIsOpen())
 				house.hCrafting().Draw(screen);
+			else if (house.MainScreenOpen())
+				HoverInsideObjects();
 		}
-
 		DrawUI();
+		
 	}
 
 	// -----------------------------------------------------------
@@ -377,17 +406,12 @@ namespace Tmpl8
 	void Game::Tick(float deltaTime)
 	{
 		deltaTime /= 1000.0f; // convert to seconds.
+
 		
+
 		HandleInput();
 		WorldState::UpdateWorldState();
-		if (Buttons::KeyR())
-		{
-			bool r = Buttons::KeyR();
-			if (r)
-			{
-				std::cout << "button r pressed" << std::endl;
-			}
-		}
+
 		// Update and draw the world
 		UpdateWorld();
 		DrawGame();

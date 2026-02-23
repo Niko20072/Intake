@@ -25,7 +25,6 @@ namespace Tmpl8
 		void CraftFrostVeil(); // Craft Frostveil Potion
 		//----update----
 		void CraftPotions(); // Handle crafting logic
-		void ManageCrafring(); // Show crafting interface
 		void Draw(Surface* screen);
 	private:
 		Sprite crafting = Sprite(new Surface("assets/crafting.png"), 3);

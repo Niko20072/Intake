@@ -12,13 +12,14 @@ namespace Tmpl8
 	class Player
 	{
 	public:
-		Player() : wateringCan(), inventory(wateringCan) {};
+		Player(Map &m) : map(m), wateringCan(), inventory(wateringCan) {};
 		Inventory& pInventory() { return inventory; }
 		WateringCan& pWateringCan() { return wateringCan; }
 		bool CheckCollision(float x, float y);
 		void HandleMovement(float deltaTime);
 		void Draw(Surface* screen);
 	private:
+		Map &map; // reference to game map
 		WateringCan wateringCan;
 		Inventory inventory; // depends on wateringCan
 		Sprite player1 = Sprite(new Surface("assets/Vera.png"), 4);

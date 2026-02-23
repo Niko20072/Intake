@@ -4,51 +4,37 @@ namespace Tmpl8
 {
 	namespace Buttons
 	{
-		bool qPressed;
-		bool ePressed;
-		bool rPressed;
-		bool leftPressed;
+        bool qPressed = false;
+        bool ePressed = false;
+        bool rPressed = false;
+        bool leftPressed = false;
 
-		//pressed-once edge detection
-		bool KeyR()
-		{
-			static bool wasDown = false;
-			bool isDown = GetAsyncKeyState('R');
-			bool pressed = isDown && !wasDown;
-			wasDown = isDown;
-			return pressed;
-		}
-		bool KeyQ()
-		{
-			static bool wasDown = false;
-			bool isDown = GetAsyncKeyState('Q');
-			bool pressed = isDown && !wasDown;
-			wasDown = isDown;
-			return pressed;
-		}
-		bool KeyE()
-		{
-			static bool wasDown = false;
-			bool isDown = GetAsyncKeyState('E');
-			bool pressed = isDown && !wasDown;
-			wasDown = isDown;
-			return pressed;
-		}
-		bool LeftClick()
-		{
-			static bool wasDown = false;
-			bool isDown = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 0 && WorldState::mouseX <= 800 && WorldState::mouseY >= 0 && WorldState::mouseY <= 600;
-			bool pressed = isDown && !wasDown;
-			wasDown = isDown;
-			return pressed;
-		}
-		void CheckClick()
-		{
-			
-			qPressed = Buttons::KeyQ();
-			ePressed = Buttons::KeyE();
-			rPressed = Buttons::KeyR();
-			leftPressed = Buttons::LeftClick();
-		}
+        static bool qWasDown = false;
+        static bool eWasDown = false;
+        static bool rWasDown = false;
+        static bool mouseWasDown = false;
+
+        void Update()
+        {
+            // Q
+            bool qIsDown = (GetAsyncKeyState('Q') & 0x8000) != 0;
+            qPressed = qIsDown && !qWasDown;
+            qWasDown = qIsDown;
+
+            // E
+            bool eIsDown = (GetAsyncKeyState('E') & 0x8000) != 0;
+            ePressed = eIsDown && !eWasDown;
+            eWasDown = eIsDown;
+
+            // R
+            bool rIsDown = (GetAsyncKeyState('R') & 0x8000) != 0;
+            rPressed = rIsDown && !rWasDown;
+            rWasDown = rIsDown;
+
+            // Left click
+            bool mouseIsDown = (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
+            leftPressed = mouseIsDown && !mouseWasDown;
+            mouseWasDown = mouseIsDown;
+        }
 	}
 };

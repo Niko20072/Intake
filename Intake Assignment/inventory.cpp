@@ -39,7 +39,7 @@ namespace Tmpl8//sterge
 			bool clickedOnSeedButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 430 && WorldState::mouseX <= 475 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
 
 			//Toggle normal inventory
-			if (Buttons::ePressed && !inventoryisopen)
+			if (Buttons::ePressed && !inventoryisopen) //add state :(
 			{
 				Buttons::ePressed = false;
 				seedsisopen = false;

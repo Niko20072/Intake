@@ -6,7 +6,10 @@ namespace Tmpl8
 	FarmTile::FarmTile(float x,float y, WateringCan& wa, Inventory& inv) : farmTileX(x * Map::TileSize), farmTileY(y * Map::TileSize), wateringCan(wa), inventory(inv), farmTile(std::make_unique<Sprite>(new Surface("assets/tiles2.png"), 6)) {}
 	void FarmTile::Draw(Surface* screen)
 	{
+		//bool hover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
 		farmTile->Draw(screen, farmTileX - Map::cameraX, farmTileY - Map::cameraY);
+		//if (hover)
+		//	screen->Box(farmTileX - Map::cameraX, farmTileY - Map::cameraY, farmTileX + Map::TileSize - Map::cameraX - 1, farmTileY + Map::TileSize - Map::cameraY - 1, 0x6B533D);
 	}
 	void FarmTile::SetFrame(int frame)
 	{
@@ -15,11 +18,11 @@ namespace Tmpl8
 	void FarmTile::Update()
 	{
 		// Tile rectangle
-		bool tileRectangle = WorldState::worldX >= farmTileX && WorldState::worldX < farmTileX + Map::TileSize && WorldState::worldY >= farmTileY && WorldState::worldY < farmTileY + Map::TileSize;
+		bool hover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
 		bool tileInReach = WorldState::reachX1 < farmTileX + Map::TileSize && WorldState::reachX2 > farmTileX && WorldState::reachY1 < farmTileY + Map::TileSize && WorldState::reachY2 > farmTileY;
 
 		// Click
-		if (Buttons::leftPressed && tileRectangle && tileInReach)
+		if (Buttons::leftPressed && hover && tileInReach)
 		{
 			Buttons::leftPressed = false; // Reset left click state to avoid multiple clicks
 			clicked = true;
@@ -29,19 +32,19 @@ namespace Tmpl8
 		// Hover & state logic
 		if (watered)
 		{
-			if (tileRectangle)
+			if (hover)
 				frame = 5;   // hover on wet tile
 			else
 				frame = 4;   // idle wet tile
 		}
 		else if (planted)
 		{
-			if (tileRectangle)
+			if (hover)
 				frame = 3;   // hover on dry tile
 			else
 				frame = 2;   // idle dry tile
 		}
-		else if (tileRectangle)
+		else if (hover)
 			frame = 1;       // hover on default tile
 		else
 			frame = 0;       // default tile

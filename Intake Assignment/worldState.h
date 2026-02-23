@@ -9,9 +9,12 @@ namespace Tmpl8
 		extern float mouseX, mouseY;
 
 		// Transform screen coordinates -> world coordinates -> mouse screen position
+		extern float mouseWorldX;
+		extern float mouseWorldY;
+		//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
+
 		extern float worldX;
 		extern float worldY;
-		//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
 
 		// Player world position
 		extern float worldPlayerX;
