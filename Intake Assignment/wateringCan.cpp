@@ -2,13 +2,10 @@
 namespace Tmpl8
 {
 	void WateringCan::WateringCanLogic()
-		{
-			if (Buttons::rPressed)
-			{
-				wateringCanState = !wateringCanState;
-				Buttons::rPressed = false; //reset rPressed to avoid multiple toggles
-			}
-		}
+	{
+		if (Input::GetKey(SDL_SCANCODE_R))
+			wateringCanState = !wateringCanState;
+	}
 	void WateringCan::Draw(Surface *screen)
 	{
 		if (wateringCanState)

@@ -17,11 +17,11 @@ namespace Tmpl8
 	void Car::BuySeeds(int& coinCounter)
 	{
 		// Buying seeds buttons
-		bool button1 = Buttons::leftPressed && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 224 && WorldState::mouseY <= 250;
-		bool button2 = Buttons::leftPressed && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 267 && WorldState::mouseY <= 293;
-		bool button3 = Buttons::leftPressed && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 310 && WorldState::mouseY <= 337;
-		bool button4 = Buttons::leftPressed && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 355 && WorldState::mouseY <= 379;
-		bool button5 = Buttons::leftPressed && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 394 && WorldState::mouseY <= 420;
+		bool button1 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 224 && WorldState::mouseY <= 250;
+		bool button2 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 267 && WorldState::mouseY <= 293;
+		bool button3 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 310 && WorldState::mouseY <= 337;
+		bool button4 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 355 && WorldState::mouseY <= 379;
+		bool button5 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 394 && WorldState::mouseY <= 420;
 
 		// Buying seeds if car inventory is open
 		if (carisopen && frame == 4)
@@ -32,72 +32,65 @@ namespace Tmpl8
 				//contSeedSunblossom++;
 				inventory.AddItem(Inventory::Item::SeedSunblossom); // Add seed to inventory
 				coinCounter -= 10;
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple purchases
 			}
 			// Buying Moonleaf seeds
 			if (button2 && coinCounter >= 12)
 			{
 				inventory.AddItem(Inventory::Item::SeedMoonleaf); // Add seed to inventory
 				coinCounter -= 12;
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple purchases
 			}
 			// Buying Emberroot seeds
 			if (button3 && coinCounter >= 18)
 			{
 				inventory.AddItem(Inventory::Item::SeedEmberroot); // Add seed to inventory
 				coinCounter -= 18;
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple purchases
 			}
 			// Buying Frostmint seeds
 			if (button4 && coinCounter >= 20)
 			{
 				inventory.AddItem(Inventory::Item::SeedFrostmint); // Add seed to inventory
 				coinCounter -= 20;
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple purchases
 			}
 			// Buying Nightshade Berry seeds
 			if (button5 && coinCounter >= 30)
 			{
 				inventory.AddItem(Inventory::Item::SeedBerry); // Add seed to inventory
 				coinCounter -= 30;
-				Buttons::leftPressed = false; // Reset left click state to avoid multiple purchases
 			}
 		}
 	}
 	void Car::CarInventoryLogic(int& coinCounter)
 	{
 		// Detect clicks and player proximity
-		bool clickedOutsideInv = Buttons::leftPressed && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
-		bool clickedOnShopButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 345 && WorldState::mouseX <= 389 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
-		bool clickedOnOrdersButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 399 && WorldState::mouseX <= 444 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+		bool clickedOutsideInv = Input::GetMouseButtonPressed(1) && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
+		bool clickedOnShopButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 345 && WorldState::mouseX <= 389 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+		bool clickedOnOrdersButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 399 && WorldState::mouseX <= 444 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
 		bool playerCloseToCar = WorldState::reachX2 >= 528 && WorldState::reachX1 <= 686 && WorldState::reachY2 >= 175 && WorldState::reachY1 <= 220;
 		bool mouseOnCar = WorldState::mouseWorldX >= 528 && WorldState::mouseWorldX <= 686 && WorldState::mouseWorldY >= 175 && WorldState::mouseWorldY <= 220;
-		bool moved = GetAsyncKeyState('W') || GetAsyncKeyState('A') || GetAsyncKeyState('S') || GetAsyncKeyState('D');
-
-		//Toggle car inventory
-		if (Buttons::leftPressed && mouseOnCar && playerCloseToCar && !carisopen)
-		{
-			Buttons::leftPressed = false; // Reset left click state to avoid multiple clicks
-			//inventoryisopen = false;
-			carisopen = !carisopen;
-			frame = 4;
-		}
+		bool moved = Input::GetKeyPressed(SDL_SCANCODE_W) || Input::GetKeyPressed(SDL_SCANCODE_A) || Input::GetKeyPressed(SDL_SCANCODE_S) || Input::GetKeyPressed(SDL_SCANCODE_D);
 
 		//Click car inventory
-		if (carisopen)
+		if (carisopen) //This condition is first because we don't want to instantly buy seeds when opening the car inventory, only after its open
 		{
 			// Manage frame selection buttons
 			if (clickedOnShopButton)
 				frame = 4;
 			if (clickedOnOrdersButton)
 				frame = 5;
-			if (moved || clickedOutsideInv || Buttons::ePressed || Buttons::qPressed || inventory.MainInvIsOpen())
+			if (moved || clickedOutsideInv || Input::GetKeyPressed(SDL_SCANCODE_E) || Input::GetKeyPressed(SDL_SCANCODE_Q) || inventory.MainInvIsOpen())
 				carisopen = false;
+			// Buy seeds logic
+			BuySeeds(coinCounter);
 		}
 		carinventory.SetFrame(frame);
 
-		// Buy seeds logic
-		BuySeeds(coinCounter);
+		//Toggle car inventory
+		if (Input::GetMouseButtonPressed(1) && mouseOnCar && playerCloseToCar && !carisopen)
+		{
+			//inventoryisopen = false;
+			carisopen = true;
+			frame = 4;
+		}
 	}
 	void Car::Draw(Surface* screen)
 	{

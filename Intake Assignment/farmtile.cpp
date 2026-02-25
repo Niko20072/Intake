@@ -22,11 +22,8 @@ namespace Tmpl8
 		bool tileInReach = WorldState::reachX1 < farmTileX + Map::TileSize && WorldState::reachX2 > farmTileX && WorldState::reachY1 < farmTileY + Map::TileSize && WorldState::reachY2 > farmTileY;
 
 		// Click
-		if (Buttons::leftPressed && hover && tileInReach)
-		{
-			Buttons::leftPressed = false; // Reset left click state to avoid multiple clicks
+		if (Input::GetMouseButtonPressed(1) && hover && tileInReach)
 			clicked = true;
-		}
 		if (clicked && wateringCan.getState())
 			watered = true;
 		// Hover & state logic
@@ -50,7 +47,6 @@ namespace Tmpl8
 			frame = 0;       // default tile
 
 		farmTile->SetFrame(frame);
-
 	}
 	void FarmTile::CreatePlant(int plantType)
 	{

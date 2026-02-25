@@ -21,9 +21,9 @@ namespace Tmpl8
 	void Crafting::ManageFrames()
 	{
 		// Manage frame selection buttons
-		bool button1 = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 244 && WorldState::mouseX <= 314 && WorldState::mouseY >= 516 && WorldState::mouseY <= 584;
-		bool button2 = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 364 && WorldState::mouseX <= 434 && WorldState::mouseY >= 516 && WorldState::mouseY <= 584;
-		bool button3 = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 485 && WorldState::mouseX <= 554 && WorldState::mouseY >= 516 && WorldState::mouseY <= 584;
+		bool button1 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 244 && WorldState::mouseX <= 314 && WorldState::mouseY >= 516 && WorldState::mouseY <= 584;
+		bool button2 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 364 && WorldState::mouseX <= 434 && WorldState::mouseY >= 516 && WorldState::mouseY <= 584;
+		bool button3 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 485 && WorldState::mouseX <= 554 && WorldState::mouseY >= 516 && WorldState::mouseY <= 584;
 		if (button1)
 			frame = 0;
 		if (button2)
@@ -84,11 +84,8 @@ namespace Tmpl8
 	void Crafting::CraftPotions()
 	{
 		// Detect crafting button clicks
-		bool clickedCraft1 = Buttons::leftPressed && WorldState::mouseX >= 295 && WorldState::mouseX <= 359 && WorldState::mouseY >= 111 && WorldState::mouseY <= 154;
-		bool clickedCraft2 = Buttons::leftPressed && WorldState::mouseX >= 643 && WorldState::mouseX <= 704 && WorldState::mouseY >= 111 && WorldState::mouseY <= 154;
-
-		if (clickedCraft1 || clickedCraft2)
-			Buttons::leftPressed = false; // Reset left click state to avoid multiple clicks
+		bool clickedCraft1 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 295 && WorldState::mouseX <= 359 && WorldState::mouseY >= 111 && WorldState::mouseY <= 154;
+		bool clickedCraft2 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 643 && WorldState::mouseX <= 704 && WorldState::mouseY >= 111 && WorldState::mouseY <= 154;
 
 		if (frame == 0)
 		{

@@ -76,14 +76,13 @@ namespace Tmpl8
 	void Order::Logic(int& coinCounter)
 	{
 		// Check if send button is clicked
-		int button = Buttons::leftPressed && WorldState::mouseX >= (475 - range) && WorldState::mouseX <= (526 + range) && WorldState::mouseY >= (235 + orderNumber * 35 - range) && WorldState::mouseY <= (242 + orderNumber * 35 + range);
+		int button = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= (475 - range) && WorldState::mouseX <= (526 + range) && WorldState::mouseY >= (235 + orderNumber * 35 - range) && WorldState::mouseY <= (242 + orderNumber * 35 + range);
 
 		// Process order if button clicked and not completed
 		if (button && !completed)
 		{
 			Inventory::Item potion1 = static_cast<Inventory::Item>(potionType1); // Convert potion type to inventory item
 			Inventory::Item potion2 = static_cast<Inventory::Item>(potionType2);
-			Buttons::leftPressed = false; // Reset left click state to avoid multiple clicks
 
 			// Order with one potion
 			if (potionNumber == 1)

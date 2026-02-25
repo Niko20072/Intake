@@ -1,5 +1,6 @@
 #pragma once
-#include "buttons.h"
+#include "input.h"
+#include "surface.h"
 namespace Tmpl8
 {
 	class WateringCan

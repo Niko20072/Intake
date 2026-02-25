@@ -222,7 +222,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="buttons.cpp" />
     <ClCompile Include="car.cpp" />
     <ClCompile Include="crafting.cpp" />
     <ClCompile Include="farmtile.cpp" />
@@ -240,7 +239,6 @@
     <ClCompile Include="worldState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="buttons.h" />
     <ClInclude Include="car.h" />
     <ClInclude Include="crafting.h" />
     <ClInclude Include="farmtile.h" />

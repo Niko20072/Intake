@@ -47,7 +47,7 @@ namespace Tmpl8
 		Car car;
 		std::vector<FarmTile> farmTiles;
 		int dayCounter = 0;
-		int coinCounter = 200;
+		int coinCounter = 2000;
 		char day[32], coins[32];
 		bool gameCompleted = false;
 		int index, index2;

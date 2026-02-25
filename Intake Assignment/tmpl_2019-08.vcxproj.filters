@@ -14,7 +14,6 @@
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="plant.cpp" />
     <ClCompile Include="house.cpp" />
-    <ClCompile Include="buttons.cpp" />
     <ClCompile Include="orders.cpp" />
     <ClCompile Include="crafting.cpp" />
     <ClCompile Include="wateringCan.cpp" />
@@ -36,7 +35,6 @@
     <ClInclude Include="inventory.h" />
     <ClInclude Include="plant.h" />
     <ClInclude Include="house.h" />
-    <ClInclude Include="buttons.h" />
     <ClInclude Include="orders.h" />
     <ClInclude Include="crafting.h" />
     <ClInclude Include="wateringCan.h" />

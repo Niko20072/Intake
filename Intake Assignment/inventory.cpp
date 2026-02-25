@@ -33,17 +33,16 @@ namespace Tmpl8//sterge
 		void Inventory::MainInventoryLogic(Surface* screen)
 		{
 			// Detect clicks
-			bool clickedOutsideInv = Buttons::leftPressed && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
-			bool clickedOnPlantButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 323 && WorldState::mouseX <= 366 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
-			bool clickedOnPotionButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 375 && WorldState::mouseX <= 510 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
-			bool clickedOnSeedButton = GetAsyncKeyState(VK_LBUTTON) && WorldState::mouseX >= 430 && WorldState::mouseX <= 475 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+			bool clickedOutsideInv = Input::GetMouseButtonPressed(1) && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
+			bool clickedOnPlantButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 323 && WorldState::mouseX <= 366 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+			bool clickedOnPotionButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 375 && WorldState::mouseX <= 510 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+			bool clickedOnSeedButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 430 && WorldState::mouseX <= 475 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
 
 			//Toggle normal inventory
-			if (Buttons::ePressed && !inventoryisopen) //add state :(
+			if (Input::GetKeyPressed(SDL_SCANCODE_E)) //add state :(
 			{
-				Buttons::ePressed = false;
 				seedsisopen = false;
-				inventoryisopen = true;
+				inventoryisopen = !inventoryisopen;
 				frame = 0;
 			}
 
@@ -57,7 +56,7 @@ namespace Tmpl8//sterge
 					frame = 1;
 				if (clickedOnSeedButton)
 					frame = 2;
-				if (clickedOutsideInv || Buttons::qPressed || Buttons::ePressed)
+				if (clickedOutsideInv || Input::GetKeyPressed(SDL_SCANCODE_Q))
 					inventoryisopen = false;
 			}
 			inventory.SetFrame(frame);
@@ -66,11 +65,11 @@ namespace Tmpl8//sterge
 		void Inventory::SeedInventoryLogic(Surface* screen, bool tileClicekd)
 		{
 			// Detect clicks
-			bool clickedOutsideInv = Buttons::leftPressed && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
-			bool moved = GetAsyncKeyState('W') || GetAsyncKeyState('A') || GetAsyncKeyState('S') || GetAsyncKeyState('D');
+			bool clickedOutsideInv = Input::GetMouseButtonPressed(1) && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
+			bool moved = Input::GetKeyPressed(SDL_SCANCODE_W) || Input::GetKeyPressed(SDL_SCANCODE_A) || Input::GetKeyPressed(SDL_SCANCODE_S) || Input::GetKeyPressed(SDL_SCANCODE_D);
 
 			//Toggle seed inventory
-			if (tileClicekd && seedsisopen == false && !wateringCan.getState())
+			if (tileClicekd && !seedsisopen && !wateringCan.getState())
 			{
 				inventoryisopen = false;
 				seedsisopen = true;
@@ -79,10 +78,8 @@ namespace Tmpl8//sterge
 
 			//Click seed inventory
 			if (seedsisopen)
-			{
-				if (clickedOutsideInv || Buttons::ePressed || Buttons::qPressed || moved)
+				if (clickedOutsideInv || Input::GetKeyPressed(SDL_SCANCODE_Q) || Input::GetKeyPressed(SDL_SCANCODE_E) || moved)
 					seedsisopen = false;
-			}
 			inventory.SetFrame(frame);
 		}
 		void Inventory::Draw(Surface* screen)

@@ -31,22 +31,22 @@ namespace Tmpl8
 		// Move camera based on WASD keys
 		vec2 movedir = 0.0f;
 
-		if (GetAsyncKeyState('A'))
+		if (Input::GetKey(SDL_SCANCODE_A))
 		{
 			player1.SetFrame(0);
 			movedir.x = -1;
 		}
-		if (GetAsyncKeyState('D'))
+		if (Input::GetKey(SDL_SCANCODE_D))
 		{
 			player1.SetFrame(1);
 			movedir.x = 1;
 		}
-		if (GetAsyncKeyState('W'))
+		if (Input::GetKey(SDL_SCANCODE_W))
 		{
 			player1.SetFrame(3);
 			movedir.y = -1;
 		}
-		if (GetAsyncKeyState('S'))
+		if (Input::GetKey(SDL_SCANCODE_S))
 		{
 			player1.SetFrame(2);
 			movedir.y = 1;

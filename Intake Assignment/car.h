@@ -1,6 +1,8 @@
 #pragma once
 #include "inventory.h"
 #include "orders.h"
+#include "surface.h"	
+#include "input.h"
 
 namespace Tmpl8
 {
