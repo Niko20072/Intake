@@ -47,6 +47,7 @@ namespace Tmpl8
 		};
 		
 		Inventory(WateringCan& wa) : wateringCan(wa) {}
+		void update();
 		int getFrame();
 		int MainInvIsOpen();
 		int SeedInvIsOpen();

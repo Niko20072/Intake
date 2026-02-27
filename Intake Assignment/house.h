@@ -23,13 +23,17 @@ namespace Tmpl8
 		void Craftinglogic(); // Handle crafting menu interactions
 		void BedLogic(int &dayCounter); // Handle bed click and day progression logic
 		bool ConfirmedToSleep();
-		void NightstandLogic(Surface* screen, int coinCounter); // Handle nightstand click
+		void NightstandLogic(int coinCounter); // Handle nightstand click
+		void DrawHover(Surface* screen);
 		void Draw(Surface* screen);
 		void GameCompleted(Surface* screen, int coinCounter, bool& gameCompleted); // Show game completed screen
 	private:
 		Sprite house = Sprite(new Surface("assets/house.png"), 3);
 		Sprite nightstand = Sprite(new Surface("assets/nightstand.png"), 1);
 		Sprite gameendscreen = Sprite(new Surface("assets/endgame.png"), 7);
+		Sprite bed_hover = Sprite(new Surface("assets/bed_hover.png"), 1);
+		Sprite table_hover = Sprite(new Surface("assets/table_hover.png"), 1);
+		Sprite nightstand_hover = Sprite(new Surface("assets/nightstand_hover.png"), 1);
 		Inventory& inventory; // reference to existing inventory
 		Crafting crafting;
 		bool houseisopen = false; // Is the house menu open?

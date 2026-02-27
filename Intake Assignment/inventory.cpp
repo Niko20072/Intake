@@ -2,6 +2,44 @@
 
 namespace Tmpl8//sterge
 {
+	//maybe states (kinda fixed it without states)
+	enum class State
+	{
+		Closed,
+		Inventory,
+		Seeds
+	};
+
+	State m_State = State::Closed;
+
+	void SetState(State newState)
+	{
+		m_State = newState;
+	}
+
+	void Inventory::update()
+	{
+		switch (m_State)
+		{
+		case State::Closed:
+			// Update closed state..
+			if (Input::GetKeyPressed(SDL_SCANCODE_E))
+			{
+				SetState(State::Inventory);
+				break;
+			}
+		case State::Inventory:
+			// Update inventory state..
+			if (Input::GetKeyPressed(SDL_SCANCODE_E))
+			{
+				SetState(State::Closed);
+			}
+			break;
+		case State::Seeds:
+			// Update seeds state....
+			break;
+		};
+	}
 		//namespace to class de ce
 		int Inventory::getFrame()
 		{

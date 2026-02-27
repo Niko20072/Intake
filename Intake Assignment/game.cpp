@@ -5,7 +5,6 @@
 //sterge includurile useless
 //verifica ca toate variabilele sa fie folosite
 //fa mai logic
-//make ending at 1000$???
 //make stuff private
 
 
@@ -21,9 +20,9 @@ namespace Tmpl8
 {
 	//ask:
 	//should i make a world class?
-	//if i make the map variables private that means i need to have a reference to the map in the farm tile and plant class? or should i just make the map variables public? Or move to worldstate?
 	//how many connections between classes are allowed?
 	//schiba hover. gen pune sa se puna pe ecran patratul cand mouseul e in zona. e mai easy
+	//fa s pot pierde daca nu mai ai potiuni sau iteme sa poti crafta potiunile
 
 	/*
 	// Convert farm tile (x,y) to index in farmTiles vector
@@ -42,7 +41,6 @@ namespace Tmpl8
 		return farmTiles[idx];
 	}*/
 
-	//use buttons template from jeremiah
 	//add state
 	//learn aabb cuz its important
 	//modify crafting recepie 18 feb update on discord
@@ -148,15 +146,18 @@ namespace Tmpl8
 	}
 	void Game::HoverOutsideObjects()
 	{
+		Sprite car_hover = Sprite(new Surface("assets/car_hover2.png"), 1);
+		Sprite door_hover = Sprite(new Surface("assets/door_hover2.png"), 1);
 		bool carHover = WorldState::mouseWorldX >= 528 && WorldState::mouseWorldX <= 686 && WorldState::mouseWorldY >= 175 && WorldState::mouseWorldY <= 220;
-		bool houseHover = WorldState::mouseWorldX >= 196 && WorldState::mouseWorldX <= 233 && WorldState::mouseWorldY >= 183 && WorldState::mouseWorldY <= 234;
+		bool doorHover = WorldState::mouseWorldX >= 196 && WorldState::mouseWorldX <= 233 && WorldState::mouseWorldY >= 183 && WorldState::mouseWorldY <= 234;
 		if (carHover)
-			screen->Box(528 - WorldState::worldX, 175 - WorldState::worldY, 686 - WorldState::worldX, 230 - WorldState::worldY, 0xffff00);
-		if (houseHover)
-			screen->Box(196 - WorldState::worldX, 183 - WorldState::worldY, 233 - WorldState::worldX, 234 - WorldState::worldY, 0xffff00); 
+			car_hover.Draw(screen, 503 - WorldState::worldX, 152 - WorldState::worldY);
+		if (doorHover)
+			door_hover.Draw(screen, 192 - WorldState::worldX, 179 - WorldState::worldY);
 	}
 	void Game::HoverInsideObjects()
 	{
+		
 		bool craftingTableHover = WorldState::mouseX >= 103 && WorldState::mouseX <= 294 && WorldState::mouseY >= 331 && WorldState::mouseY <= 476;
 		bool bedHover = WorldState::mouseX >= 511 && WorldState::mouseX <= 742 && WorldState::mouseY >= 320 && WorldState::mouseY <= 565;
 		bool nightstandHover = WorldState::mouseX >= 386 && WorldState::mouseX <= 497 && WorldState::mouseY >= 351 && WorldState::mouseY <= 454;
@@ -239,9 +240,7 @@ namespace Tmpl8
 	void Game::UpdatePlants()
 	{
 		for (auto& x : farmTiles)
-		{
 			x.CollectPlant();
-		}
 	}
 	void Game::UpdateFarmTiles()
 	{
@@ -264,7 +263,6 @@ namespace Tmpl8
 	}
 	void Game::ProgressToNextDay()
 	{
-
 		for (auto& x : farmTiles)
 		{
 			x.UpdatePlant();
@@ -302,7 +300,7 @@ namespace Tmpl8
 				house.hCrafting().CraftPotions();
 
 			// House Interactions
-			house.NightstandLogic(screen, coinCounter);
+			house.NightstandLogic(coinCounter);
 			house.BedLogic(dayCounter);
 			if (house.ConfirmedToSleep()) // Player confirmed to sleep, update day and progress plants
 				ProgressToNextDay();
@@ -357,7 +355,7 @@ namespace Tmpl8
 			if (house.hCrafting().CraftingIsOpen())
 				house.hCrafting().Draw(screen);
 			else if (house.MainScreenOpen())
-				HoverInsideObjects();
+				house.DrawHover(screen);
 		}
 		DrawUI();
 		
@@ -402,8 +400,6 @@ namespace Tmpl8
 	{
 		deltaTime /= 1000.0f; // convert to seconds.
 
-		
-
 		HandleInput();
 		WorldState::UpdateWorldState();
 
@@ -412,7 +408,7 @@ namespace Tmpl8
 		DrawGame();
 
 		// Handle player movement only when outside
-		if (!house.IsOpen())       //!player.isinhouse
+		if (!house.IsOpen())
 			player.HandleMovement(deltaTime);
 
 		// Check for game completion

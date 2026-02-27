@@ -3,7 +3,7 @@ namespace Tmpl8
 {
 	void WateringCan::WateringCanLogic()
 	{
-		if (Input::GetKey(SDL_SCANCODE_R))
+		if (Input::GetKeyPressed(SDL_SCANCODE_R))
 			wateringCanState = !wateringCanState;
 	}
 	void WateringCan::Draw(Surface *screen)

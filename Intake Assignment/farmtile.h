@@ -36,6 +36,7 @@ namespace Tmpl8
 		WateringCan& wateringCan; // reference to existing watering can state
 		Inventory& inventory;
 		std::unique_ptr<Sprite> farmTile;
+		std::unique_ptr<Sprite> hover;
 		std::unique_ptr<Plant> plant;
 		float farmTileX;
 		float farmTileY;

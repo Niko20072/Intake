@@ -2,14 +2,13 @@
 
 namespace Tmpl8
 {
-	
-	FarmTile::FarmTile(float x,float y, WateringCan& wa, Inventory& inv) : farmTileX(x * Map::TileSize), farmTileY(y * Map::TileSize), wateringCan(wa), inventory(inv), farmTile(std::make_unique<Sprite>(new Surface("assets/tiles2.png"), 6)) {}
+	FarmTile::FarmTile(float x,float y, WateringCan& wa, Inventory& inv) : farmTileX(x * Map::TileSize), farmTileY(y * Map::TileSize), wateringCan(wa), inventory(inv), farmTile(std::make_unique<Sprite>(new Surface("assets/tiles.png"), 3)), hover(std::make_unique<Sprite>(new Surface("assets/tiles_hover.png"), 1)) {}
 	void FarmTile::Draw(Surface* screen)
 	{
-		//bool hover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
+		bool checkHover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
 		farmTile->Draw(screen, farmTileX - Map::cameraX, farmTileY - Map::cameraY);
-		//if (hover)
-		//	screen->Box(farmTileX - Map::cameraX, farmTileY - Map::cameraY, farmTileX + Map::TileSize - Map::cameraX - 1, farmTileY + Map::TileSize - Map::cameraY - 1, 0x6B533D);
+		if (checkHover)
+			hover->Draw(screen,farmTileX - Map::cameraX, farmTileY - Map::cameraY);
 	}
 	void FarmTile::SetFrame(int frame)
 	{
@@ -18,33 +17,21 @@ namespace Tmpl8
 	void FarmTile::Update()
 	{
 		// Tile rectangle
-		bool hover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
+		bool checkHover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
 		bool tileInReach = WorldState::reachX1 < farmTileX + Map::TileSize && WorldState::reachX2 > farmTileX && WorldState::reachY1 < farmTileY + Map::TileSize && WorldState::reachY2 > farmTileY;
 
 		// Click
-		if (Input::GetMouseButtonPressed(1) && hover && tileInReach)
+		if (Input::GetMouseButtonPressed(1) && checkHover && tileInReach)
 			clicked = true;
 		if (clicked && wateringCan.getState())
 			watered = true;
 		// Hover & state logic
 		if (watered)
-		{
-			if (hover)
-				frame = 5;   // hover on wet tile
-			else
-				frame = 4;   // idle wet tile
-		}
+			frame = 2;   // idle wet tile
 		else if (planted)
-		{
-			if (hover)
-				frame = 3;   // hover on dry tile
-			else
-				frame = 2;   // idle dry tile
-		}
-		else if (hover)
-			frame = 1;       // hover on default tile
+			frame = 1;   // idle dry tile
 		else
-			frame = 0;       // default tile
+			frame = 0;   // default tile
 
 		farmTile->SetFrame(frame);
 	}

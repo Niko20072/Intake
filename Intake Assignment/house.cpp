@@ -59,9 +59,9 @@ namespace Tmpl8
 			return true;
 		return false;
 	}
+	//Fix double click problem(bed after clicking yes)
 	void House::BedLogic(int& dayCounter)
 	{
-		house.SetFrame(frame);
 		// Check if player clicked on bed
 		bool clickedOnBed = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 511 && WorldState::mouseX <= 742 && WorldState::mouseY >= 320 && WorldState::mouseY <= 565;
 		
@@ -90,9 +90,9 @@ namespace Tmpl8
 		// Frame 1: Sleep confirmation view
 		// Frame 2: Day passed view
 
-		
+		house.SetFrame(frame);
 	}
-	void House::NightstandLogic(Surface* screen, int coinCounter)
+	void House::NightstandLogic(int coinCounter)
 	{
 		// Check if player clicked on nightstand
 		bool clickedOnNightstand = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 386 && WorldState::mouseX <= 497 && WorldState::mouseY >= 351 && WorldState::mouseY <= 454;
@@ -105,6 +105,18 @@ namespace Tmpl8
 		// Close nightstand if Q is pressed and crafting menu is not open
 		if (Input::GetKeyPressed(SDL_SCANCODE_Q) && !crafting.CraftingIsOpen() && !bedisopen)
 			nightstandisopen = false;
+	}
+	void House::DrawHover(Surface* screen)
+	{
+		bool hoverNightstand = WorldState::mouseX >= 386 && WorldState::mouseX <= 497 && WorldState::mouseY >= 351 && WorldState::mouseY <= 454;
+		bool hoverBed = WorldState::mouseX >= 511 && WorldState::mouseX <= 742 && WorldState::mouseY >= 320 && WorldState::mouseY <= 565;
+		bool hoverTable = WorldState::mouseX >= 103 && WorldState::mouseX <= 294 && WorldState::mouseY >= 331 && WorldState::mouseY <= 476;
+		if (hoverNightstand)
+			nightstand_hover.Draw(screen, 0, 0);
+		if (hoverBed)
+			bed_hover.Draw(screen, 0, 0);
+		if (hoverTable)
+			table_hover.Draw(screen, 0, 0);
 	}
 	void House::Draw(Surface* screen)
 	{
