@@ -92,10 +92,32 @@ namespace Tmpl8
 			frame = 4;
 		}
 	}
+	void Car::DrawCarText(Surface* screen)
+	{
+		char counterSeedSunBlossom[32], counterSeedMoonLeaf[32], counterSeedEmberRoot[32], counterSeedFrostMint[32], counterSeedBerry[32];
+		sprintf(counterSeedSunBlossom, "x%d", inventory.GetItemCount(Inventory::Item::SeedSunblossom));
+		sprintf(counterSeedMoonLeaf, "x%d", inventory.GetItemCount(Inventory::Item::SeedMoonleaf));
+		sprintf(counterSeedEmberRoot, "x%d", inventory.GetItemCount(Inventory::Item::SeedEmberroot));
+		sprintf(counterSeedFrostMint, "x%d", inventory.GetItemCount(Inventory::Item::SeedFrostmint));
+		sprintf(counterSeedBerry, "x%d", inventory.GetItemCount(Inventory::Item::SeedBerry));
+		// Display when car shop inventory is open
+		if (CarInvIsOpen() && frame == 4)
+		{
+			screen->Print(counterSeedSunBlossom, 350 + 160, 236, 0x0);
+			screen->Print(counterSeedMoonLeaf, 350 + 160, 280, 0x0);
+			screen->Print(counterSeedEmberRoot, 350 + 160, 321, 0x0);
+			screen->Print(counterSeedFrostMint, 350 + 160, 367, 0x0);
+			screen->Print(counterSeedBerry, 350 + 160, 411, 0x0);
+		}
+	}
 	void Car::Draw(Surface* screen)
 	{
 		if (carisopen)
+		{
 			carinventory.Draw(screen, 140, 20);
+			DrawCarText(screen);
+		}
+			
 	}
 	void Car::MakeNewOrders()
 	{

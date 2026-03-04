@@ -107,6 +107,47 @@ namespace Tmpl8
 				CraftFrostVeil();
 		}
 	}
+	//new
+	/*
+	void Crafting::CraftLogic(bool button, int Frame, int ingredient1, int ingredient2, int potion)
+	{
+		// Crafting logic for potions with two ingredients
+		if (Input::GetMouseButtonPressed(1) && button && frame == Frame && ingredient1 >= 1 && ingredient2 >= 1)
+		{
+			inventory.AddItem(static_cast<Inventory::Item>(potion));
+			inventory.AddItem(static_cast<Inventory::Item>(ingredient1), -1);
+			inventory.AddItem(static_cast<Inventory::Item>(ingredient2), -1);
+		}
+	}
+	void Crafting::CraftLogic(bool button, int Frame, int ingredient1, int ingredient2, int ingredient3, int potion)
+	{
+		// Crafting logic for potions with three ingredients
+		if (Input::GetMouseButtonPressed(1) && button && frame == Frame && ingredient1 >= 1 && ingredient2 >= 1 && ingredient3 >= 1)
+		{
+			inventory.AddItem(static_cast<Inventory::Item>(potion));
+			inventory.AddItem(static_cast<Inventory::Item>(ingredient1), -1);
+			inventory.AddItem(static_cast<Inventory::Item>(ingredient2), -1);
+			inventory.AddItem(static_cast<Inventory::Item>(ingredient3), -1);
+		}
+	}
+	void Crafting::CraftLogic()
+	{
+		// Detect crafting button clicks
+		bool clickedCraft1 = WorldState::mouseX >= 295 && WorldState::mouseX <= 359 && WorldState::mouseY >= 111 && WorldState::mouseY <= 154;
+		bool clickedCraft2 =  WorldState::mouseX >= 643 && WorldState::mouseX <= 704 && WorldState::mouseY >= 111 && WorldState::mouseY <= 154;
+
+		///crafting vital tonic
+		CraftLogic(clickedCraft1, 0, static_cast<int>(inventory.GetItemCount(Inventory::Item::Sunblossom)), static_cast<int>(Inventory::Item::Emberroot), static_cast<int>(Inventory::Item::VitalTonic));
+		///crafting calm mind elixir
+		CraftLogic(clickedCraft2, 0, static_cast<int>(Inventory::Item::Moonleaf), static_cast<int>(Inventory::Item::Frostmint), static_cast<int>(Inventory::Item::CalmMind));
+		///crafting dream draught
+		CraftLogic(clickedCraft1, 1, static_cast<int>(Inventory::Item::Moonleaf), static_cast<int>(Inventory::Item::Berry), static_cast<int>(Inventory::Item::DreamDraught));
+		///crafting fireheart brew
+		CraftLogic(clickedCraft2, 1, static_cast<int>(Inventory::Item::Emberroot), static_cast<int>(Inventory::Item::Sunblossom), static_cast<int>(Inventory::Item::Berry), static_cast<int>(Inventory::Item::FireHeart));
+		//crafting frostveil potion
+		CraftLogic(clickedCraft1, 2, static_cast<int>(Inventory::Item::Frostmint), static_cast<int>(Inventory::Item::Moonleaf), static_cast<int>(Inventory::Item::Berry), static_cast<int>(Inventory::Item::FrostVeil));
+	}
+	//new*/
 	void Crafting::CraftingDraw(Surface* screen) ///chance frame!!!!!!!!!!!!!!
 	{
 		crafting.Draw(screen, 0, 0);

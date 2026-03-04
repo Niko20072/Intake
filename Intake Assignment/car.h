@@ -14,6 +14,7 @@ namespace Tmpl8
 		int getFrame();
 		void UpdateOrderDays();
 		void CarInventoryLogic(int& coinCounter);
+		void DrawCarText(Surface* screen);
 		void BuySeeds(int& coinCounter); // Buying seeds logic
 		void Draw(Surface* screen);
 		void MakeNewOrders();

@@ -56,6 +56,8 @@ namespace Tmpl8
 		int AddItem(Item item, int quantity = 1); // Add item to inventory
 		int GetItemCount(Item item); // Get count of specific item in inventory
 
+		void InventoryText(Surface* screen);
+
 		void MainInventoryLogic(Surface* screen); // Normal inventory management
 		void SeedInventoryLogic(Surface* screen, bool tileClicekd); // Seed inventory management
 		void Draw(Surface* screen);

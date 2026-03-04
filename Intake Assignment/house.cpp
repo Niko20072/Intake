@@ -86,7 +86,6 @@ namespace Tmpl8
 				frame = 0;
 			}
 		}
-
 		
 		// Frame 0: Normal house view
 		// Frame 1: Sleep confirmation view

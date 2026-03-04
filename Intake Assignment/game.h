@@ -53,7 +53,6 @@ namespace Tmpl8
 		int index, index2;
 		bool tileClicked = false;
 		bool AllInventoriesClosed(); // Check if all inventories are closed
-		void InventoryText();
 		void DrawInventory();
 		void HoverOutsideObjects();
 		void HoverInsideObjects();

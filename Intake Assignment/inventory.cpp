@@ -68,6 +68,77 @@ namespace Tmpl8//sterge
 			return items[item];
 		}
 
+		void Inventory::InventoryText(Surface*screen)
+		{
+			// Display values
+			char sunBlossom[32], moonLeaf[32], emberRoot[32], frostMint[32], berry[32];
+			char vitalTonic[32], calmMind[32], dreamDraught[32], fireHeart[32], frostVeil[32];
+			char seedSunBlossom[32], seedMoonLeaf[32], seedEmberRoot[32], seedFrostMint[32], seedBerry[32];
+			char counterSeedSunBlossom[32], counterSeedMoonLeaf[32], counterSeedEmberRoot[32], counterSeedFrostMint[32], counterSeedBerry[32];
+
+			// Format strings with current counts
+			sprintf(sunBlossom, "Sunblossom          x%d", items[Item::Sunblossom]);
+			sprintf(moonLeaf, "Moonleaf            x%d", items[Item::Moonleaf]);
+			sprintf(emberRoot, "Emberroot           x%d", items[Item::Emberroot]);
+			sprintf(frostMint, "Frostmint           x%d", items[Item::Frostmint]);
+			sprintf(berry, "Nightshade Berry    x%d", items[Item::Berry]);
+
+			sprintf(vitalTonic, "Vital Tonic         x%d", items[Item::VitalTonic]);
+			sprintf(calmMind, "Calm Mind Elixir    x%d", items[Item::CalmMind]);
+			sprintf(dreamDraught, "Dream Draught       x%d", items[Item::DreamDraught]);
+			sprintf(fireHeart, "FireHeart Brew      x%d", items[Item::FireHeart]);
+			sprintf(frostVeil, "Frostveil Potion    x%d", items[Item::FrostVeil]);
+
+			sprintf(seedSunBlossom, "Sunblossom          x%d", items[Item::SeedSunblossom]);
+			sprintf(seedMoonLeaf, "Moonleaf            x%d", items[Item::SeedMoonleaf]);
+			sprintf(seedEmberRoot, "Emberroot           x%d", items[Item::SeedEmberroot]);
+			sprintf(seedFrostMint, "Frostmint           x%d", items[Item::SeedFrostmint]);
+			sprintf(seedBerry, "Nightshade Berry    x%d", items[Item::SeedBerry]);
+
+			sprintf(counterSeedSunBlossom, "x%d", items[Item::SeedSunblossom]);
+			sprintf(counterSeedMoonLeaf, "x%d", items[Item::SeedMoonleaf]);
+			sprintf(counterSeedEmberRoot, "x%d", items[Item::SeedEmberroot]);
+			sprintf(counterSeedFrostMint, "x%d", items[Item::SeedFrostmint]);
+			sprintf(counterSeedBerry, "x%d", items[Item::SeedBerry]);
+
+			// Display when ingredients inventory is open
+			if (MainInvIsOpen() && frame == 0)
+			{
+				screen->Print(sunBlossom, 350, 236, 0x0);
+				screen->Print(moonLeaf, 350, 280, 0x0);
+				screen->Print(emberRoot, 350, 321, 0x0);
+				screen->Print(frostMint, 350, 367, 0x0);
+				screen->Print(berry, 350, 411, 0x0);
+			}
+			// Display when potions inventory is open
+			if (MainInvIsOpen() && frame == 1)
+			{
+				screen->Print(vitalTonic, 350, 241, 0x0);
+				screen->Print(calmMind, 350, 285, 0x0);
+				screen->Print(dreamDraught, 350, 328, 0x0);
+				screen->Print(fireHeart, 350, 373, 0x0);
+				screen->Print(frostVeil, 350, 418, 0x0);
+			}
+			// Display when seeds inventory is open
+			if (MainInvIsOpen() && frame == 2)
+			{
+				screen->Print(seedSunBlossom, 350, 236, 0x0);
+				screen->Print(seedMoonLeaf, 350, 280, 0x0);
+				screen->Print(seedEmberRoot, 350, 321, 0x0);
+				screen->Print(seedFrostMint, 350, 367, 0x0);
+				screen->Print(seedBerry, 350, 411, 0x0);
+			}
+			// Display when planting seeds inventory is open
+			if (SeedInvIsOpen() && frame == 3)
+			{
+				screen->Print(counterSeedSunBlossom, 350 + 160, 236, 0x0);
+				screen->Print(counterSeedMoonLeaf, 350 + 160, 280, 0x0);
+				screen->Print(counterSeedEmberRoot, 350 + 160, 321, 0x0);
+				screen->Print(counterSeedFrostMint, 350 + 160, 367, 0x0);
+				screen->Print(counterSeedBerry, 350 + 160, 411, 0x0);
+			}
+			
+		}
 		void Inventory::MainInventoryLogic(Surface* screen)
 		{
 			// Detect clicks
@@ -77,7 +148,7 @@ namespace Tmpl8//sterge
 			bool clickedOnSeedButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 430 && WorldState::mouseX <= 475 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
 
 			//Toggle normal inventory
-			if (Input::GetKeyPressed(SDL_SCANCODE_E)) //add state :(
+			if (Input::GetKeyPressed(SDL_SCANCODE_E)) //add state maybe
 			{
 				seedsisopen = false;
 				inventoryisopen = !inventoryisopen;
@@ -123,7 +194,11 @@ namespace Tmpl8//sterge
 		void Inventory::Draw(Surface* screen)
 		{
 			if (inventoryisopen || seedsisopen)
+			{
 				inventory.Draw(screen, 140, 20);
+				InventoryText(screen);
+			}
+				
 		}
 		
 		/*

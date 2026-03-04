@@ -49,7 +49,6 @@ namespace Tmpl8
 	{
 	}
 
-	//---new--- 
 	bool Game::AllInventoriesClosed()
 	{
 		// Check if all inventories are closed
@@ -57,92 +56,13 @@ namespace Tmpl8
 			return 1;
 		return 0;
 	}
-	void Game::InventoryText()
-	{
-		// Display values
-		char sunBlossom[32], moonLeaf[32], emberRoot[32], frostMint[32], berry[32];
-		char vitalTonic[32], calmMind[32], dreamDraught[32], fireHeart[32], frostVeil[32];
-		char seedSunBlossom[32], seedMoonLeaf[32], seedEmberRoot[32], seedFrostMint[32], seedBerry[32];
-		char counterSeedSunBlossom[32], counterSeedMoonLeaf[32], counterSeedEmberRoot[32], counterSeedFrostMint[32], counterSeedBerry[32];
-
-		// Format strings with current counts
-		sprintf(sunBlossom, "Sunblossom          x%d", player.pInventory().GetItemCount(Inventory::Item::Sunblossom));
-		sprintf(moonLeaf, "Moonleaf            x%d", player.pInventory().GetItemCount(Inventory::Item::Moonleaf));
-		sprintf(emberRoot, "Emberroot           x%d", player.pInventory().GetItemCount(Inventory::Item::Emberroot));
-		sprintf(frostMint, "Frostmint           x%d", player.pInventory().GetItemCount(Inventory::Item::Frostmint));
-		sprintf(berry, "Nightshade Berry    x%d", player.pInventory().GetItemCount(Inventory::Item::Berry));
-
-		sprintf(vitalTonic, "Vital Tonic         x%d", player.pInventory().GetItemCount(Inventory::Item::VitalTonic));
-		sprintf(calmMind, "Calm Mind Elixir    x%d", player.pInventory().GetItemCount(Inventory::Item::CalmMind));
-		sprintf(dreamDraught, "Dream Draught       x%d", player.pInventory().GetItemCount(Inventory::Item::DreamDraught));
-		sprintf(fireHeart, "FireHeart Brew      x%d", player.pInventory().GetItemCount(Inventory::Item::FireHeart));
-		sprintf(frostVeil, "Frostveil Potion    x%d", player.pInventory().GetItemCount(Inventory::Item::FrostVeil));
-
-		sprintf(seedSunBlossom, "Sunblossom          x%d", player.pInventory().GetItemCount(Inventory::Item::SeedSunblossom));
-		sprintf(seedMoonLeaf, "Moonleaf            x%d", player.pInventory().GetItemCount(Inventory::Item::SeedMoonleaf));
-		sprintf(seedEmberRoot, "Emberroot           x%d", player.pInventory().GetItemCount(Inventory::Item::SeedEmberroot));
-		sprintf(seedFrostMint, "Frostmint           x%d", player.pInventory().GetItemCount(Inventory::Item::SeedFrostmint));
-		sprintf(seedBerry, "Nightshade Berry    x%d", player.pInventory().GetItemCount(Inventory::Item::SeedBerry));
-
-		sprintf(counterSeedSunBlossom, "x%d", player.pInventory().GetItemCount(Inventory::Item::SeedSunblossom));
-		sprintf(counterSeedMoonLeaf, "x%d", player.pInventory().GetItemCount(Inventory::Item::SeedMoonleaf));
-		sprintf(counterSeedEmberRoot, "x%d", player.pInventory().GetItemCount(Inventory::Item::SeedEmberroot));
-		sprintf(counterSeedFrostMint, "x%d", player.pInventory().GetItemCount(Inventory::Item::SeedFrostmint));
-		sprintf(counterSeedBerry, "x%d", player.pInventory().GetItemCount(Inventory::Item::SeedBerry));
-
-		// Display when ingredients inventory is open
-		if (player.pInventory().MainInvIsOpen() && player.pInventory().getFrame() == 0)
-		{
-			screen->Print(sunBlossom, 350, 236, 0x0);
-			screen->Print(moonLeaf, 350, 280, 0x0);
-			screen->Print(emberRoot, 350, 321, 0x0);
-			screen->Print(frostMint, 350, 367, 0x0);
-			screen->Print(berry, 350, 411, 0x0);
-		}
-		// Display when potions inventory is open
-		if (player.pInventory().MainInvIsOpen() && player.pInventory().getFrame() == 1)
-		{
-			screen->Print(vitalTonic, 350, 241, 0x0);
-			screen->Print(calmMind, 350, 285, 0x0);
-			screen->Print(dreamDraught, 350, 328, 0x0);
-			screen->Print(fireHeart, 350, 373, 0x0);
-			screen->Print(frostVeil, 350, 418, 0x0);
-		}
-		// Display when seeds inventory is open
-		if (player.pInventory().MainInvIsOpen() && player.pInventory().getFrame() == 2)
-		{
-			screen->Print(seedSunBlossom, 350, 236, 0x0);
-			screen->Print(seedMoonLeaf, 350, 280, 0x0);
-			screen->Print(seedEmberRoot, 350, 321, 0x0);
-			screen->Print(seedFrostMint, 350, 367, 0x0);
-			screen->Print(seedBerry, 350, 411, 0x0);
-		}
-		// Display when planting seeds inventory is open
-		if (player.pInventory().SeedInvIsOpen() && player.pInventory().getFrame() == 3)
-		{
-			screen->Print(counterSeedSunBlossom, 350 + 160, 236, 0x0);
-			screen->Print(counterSeedMoonLeaf, 350 + 160, 280, 0x0);
-			screen->Print(counterSeedEmberRoot, 350 + 160, 321, 0x0);
-			screen->Print(counterSeedFrostMint, 350 + 160, 367, 0x0);
-			screen->Print(counterSeedBerry, 350 + 160, 411, 0x0);
-		}
-		// Display when car shop inventory is open
-		if (car.CarInvIsOpen() && car.getFrame() == 4)
-		{
-			screen->Print(counterSeedSunBlossom, 350 + 160, 236, 0x0);
-			screen->Print(counterSeedMoonLeaf, 350 + 160, 280, 0x0);
-			screen->Print(counterSeedEmberRoot, 350 + 160, 321, 0x0);
-			screen->Print(counterSeedFrostMint, 350 + 160, 367, 0x0);
-			screen->Print(counterSeedBerry, 350 + 160, 411, 0x0);
-		}
-	}
 	void Game::DrawInventory()
 	{
 		// Draw inventory
 		player.pInventory().Draw(screen);
 		if(!player.pInventory().MainInvIsOpen())
 			car.Draw(screen);
-		InventoryText();
+		//InventoryText();
 	}
 	void Game::HoverOutsideObjects()
 	{
@@ -155,7 +75,7 @@ namespace Tmpl8
 		if (doorHover)
 			door_hover.Draw(screen, 192 - WorldState::worldX, 179 - WorldState::worldY);
 	}
-	void Game::HoverInsideObjects()
+	/*void Game::HoverInsideObjects()
 	{
 		
 		bool craftingTableHover = WorldState::mouseX >= 103 && WorldState::mouseX <= 294 && WorldState::mouseY >= 331 && WorldState::mouseY <= 476;
@@ -167,8 +87,7 @@ namespace Tmpl8
 			screen->Box(511, 320, 742, 565, 0xffff00);
 		if (nightstandHover)
 			screen->Box(386, 351, 497, 454, 0xffff00);
-	}
-	//---new---
+	}//not used?*/
 	void Game::HandleInput()
 	{
 		Input::Update(); // Update input states
