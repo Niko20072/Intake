@@ -24,7 +24,6 @@ namespace Tmpl8
 		void BedLogic(int &dayCounter); // Handle bed click and day progression logic
 		bool ConfirmedToSleep();
 		void NightstandLogic(int coinCounter); // Handle nightstand click
-		void DrawHover(Surface* screen);
 		void Draw(Surface* screen);
 		void GameCompleted(Surface* screen, int coinCounter, bool& gameCompleted); // Show game completed screen
 	private:
@@ -43,5 +42,6 @@ namespace Tmpl8
 		int gameframe = 0; // Current frame of the game end screen
 		bool clickedYes = 0;
 		bool clickedNo = 0;
+		void DrawHover(Surface* screen);
 	};
 }

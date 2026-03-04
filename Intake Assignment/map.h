@@ -19,7 +19,6 @@ namespace Tmpl8
 		//void DrawTile(Surface* screen, int tx, int ty, int x, int y); // Draw a single tile at (x,y) on the screen
 		//void DrawMap(Surface* screen); // Draw the entire map on the screen'
 	private:
-	
 		char map[MapHeight][79] =
 		{
 			"00X10X20X30X40X50X60X70X80X90X:0X;0X<0X=0X>0X?0X@0XA0XB0XC0XD0XE0XF0XG0XH0XI0X",
@@ -49,6 +48,5 @@ namespace Tmpl8
 			"0HX1HX2HX3HX4HX5HX6HX7HX8HX9HX:HX;HX<HX=HX>HX?HX@HXAHXBHXCHXDHXEHXFHXGHXHHXIHX",
 			"0IX1IX2IX3IX4IX5IX6IX7IX8IX9IX:IX;IX<IX=IX>IX?IX@IXAIXBIXCIXDIXEIXFIXGIXHIXIIX",
 		}; //104 lectie
-
 	};
 };

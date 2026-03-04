@@ -55,7 +55,7 @@ namespace Tmpl8
 		bool AllInventoriesClosed(); // Check if all inventories are closed
 		void DrawInventory();
 		void HoverOutsideObjects();
-		void HoverInsideObjects();
+		//void HoverInsideObjects();
 		bool CheckCollision(float x, float y);
 		void HandleInput();
 		void HandleMovement(float deltaTime);

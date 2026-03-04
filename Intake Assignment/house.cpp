@@ -123,7 +123,11 @@ namespace Tmpl8
 	{
 		// Draw house if it is open
 		if (houseisopen)
+		{
 			house.Draw(screen, 0, 0);
+			if(MainScreenOpen())
+				DrawHover(screen);
+		}
 		// Draw nightstand if it is open
 		if (nightstandisopen)
 			nightstand.Draw(screen, 0, 0);

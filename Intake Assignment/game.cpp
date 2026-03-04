@@ -23,6 +23,7 @@ namespace Tmpl8
 	//how many connections between classes are allowed?
 	//schiba hover. gen pune sa se puna pe ecran patratul cand mouseul e in zona. e mai easy
 	//fa s pot pierde daca nu mai ai potiuni sau iteme sa poti crafta potiunile
+	//deltatime = the time between frames
 
 	/*
 	// Convert farm tile (x,y) to index in farmTiles vector
@@ -102,7 +103,7 @@ namespace Tmpl8
 			WorldState::mouseX = mousePos.x;
 			WorldState::mouseY = mousePos.y;
 			// Mouse coordinates on screen
-			std::cout << "Mouse X: " << WorldState::mouseX << ", Y: " << WorldState::mouseY << std::endl;
+			//std::cout << "Mouse X: " << WorldState::mouseX << ", Y: " << WorldState::mouseY << std::endl;
 		}
 	}
 	void Game::PlantSeed(Surface* screen, int tileNumber)
@@ -255,6 +256,7 @@ namespace Tmpl8
 			gameMap.Draw(screen);
 			if(AllInventoriesClosed())
 				HoverOutsideObjects();
+
 			// Tiles & Plants
 			for (auto& x : farmTiles)
 			{
@@ -274,8 +276,6 @@ namespace Tmpl8
 			house.Draw(screen);
 			if (house.hCrafting().CraftingIsOpen())
 				house.hCrafting().Draw(screen);
-			else if (house.MainScreenOpen())
-				house.DrawHover(screen);
 		}
 		DrawUI();
 		
