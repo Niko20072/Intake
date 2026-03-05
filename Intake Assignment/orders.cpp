@@ -121,8 +121,12 @@ namespace Tmpl8
 	}
 	void Order::Draw(Surface* screen)
 	{
+		int hover = WorldState::mouseX >= (475 - range) && WorldState::mouseX <= (526 + range) && WorldState::mouseY >= (235 + orderNumber * 35 - range) && WorldState::mouseY <= (242 + orderNumber * 35 + range);
 		// Button outline
-		screen->Box(475 - range, 235 + orderNumber * 35 - range, 526 + range, 242 + orderNumber * 35 + range, 0x0);
+		if (hover && !completed)
+			screen->Box(475 - range, 235 + orderNumber * 35 - range, 526 + range, 242 + orderNumber * 35 + range, 0xfffb00);
+		else
+			screen->Box(475 - range, 235 + orderNumber * 35 - range, 526 + range, 242 + orderNumber * 35 + range, 0x0);
 		if (!completed)
 		{
 			screen->Print(order, 265, 236 + orderNumber * 35, 0x0);

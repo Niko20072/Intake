@@ -58,6 +58,28 @@ namespace Tmpl8
 	{
 	}
 
+	void Game::GodMode()
+	{
+		if(Input::GetKeyPressed(SDL_SCANCODE_G))
+		{
+			player.pInventory().SetItemTo(Inventory::Item::VitalTonic, 99);
+			player.pInventory().SetItemTo(Inventory::Item::CalmMind, 99);
+			player.pInventory().SetItemTo(Inventory::Item::DreamDraught, 99);
+			player.pInventory().SetItemTo(Inventory::Item::FireHeart, 99);
+			player.pInventory().SetItemTo(Inventory::Item::FrostVeil, 99);
+			player.pInventory().SetItemTo(Inventory::Item::Sunblossom, 99);
+			player.pInventory().SetItemTo(Inventory::Item::Moonleaf, 99);
+			player.pInventory().SetItemTo(Inventory::Item::Emberroot, 99);
+			player.pInventory().SetItemTo(Inventory::Item::Frostmint, 99);
+			player.pInventory().SetItemTo(Inventory::Item::Berry, 99);
+			player.pInventory().SetItemTo(Inventory::Item::SeedSunblossom, 99);
+			player.pInventory().SetItemTo(Inventory::Item::SeedMoonleaf, 99);
+			player.pInventory().SetItemTo(Inventory::Item::SeedEmberroot, 99);
+			player.pInventory().SetItemTo(Inventory::Item::SeedFrostmint, 99);
+			player.pInventory().SetItemTo(Inventory::Item::SeedBerry, 99);
+			coinCounter = 9999;
+		}
+	}
 	bool Game::AllInventoriesClosed()
 	{
 		// Check if all inventories are closed
@@ -206,6 +228,9 @@ namespace Tmpl8
 	}
 	void Game::Logic()
 	{
+		//check if godmode is activated
+		GodMode();
+
 		// House interaction
 		house.HouseLogic();
 
@@ -250,6 +275,7 @@ namespace Tmpl8
 		UpdatePlants();
 		car.UpdateOrders(coinCounter);
 		Logic();
+		tutorial.Update();
 	}
 	void Game::DrawUI()
 	{
@@ -260,6 +286,8 @@ namespace Tmpl8
 		screen->PrintScaled(coins, 10, 10, 2, 2, 0xffff00);
 		if (!house.IsOpen() && AllInventoriesClosed()) // Draw watering can only when outside and inventory is closed
 			player.pWateringCan().Draw(screen);
+		tutorial.Draw(screen);
+
 	}
 	void Game::DrawGame()
 	{
@@ -343,9 +371,6 @@ namespace Tmpl8
 		// Handle player movement only when outside
 		if (!house.IsOpen())
 			player.HandleMovement(deltaTime);
-
-		tutorial.Update();
-		tutorial.Draw(screen);
 
 		// Check for game completion
 		house.GameCompleted(screen, coinCounter, gameCompleted);

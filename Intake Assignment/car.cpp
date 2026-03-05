@@ -155,8 +155,8 @@ namespace Tmpl8
 		{
 			// Draw order text and button based on completion status
 			char daysUntilResetText[64];
-			sprintf(daysUntilResetText, "Days until order reset: %d", daysUntilOrderReset);
-			screen->Print(daysUntilResetText, 330, 94, 0x0);
+			sprintf(daysUntilResetText, "Days until orders reset: %d", daysUntilOrderReset);
+			screen->PrintScaled(daysUntilResetText, 245, 94, 2, 2, 0x870101);
 			for (auto& x : orders)
 				x.Draw(screen);
 		}

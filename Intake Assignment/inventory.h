@@ -48,6 +48,7 @@ namespace Tmpl8
 		void setSeedState(bool state);
 
 		int AddItem(Item item, int quantity = 1); // Add item to inventory
+		int SetItemTo(Item item, int quantity);
 		int GetItemCount(Item item); // Get count of specific item in inventory
 
 		void InventoryText(Surface* screen);

@@ -174,26 +174,26 @@ namespace Tmpl8
 		sprintf(frostVeil, "x%d", inventory.GetItemCount(Inventory::Item::FrostVeil));
 
 		// Display ingredients
-		screen->PrintScaled(sunBlossom, 291 - 8, 48, 2, 2, 0x0);
-		screen->PrintScaled(moonLeaf, 341 - 10, 48, 2, 2, 0x0);
-		screen->PrintScaled(emberRoot, 392 - 8, 48, 2, 2, 0x0);
-		screen->PrintScaled(frostMint, 443 - 9, 48, 2, 2, 0x0);
-		screen->PrintScaled(berry, 499 - 10, 48, 2, 2, 0x0);
+		screen->PrintScaled(sunBlossom, 291 - 11, 48, 2, 2, 0x0);
+		screen->PrintScaled(moonLeaf, 341 - 12, 48, 2, 2, 0x0);
+		screen->PrintScaled(emberRoot, 392 - 9, 48, 2, 2, 0x0);
+		screen->PrintScaled(frostMint, 443 - 10, 48, 2, 2, 0x0);
+		screen->PrintScaled(berry, 499 - 11, 48, 2, 2, 0x0);
 
 		// Display potions based on selected frame
 		if (frame == 0)
 		{
-			screen->PrintScaled(vitalTonic, 329 - 11, 163, 2, 2, 0x0);
-			screen->PrintScaled(calmMind, 676 - 11, 163, 2, 2, 0x0);
+			screen->PrintScaled(vitalTonic, 329 - 13, 163, 2, 2, 0x0);
+			screen->PrintScaled(calmMind, 676 - 13, 163, 2, 2, 0x0);
 		}
 		if (frame == 1)
 		{
-			screen->PrintScaled(dreamDraught, 329 - 11, 163, 2, 2, 0x0);
-			screen->PrintScaled(fireHeart, 676 - 11, 163, 2, 2, 0x0);
+			screen->PrintScaled(dreamDraught, 329 - 13, 163, 2, 2, 0x0);
+			screen->PrintScaled(fireHeart, 676 - 13, 163, 2, 2, 0x0);
 		}
 		if (frame == 2)
 		{
-			screen->PrintScaled(frostVeil, 329 - 11, 163, 2, 2, 0x0);
+			screen->PrintScaled(frostVeil, 329 - 13, 163, 2, 2, 0x0);
 		}
 	}
 	void Crafting::Draw(Surface* screen)

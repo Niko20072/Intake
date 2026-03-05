@@ -56,8 +56,7 @@ namespace Tmpl8
 	void Player::Draw(Surface* screen)
 	{
 		// Player reach box
-		screen->Box(WorldState::reachX1 - WorldState::cameraX, WorldState::reachY1 - WorldState::cameraY, WorldState::reachX2 - WorldState::cameraX, WorldState::reachY2 - WorldState::cameraY, 0x00ff00);
-		// Player sprite
+		//screen->Box(WorldState::reachX1 - WorldState::cameraX, WorldState::reachY1 - WorldState::cameraY, WorldState::reachX2 - WorldState::cameraX, WorldState::reachY2 - WorldState::cameraY, 0x00ff00);
 		player1.Draw(screen, WorldState::playerX, WorldState::playerY);
 	}
 }

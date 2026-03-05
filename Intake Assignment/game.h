@@ -54,6 +54,7 @@ namespace Tmpl8
 		bool gameCompleted = false;
 		int index, index2;
 		bool tileClicked = false;
+		void GodMode();
 		bool AllInventoriesClosed(); // Check if all inventories are closed
 		void DrawInventory();
 		void HoverOutsideObjects();

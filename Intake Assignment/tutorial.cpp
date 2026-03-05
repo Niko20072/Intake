@@ -139,7 +139,7 @@ namespace Tmpl8
             break;
         case TutorialState::HaveFun:
             sprintf(tutorialText, "That's all you need to know!");
-            sprintf(tutorialText2, "Have fun playing! <3");
+            sprintf(tutorialText2, "Have fun playing!");
             if (!house.IsOpen() || house.hCrafting().CraftingIsOpen() || house.NightstandIsOpen())
                 tutorialState = TutorialState::Done;
 			break;
@@ -155,8 +155,8 @@ namespace Tmpl8
     {
         if (tutorialState == TutorialState::ExplainTable || tutorialState == TutorialState::ExitTable)
         {
-            screen->CentreScaled(tutorialText, 409 + 10, 2, 2, 0xff0000);
-            screen->CentreScaled(tutorialText2, 409 + 30, 2, 2, 0xff0000);
+            screen->CentreScaled(tutorialText, 409 + 15, 2, 2, 0xff0000);
+            screen->CentreScaled(tutorialText2, 409 + 35, 2, 2, 0xff0000);
         }
         else if (tutorialText2[0] == '\0')
         {
