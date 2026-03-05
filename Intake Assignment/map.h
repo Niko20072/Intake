@@ -1,24 +1,23 @@
 #pragma once
 #include "surface.h"
-#include "template.h"
 
 namespace Tmpl8
 {
+	//fix static camera xy
 	class Map
 	{
 	public:
 		Surface tiles = ("assets/MediumMap.png");
-		static const int MapWidth = 26; // Number of tiles horizontally
-		static const int MapHeight = 26; // Number of tiles vertically
 		static const int TileSize = 48; // Size of each tile in pixels
-		static const int MapSize = 1264; // Width of the tileset image in pixels
-		static float cameraX, cameraY; // Map offset
-
-		bool IsBlocked(int x, int y); // Check if tile at (x,y) is blocked
+		bool CheckCollision(float x, float y);
 		void Draw(Surface* screen);
 		//void DrawTile(Surface* screen, int tx, int ty, int x, int y); // Draw a single tile at (x,y) on the screen
 		//void DrawMap(Surface* screen); // Draw the entire map on the screen'
 	private:
+		const int MapWidth = 26; // Number of tiles horizontally
+		static const int MapHeight = 26; // Number of tiles vertically
+		const int MapSize = 1264; // Width of the tileset image in pixels
+		bool IsBlocked(int x, int y); // Check if tile at (x,y) is blocked
 		char map[MapHeight][79] =
 		{
 			"00X10X20X30X40X50X60X70X80X90X:0X;0X<0X=0X>0X?0X@0XA0XB0XC0XD0XE0XF0XG0XH0XI0X",

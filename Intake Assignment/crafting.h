@@ -1,11 +1,9 @@
 #pragma once
 #include "surface.h"
-#include <windows.h>
-#include "inventory.h"
-#include "template.h"
-#include "buttons.h"
 namespace Tmpl8
 {
+	class Inventory;
+
 	class Crafting
 	{
 	public:

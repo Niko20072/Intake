@@ -1,10 +1,7 @@
 #include "map.h"
-
+#include "worldState.h"
 namespace Tmpl8
 {
-	float Map::cameraX = 0.0f;
-	float Map::cameraY = 0.0f;
-
 	//pune toata harta ca png, collision box
 	//copy to screen + offset
 	//transform 
@@ -16,9 +13,25 @@ namespace Tmpl8
 		//return true if tile is blocked/ false if not
 		return map[ty][tx * 3 + 2] == 'X';
 	}
+	bool Map::CheckCollision(float x, float y)
+	{
+		//sprit corners
+		int left = x;
+		int top = y;
+		int right = left + 46;
+		int bottom = top + 22;
+
+		//check all corners for collision
+		if (IsBlocked(left, top)) return false;
+		if (IsBlocked(right, top)) return false;
+		if (IsBlocked(left, bottom)) return false;
+		if (IsBlocked(right, bottom)) return false;
+
+		return true; //no collision
+	}
 	void Map::Draw(Surface*screen)
 	{
-		tiles.CopyTo(screen, -cameraX, -cameraY);
+		tiles.CopyTo(screen, -WorldState::cameraX, -WorldState::cameraY);
 		return;
 	}
 	/*

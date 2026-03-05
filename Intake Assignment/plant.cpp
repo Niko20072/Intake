@@ -1,4 +1,6 @@
 #include "plant.h"
+#include "inventory.h"
+#include "worldState.h"
 
 namespace Tmpl8
 {
@@ -9,7 +11,7 @@ namespace Tmpl8
 	void Plant::Draw(Surface* screen)
 	{
 		plant.SetFrame(frame);
-		plant.Draw(screen, x - Map::cameraX, y - Map::cameraY - 10);
+		plant.Draw(screen, x - WorldState::cameraX, y - WorldState::cameraY - 10);
 	}
 	void Plant::Update()
 	{

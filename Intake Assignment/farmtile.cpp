@@ -1,14 +1,18 @@
 #include "farmtile.h"
+#include "input.h"
+#include "worldState.h"
+#include "wateringCan.h"
+
 
 namespace Tmpl8
 {
-	FarmTile::FarmTile(float x,float y, WateringCan& wa, Inventory& inv) : farmTileX(x * Map::TileSize), farmTileY(y * Map::TileSize), wateringCan(wa), inventory(inv), farmTile(std::make_unique<Sprite>(new Surface("assets/tiles.png"), 3)), hover(std::make_unique<Sprite>(new Surface("assets/tiles_hover.png"), 1)) {}
+	FarmTile::FarmTile(float x,float y, WateringCan& wa, Inventory& inv) : farmTileX(x * WorldState::mapTileSize), farmTileY(y * WorldState::mapTileSize), wateringCan(wa), inventory(inv), farmTile(std::make_unique<Sprite>(new Surface("assets/tiles.png"), 3)), hover(std::make_unique<Sprite>(new Surface("assets/tiles_hover.png"), 1)) {}
 	void FarmTile::Draw(Surface* screen)
 	{
-		bool checkHover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
-		farmTile->Draw(screen, farmTileX - Map::cameraX, farmTileY - Map::cameraY);
+		bool checkHover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + WorldState::mapTileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + WorldState::mapTileSize;
+		farmTile->Draw(screen, farmTileX - WorldState::cameraX, farmTileY - WorldState::cameraY);
 		if (checkHover)
-			hover->Draw(screen,farmTileX - Map::cameraX, farmTileY - Map::cameraY);
+			hover->Draw(screen,farmTileX - WorldState::cameraX, farmTileY - WorldState::cameraY);
 	}
 	void FarmTile::SetFrame(int frame)
 	{
@@ -17,8 +21,8 @@ namespace Tmpl8
 	void FarmTile::Update()
 	{
 		// Tile rectangle
-		bool checkHover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + Map::TileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + Map::TileSize;
-		bool tileInReach = WorldState::reachX1 < farmTileX + Map::TileSize && WorldState::reachX2 > farmTileX && WorldState::reachY1 < farmTileY + Map::TileSize && WorldState::reachY2 > farmTileY;
+		bool checkHover = WorldState::mouseWorldX >= farmTileX && WorldState::mouseWorldX < farmTileX + WorldState::mapTileSize && WorldState::mouseWorldY >= farmTileY && WorldState::mouseWorldY < farmTileY + WorldState::mapTileSize;
+		bool tileInReach = WorldState::reachX1 < farmTileX + WorldState::mapTileSize && WorldState::reachX2 > farmTileX && WorldState::reachY1 < farmTileY + WorldState::mapTileSize && WorldState::reachY2 > farmTileY;
 
 		// Click
 		if (Input::GetMouseButtonPressed(1) && checkHover && tileInReach)

@@ -1,4 +1,7 @@
 #include "crafting.h"
+#include "input.h"
+#include "worldState.h"
+#include "inventory.h"
 
 namespace Tmpl8
 {

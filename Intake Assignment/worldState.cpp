@@ -1,4 +1,5 @@
 #include "worldState.h"
+#include "map.h"
 namespace Tmpl8
 {
 	namespace WorldState
@@ -6,23 +7,21 @@ namespace Tmpl8
 		const int playerX = 648 / 2 + 46, playerY = 512 / 2 + 22; //player position
 		float mouseX = 0, mouseY = 0; //mouse position on screen
 		float mouseWorldX, mouseWorldY; //mouse position in world coordinates
-		float worldX, worldY; //world coordinates
+		float cameraX = 0.0f, cameraY = 0.0f; //world coordinates (map offset)
 		float worldPlayerX, worldPlayerY; //player position in world coordinates
 		float reachX1, reachY1, reachX2, reachY2; //player reach area (rectangle around player)
 		const float cameraSpeed = 360.0f;
+		const int mapTileSize = Map::TileSize;
 		void UpdateWorldState()
 		{
-			worldX = Map::cameraX;
-			worldY = Map::cameraY;
-
 			// Transform screen coordinates -> world coordinates -> mouse screen position
-			mouseWorldX = worldX + mouseX;
-			mouseWorldY = worldY + mouseY;
+			mouseWorldX = cameraX + mouseX;
+			mouseWorldY = cameraY + mouseY;
 			//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
 
 			// Player world position
-			worldPlayerX = worldX + playerX;
-			worldPlayerY = worldY + playerY;
+			worldPlayerX = cameraX + playerX;
+			worldPlayerY = cameraY + playerY;
 			//std::cout << "Player world position: X=" << worldPlayerX << ", Y=" << worldPlayerY << std::endl;
 
 			// Player reach area

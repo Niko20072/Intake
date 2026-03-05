@@ -1,13 +1,11 @@
 #pragma once
-#include "template.h"
 #include <iostream>
 #include <vector>
-#include "inventory.h"
 #include "surface.h"
-#include "buttons.h"
 
 namespace Tmpl8
 {
+	class Inventory;
 	class Order
 	{
 	public:

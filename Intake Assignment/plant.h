@@ -1,14 +1,13 @@
 #pragma once
 #include "surface.h"
-#include "template.h"
-#include "map.h"
 #include <vector>
 #include <iostream>
-#include "inventory.h"
-#include "buttons.h"
+
+
 
 namespace Tmpl8
 {
+	class Inventory;
 	class Plant
 	{
 	public:

@@ -1,4 +1,9 @@
 #include "orders.h"
+#include "input.h"
+#include "template.h"
+#include "worldState.h"
+#include "inventory.h"
+
 namespace Tmpl8
 {
 	int range = 5; // Click range

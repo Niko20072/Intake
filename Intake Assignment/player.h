@@ -1,21 +1,19 @@
 #pragma once
 #include "surface.h"
-#include "map.h"
-#include <windows.h>
 #include "template.h"
 #include "inventory.h"
 #include "wateringCan.h"
-#include "worldState.h"
+
 
 namespace Tmpl8
 {
+	class Map;
 	class Player
 	{
 	public:
 		Player(Map &m) : map(m), wateringCan(), inventory(wateringCan) {};
 		Inventory& pInventory() { return inventory; }
 		WateringCan& pWateringCan() { return wateringCan; }
-		bool CheckCollision(float x, float y);
 		void HandleMovement(float deltaTime);
 		void Draw(Surface* screen);
 	private:

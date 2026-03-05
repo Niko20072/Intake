@@ -1,4 +1,7 @@
 #include "inventory.h"
+#include "wateringCan.h"
+#include "worldState.h"
+#include "input.h"
 
 namespace Tmpl8//sterge
 {

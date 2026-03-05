@@ -1,4 +1,8 @@
 #include "car.h"
+#include "inventory.h"
+#include "input.h"
+#include "worldState.h"
+
 
 namespace Tmpl8
 {
@@ -126,7 +130,7 @@ namespace Tmpl8
 		{
 			//generate new orders
 			daysUntilOrderReset = 5;
-			srand(time(0));
+			srand(static_cast<unsigned int>(time(0)));
 			orders.clear();
 			for (int i = 0; i <= 5; i++)
 				orders.emplace_back(i, inventory);

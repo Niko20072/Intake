@@ -1,5 +1,7 @@
 #include "house.h"
-
+#include "input.h"
+#include "worldstate.h"
+#include "Windows.h"
 
 namespace Tmpl8
 {

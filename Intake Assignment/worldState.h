@@ -1,5 +1,4 @@
 #pragma once
-#include "map.h"
 namespace Tmpl8
 {
 	namespace WorldState
@@ -13,8 +12,8 @@ namespace Tmpl8
 		extern float mouseWorldY;
 		//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
 
-		extern float worldX;
-		extern float worldY;
+		extern float cameraX;
+		extern float cameraY;
 
 		// Player world position
 		extern float worldPlayerX;
@@ -26,6 +25,8 @@ namespace Tmpl8
 		extern float reachY1;
 		extern float reachX2;
 		extern float reachY2;
+
+		extern const int mapTileSize;
 
 		void UpdateWorldState();
 	}

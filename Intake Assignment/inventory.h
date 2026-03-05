@@ -1,15 +1,6 @@
 #pragma once
-#include "surface.h"
-#include "template.h"
-#include <windows.h>
-#include <cstdio> //printf
-#include <iostream>
-#include <vector>
-#include "worldState.h"
-#include "buttons.h"
-#include "wateringCan.h"
 #include <unordered_map>
-#include "input.h"
+#include "surface.h"
 
 namespace Tmpl8
 {
@@ -23,6 +14,9 @@ namespace Tmpl8
 	// Frame 3 : Planting seeds
 	// Frame 4 : Car Shop
 	// Frame 5 : Car Orders
+
+	class WateringCan; // Forward declaration of WateringCan class
+
 	class Inventory
 	{
 	public:

@@ -1,23 +1,11 @@
 #include "player.h"
+#include "input.h"
+#include "worldState.h"
+#include "map.h"
 
 namespace Tmpl8
 {
-	bool Player::CheckCollision(float x, float y)
-	{
-		//sprit corners
-		int left = x;
-		int top = y;
-		int right = left + 46;
-		int bottom = top + 22;
-
-		//check all corners for collision
-		if (map.IsBlocked(left, top)) return false;
-		if (map.IsBlocked(right, top)) return false;
-		if (map.IsBlocked(left, bottom)) return false;
-		if (map.IsBlocked(right, bottom)) return false;
-
-		return true; //no collision
-	}
+	
 	void Player::HandleMovement(float deltaTime)
 	{
 		// -----------------------------------------------------------
@@ -25,8 +13,8 @@ namespace Tmpl8
 		// -----------------------------------------------------------
 
 		// New camera position
-		float newCameraX = Map::cameraX;
-		float newCameraY = Map::cameraY;
+		float newCameraX = WorldState::cameraX;
+		float newCameraY = WorldState::cameraY;
 
 		// Move camera based on WASD keys
 		vec2 movedir = 0.0f;
@@ -59,16 +47,16 @@ namespace Tmpl8
 		}
 
 		// Check for collision before updating camera position
-		if (CheckCollision(newCameraX + WorldState::playerX, newCameraY + WorldState::playerY) == true)
+		if (map.CheckCollision(newCameraX + WorldState::playerX, newCameraY + WorldState::playerY) == true)
 		{
-			Map::cameraX = newCameraX;
-			Map::cameraY = newCameraY;
+			WorldState::cameraX = newCameraX;
+			WorldState::cameraY = newCameraY;
 		}
 	}
 	void Player::Draw(Surface* screen)
 	{
 		// Player reach box
-		screen->Box(WorldState::reachX1 - Map::cameraX, WorldState::reachY1 - Map::cameraY, WorldState::reachX2 - Map::cameraX, WorldState::reachY2 - Map::cameraY, 0x00ff00);
+		screen->Box(WorldState::reachX1 - WorldState::cameraX, WorldState::reachY1 - WorldState::cameraY, WorldState::reachX2 - WorldState::cameraX, WorldState::reachY2 - WorldState::cameraY, 0x00ff00);
 		// Player sprite
 		player1.Draw(screen, WorldState::playerX, WorldState::playerY);
 	}

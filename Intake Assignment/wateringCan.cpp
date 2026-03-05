@@ -1,4 +1,5 @@
 #include "wateringCan.h"
+#include "input.h"
 namespace Tmpl8
 {
 	void WateringCan::WateringCanLogic()

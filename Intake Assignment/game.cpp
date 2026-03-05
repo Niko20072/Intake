@@ -46,6 +46,14 @@ namespace Tmpl8
 	//learn aabb cuz its important
 	//modify crafting recepie 18 feb update on discord
 
+
+	//to do:
+	//add forward declaration of classes in game.h
+	//add turotial class with switch statements and like frame?
+	//fix all errors (holy errors btw)
+	//make plants
+
+
 	Game::Game() : player(gameMap), house(player.pInventory()), car(player.pInventory())
 	{
 	}
@@ -72,9 +80,9 @@ namespace Tmpl8
 		bool carHover = WorldState::mouseWorldX >= 528 && WorldState::mouseWorldX <= 686 && WorldState::mouseWorldY >= 175 && WorldState::mouseWorldY <= 220;
 		bool doorHover = WorldState::mouseWorldX >= 196 && WorldState::mouseWorldX <= 233 && WorldState::mouseWorldY >= 183 && WorldState::mouseWorldY <= 234;
 		if (carHover)
-			car_hover.Draw(screen, 503 - WorldState::worldX, 152 - WorldState::worldY);
+			car_hover.Draw(screen, 503 - WorldState::cameraX, 152 - WorldState::cameraY);
 		if (doorHover)
-			door_hover.Draw(screen, 192 - WorldState::worldX, 179 - WorldState::worldY);
+			door_hover.Draw(screen, 192 - WorldState::cameraX, 179 - WorldState::cameraY);
 	}
 	/*void Game::HoverInsideObjects()
 	{
