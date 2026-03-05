@@ -14,6 +14,12 @@ namespace Tmpl8
 	{
 		return frame;
 	}
+	bool Car::CheckIfAnySeedButtonPressed()
+	{
+		if(button1 || button2 || button3 || button4 || button5)
+			return true;
+		return false;
+	}
 	void Car::UpdateOrderDays()
 	{
 		daysUntilOrderReset--;
@@ -21,11 +27,11 @@ namespace Tmpl8
 	void Car::BuySeeds(int& coinCounter)
 	{
 		// Buying seeds buttons
-		bool button1 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 224 && WorldState::mouseY <= 250;
-		bool button2 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 267 && WorldState::mouseY <= 293;
-		bool button3 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 310 && WorldState::mouseY <= 337;
-		bool button4 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 355 && WorldState::mouseY <= 379;
-		bool button5 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 394 && WorldState::mouseY <= 420;
+		button1 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 224 && WorldState::mouseY <= 250;
+		button2 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 267 && WorldState::mouseY <= 293;
+		button3 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 310 && WorldState::mouseY <= 337;
+		button4 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 355 && WorldState::mouseY <= 379;
+		button5 = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 458 && WorldState::mouseX <= 499 && WorldState::mouseY >= 394 && WorldState::mouseY <= 420;
 
 		// Buying seeds if car inventory is open
 		if (carisopen && frame == 4)
@@ -120,6 +126,7 @@ namespace Tmpl8
 		{
 			carinventory.Draw(screen, 140, 20);
 			DrawCarText(screen);
+			std::cout << CheckIfAnySeedButtonPressed() << std::endl;
 		}
 			
 	}

@@ -5,7 +5,7 @@
 
 namespace Tmpl8
 {
-	int House::IsOpen()
+	bool House::IsOpen()
 	{
 		return houseisopen;
 	}

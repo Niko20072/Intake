@@ -13,8 +13,10 @@ namespace Tmpl8
 	public:
 		House(Inventory& inv) : inventory(inv), crafting(inv) {};
 		Crafting& hCrafting() { return crafting; } // Reference to crafting system
-		int IsOpen();
+		bool IsOpen();
 		int getFrame();
+		bool NightstandIsOpen() { return nightstandisopen; }
+		bool BedIsOpen() { return bedisopen; }
 		int MainScreenOpen();
 		bool getClickedYes() { return clickedYes; }
 		void HouseLogic(); // Handle house interactions (opening/closing, crafting menu)

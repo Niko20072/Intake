@@ -66,7 +66,7 @@ namespace Tmpl8
 	{
 		if (planted) // avoid null pointer access
 		{
-			if ((plant->getGrown() || !plant->getAlive()) && clicked) // Check if the plant is ready for harvest or dead, and the tile has been clicked
+			if ((plant->getGrown() || !plant->getAlive()) && clicked && !wateringCan.getState()) // Check if the plant is ready for harvest or dead, and the tile has been clicked
 			{
 				plant->Collect();
 				DeletePlant();

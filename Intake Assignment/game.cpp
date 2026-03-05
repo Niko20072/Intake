@@ -54,7 +54,7 @@ namespace Tmpl8
 	//make plants
 
 
-	Game::Game() : player(gameMap), house(player.pInventory()), car(player.pInventory())
+	Game::Game() : player(gameMap), house(player.pInventory()), car(player.pInventory()), tutorial(player.pInventory(), car, house, player.pWateringCan())
 	{
 	}
 
@@ -111,7 +111,7 @@ namespace Tmpl8
 			WorldState::mouseX = mousePos.x;
 			WorldState::mouseY = mousePos.y;
 			// Mouse coordinates on screen
-			//std::cout << "Mouse X: " << WorldState::mouseX << ", Y: " << WorldState::mouseY << std::endl;
+			std::cout << "Mouse X: " << WorldState::mouseX << ", Y: " << WorldState::mouseY << std::endl;
 		}
 	}
 	void Game::PlantSeed(Surface* screen, int tileNumber)
@@ -130,6 +130,7 @@ namespace Tmpl8
 			// Planting Sunblossom seed
 			if (button1 && player.pInventory().GetItemCount(Inventory::Item::SeedSunblossom) > 0)
 			{
+				tutorial.setPlanted(true); // Set tutorial state to seed planted
 				farmTiles[tileNumber].CreatePlant(0); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedSunblossom, -1);
 				player.pInventory().setSeedState(false);
@@ -137,6 +138,7 @@ namespace Tmpl8
 			// Planting Moonleaf seed
 			if (button2 && player.pInventory().GetItemCount(Inventory::Item::SeedMoonleaf) > 0)
 			{
+				tutorial.setPlanted(true); // Set tutorial state to seed planted
 				farmTiles[tileNumber].CreatePlant(1); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedMoonleaf, -1);
 				player.pInventory().setSeedState(false);
@@ -144,6 +146,7 @@ namespace Tmpl8
 			// Planting Emberroot seed
 			if (button3 && player.pInventory().GetItemCount(Inventory::Item::SeedEmberroot) > 0)
 			{
+				tutorial.setPlanted(true); // Set tutorial state to seed planted
 				farmTiles[tileNumber].CreatePlant(2); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedEmberroot, -1);
 				player.pInventory().setSeedState(false);
@@ -151,6 +154,7 @@ namespace Tmpl8
 			// Planting Frostmint seed
 			if (button4 && player.pInventory().GetItemCount(Inventory::Item::SeedFrostmint) > 0)
 			{
+				tutorial.setPlanted(true); // Set tutorial state to seed planted
 				farmTiles[tileNumber].CreatePlant(3); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedFrostmint, -1);
 				player.pInventory().setSeedState(false);
@@ -158,6 +162,7 @@ namespace Tmpl8
 			// Planting Nightshade Berry seed
 			if (button5 && player.pInventory().GetItemCount(Inventory::Item::SeedBerry) > 0)
 			{
+				tutorial.setPlanted(true); // Set tutorial state to seed planted
 				farmTiles[tileNumber].CreatePlant(4); // Create plant on farm tile
 				player.pInventory().AddItem(Inventory::Item::SeedBerry, -1);
 				player.pInventory().setSeedState(false);
@@ -251,8 +256,8 @@ namespace Tmpl8
 		// Draw day and coins
 		sprintf(day, "DAY: %d", dayCounter);
 		sprintf(coins, "COINS: %d", coinCounter);
-		screen->Print(day, 750, 10, 0xff0000);
-		screen->Print(coins, 10, 10, 0xffff00);
+		screen->PrintScaled(day, 710, 10, 2, 2, 0x0389afc);
+		screen->PrintScaled(coins, 10, 10, 2, 2, 0xffff00);
 		if (!house.IsOpen() && AllInventoriesClosed()) // Draw watering can only when outside and inventory is closed
 			player.pWateringCan().Draw(screen);
 	}
@@ -338,6 +343,9 @@ namespace Tmpl8
 		// Handle player movement only when outside
 		if (!house.IsOpen())
 			player.HandleMovement(deltaTime);
+
+		tutorial.Update();
+		tutorial.Draw(screen);
 
 		// Check for game completion
 		house.GameCompleted(screen, coinCounter, gameCompleted);

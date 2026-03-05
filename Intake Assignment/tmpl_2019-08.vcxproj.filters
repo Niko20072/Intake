@@ -20,6 +20,7 @@
     <ClCompile Include="worldState.cpp" />
     <ClCompile Include="car.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="worldState.h" />
     <ClInclude Include="car.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="tutotial.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

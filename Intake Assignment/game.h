@@ -21,6 +21,7 @@
 #include "car.h"
 #include "SDL_scancode.h"
 #include "input.h"
+#include "tutotial.h"
 
 namespace Tmpl8
 {
@@ -45,9 +46,10 @@ namespace Tmpl8
 		Player player;
 		House house;
 		Car car;
+		Tutorial tutorial;
 		std::vector<FarmTile> farmTiles;
 		int dayCounter = 0;
-		int coinCounter = 2000;
+		int coinCounter = 250;
 		char day[32], coins[32];
 		bool gameCompleted = false;
 		int index, index2;

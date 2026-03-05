@@ -1,0 +1,173 @@
+#include "tutotial.h"
+#include "input.h"
+#include "worldState.h"
+
+#include "inventory.h"
+#include "car.h"
+#include "house.h"
+#include "wateringCan.h"
+namespace Tmpl8
+{
+	void Tutorial::Update()
+	{
+        bool clickedOnPlantButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 323 && WorldState::mouseX <= 366 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+        bool clickedOnPotionButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 375 && WorldState::mouseX <= 510 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+        bool clickedOnSeedButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 430 && WorldState::mouseX <= 475 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
+        bool clickedOutsideInv = Input::GetMouseButtonPressed(1) && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
+		// Tutorial logic here
+        switch (tutorialState)
+        {
+        case TutorialState::Move:
+            sprintf(tutorialText, "Use WASD to move");
+            tutorialText2[0] = '\0';
+            if (Input::GetKey(SDL_SCANCODE_W) || Input::GetKey(SDL_SCANCODE_A) || Input::GetKey(SDL_SCANCODE_S) || Input::GetKey(SDL_SCANCODE_D))
+                tutorialState = TutorialState::OpenInventory;
+            break;
+
+        case TutorialState::OpenInventory:
+            sprintf(tutorialText, "Press E to open inventory");
+            if (Input::GetKeyPressed(SDL_SCANCODE_E))
+                tutorialState = TutorialState::InteractInventory;
+            break;
+
+        case TutorialState::InteractInventory:
+            sprintf(tutorialText, "Click on the inventory buttons");
+            sprintf(tutorialText2, "to interact with it");
+            if(clickedOnPlantButton || clickedOnPotionButton || clickedOnSeedButton)
+                tutorialState = TutorialState::ExitInventory;
+            break;
+
+		case TutorialState::ExitInventory:
+            sprintf(tutorialText, "Press E, Q or click outside of");
+			sprintf(tutorialText2, "the inventory screen to close it");
+            if (!inventory.MainInvIsOpen())
+                tutorialState = TutorialState::GoToCar;
+			break;
+
+        case TutorialState::GoToCar:
+            sprintf(tutorialText, "Go to the car and click on it. You need");
+            sprintf(tutorialText2, "to be close to objects to interact with them!");
+            if (car.CarInvIsOpen())
+                tutorialState = TutorialState::BuySeeds;
+			break;
+
+        case TutorialState::BuySeeds:
+            sprintf(tutorialText, "Buy some seeds from the car shop");
+            tutorialText2[0] = '\0';
+            if (car.getFrame() == 4 && car.CheckIfAnySeedButtonPressed())
+				tutorialState = TutorialState::CheckOrders;
+			break;
+
+        case TutorialState::CheckOrders:
+            sprintf(tutorialText, "Check out the orders (envelope icon)");
+            tutorialText2[0] = '\0';
+            if (car.getFrame() == 5)
+                tutorialState = TutorialState::HowOrdersWork;
+			break;
+
+        case TutorialState::HowOrdersWork:
+            sprintf(tutorialText, "You can complete orders by crafting");
+            sprintf(tutorialText2, "the required potions, then sending them to make money");
+            if(!car.CarInvIsOpen())
+                tutorialState = TutorialState::ClickFarmTile;
+            break;
+        case TutorialState::ClickFarmTile:
+            sprintf(tutorialText, "Go to the field and click on a");
+            sprintf(tutorialText2, "farm tile to that's close to you");
+            if (inventory.SeedInvIsOpen())
+                tutorialState = TutorialState::PlantSeed;
+			break;
+        case TutorialState::PlantSeed:
+            sprintf(tutorialText, "Plant a seed");
+            tutorialText2[0] = '\0';
+            if (planted == true)
+				tutorialState = TutorialState::WaterSeed;
+            break;
+		case TutorialState::WaterSeed:
+            sprintf(tutorialText, "Water the plant by pressing R to equipt");
+            sprintf(tutorialText2, "the wateringcan, then clicking on the plant");
+            if(wateringCan.getState() && Input::GetMouseButtonPressed(1))
+				tutorialState = TutorialState::ClickHouse;
+            break;
+        case TutorialState::ClickHouse:
+            sprintf(tutorialText, "Good job! Don't forget to water the plants");
+            sprintf(tutorialText2, "everyday! Now go inside the house");
+            if (house.IsOpen())
+				tutorialState = TutorialState::IntercatTable;
+			break;
+        case TutorialState::IntercatTable:
+            sprintf(tutorialText, "Click on the crafting table");
+            tutorialText2[0] = '\0';
+			if (house.hCrafting().CraftingIsOpen())
+				tutorialState = TutorialState::ExplainTable;
+            break;
+		case TutorialState::ExplainTable:
+            sprintf(tutorialText, "You can craft potions here using the");
+            sprintf(tutorialText2, "plants you grow. Try crafting a potion!");
+            if (house.hCrafting().getTutorialCraft())
+                tutorialState = TutorialState::ExitTable;
+			break;
+        case TutorialState::ExitTable:
+            sprintf(tutorialText, "Exit the crafting menu by pressing Q. Remember that");
+            sprintf(tutorialText2, "you can quit any interface by pressing Q!");
+            if (!house.hCrafting().CraftingIsOpen())
+				tutorialState = TutorialState::ClickNightstand;
+			break;
+        case TutorialState::ClickNightstand:
+            sprintf(tutorialText, "Now click on the nightstand");
+            tutorialText2[0] = '\0';
+            if (house.NightstandIsOpen())
+				tutorialState = TutorialState::ExplainNightstand;
+			break;
+        case TutorialState::ExplainNightstand:
+            sprintf(tutorialText, "Here is how to finish the game:");
+            sprintf(tutorialText2, "Make 2000 coins and get your broom back!");
+            if(!house.NightstandIsOpen())
+				tutorialState = TutorialState::ClickBed;
+            break;
+		case TutorialState::ClickBed:
+            sprintf(tutorialText, "Finally, click on the bed");
+            tutorialText2[0] = '\0';
+			if (house.BedIsOpen())
+				tutorialState = TutorialState::ExplainBed;
+            break;
+		case TutorialState::ExplainBed:
+            sprintf(tutorialText, "Sleeping will progress the day, which will");
+            sprintf(tutorialText2, "cause your plants to grow and orders to refresh (every 5 days)");
+			if (!house.BedIsOpen() || house.ConfirmedToSleep())
+				tutorialState = TutorialState::HaveFun;
+            break;
+        case TutorialState::HaveFun:
+            sprintf(tutorialText, "That's all you need to know!");
+            sprintf(tutorialText2, "Have fun playing! <3");
+            if (!house.IsOpen() || house.hCrafting().CraftingIsOpen() || house.NightstandIsOpen())
+                tutorialState = TutorialState::Done;
+			break;
+        case TutorialState::Done:
+            tutorialText[0] = '\0';
+            tutorialText2[0] = '\0';
+            break;
+        }
+        if(Input::GetKeyPressed(SDL_SCANCODE_X))
+			tutorialState = TutorialState::Done;
+	}
+    void Tutorial::Draw(Surface* screen)
+    {
+        if (tutorialState == TutorialState::ExplainTable || tutorialState == TutorialState::ExitTable)
+        {
+            screen->CentreScaled(tutorialText, 409 + 10, 2, 2, 0xff0000);
+            screen->CentreScaled(tutorialText2, 409 + 30, 2, 2, 0xff0000);
+        }
+        else if (tutorialText2[0] == '\0')
+        {
+            screen->CentreScaled(tutorialText, 20, 2, 2, 0xff0000);
+        }
+        else
+        {
+            screen->CentreScaled(tutorialText, 10, 2, 2, 0xff0000);
+            screen->CentreScaled(tutorialText2, 30, 2, 2, 0xff0000);
+        }
+        if(tutorialState == TutorialState::Move || tutorialState == TutorialState::OpenInventory || tutorialState == TutorialState::InteractInventory)
+		    screen->PrintScaled("Press X to skip the tutorial", 10, 580, 2, 2, 0x08f0d7d);
+	}
+}

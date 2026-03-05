@@ -40,6 +40,7 @@ namespace Tmpl8
 	{
 		if(inventory.GetItemCount(Inventory::Item::Sunblossom) >= 1 && inventory.GetItemCount(Inventory::Item::Emberroot) >= 1)
 		{
+			tutorialCraft = true; // Set tutorial state to potion crafted
 			inventory.AddItem(Inventory::Item::VitalTonic);
 			inventory.AddItem(Inventory::Item::Sunblossom, -1);
 			inventory.AddItem(Inventory::Item::Emberroot, -1);
@@ -173,26 +174,26 @@ namespace Tmpl8
 		sprintf(frostVeil, "x%d", inventory.GetItemCount(Inventory::Item::FrostVeil));
 
 		// Display ingredients
-		screen->Print(sunBlossom, 291 - 5, 48, 0x0);
-		screen->Print(moonLeaf, 341 - 5, 48, 0x0);
-		screen->Print(emberRoot, 392 - 3, 48, 0x0);
-		screen->Print(frostMint, 443 - 4, 48, 0x0);
-		screen->Print(berry, 499 - 5, 48, 0x0);
+		screen->PrintScaled(sunBlossom, 291 - 8, 48, 2, 2, 0x0);
+		screen->PrintScaled(moonLeaf, 341 - 10, 48, 2, 2, 0x0);
+		screen->PrintScaled(emberRoot, 392 - 8, 48, 2, 2, 0x0);
+		screen->PrintScaled(frostMint, 443 - 9, 48, 2, 2, 0x0);
+		screen->PrintScaled(berry, 499 - 10, 48, 2, 2, 0x0);
 
 		// Display potions based on selected frame
 		if (frame == 0)
 		{
-			screen->Print(vitalTonic, 329 - 4, 163, 0x0);
-			screen->Print(calmMind, 676 - 4, 163, 0x0);
+			screen->PrintScaled(vitalTonic, 329 - 11, 163, 2, 2, 0x0);
+			screen->PrintScaled(calmMind, 676 - 11, 163, 2, 2, 0x0);
 		}
 		if (frame == 1)
 		{
-			screen->Print(dreamDraught, 329 - 4, 163, 0x0);
-			screen->Print(fireHeart, 676 - 4, 163, 0x0);
+			screen->PrintScaled(dreamDraught, 329 - 11, 163, 2, 2, 0x0);
+			screen->PrintScaled(fireHeart, 676 - 11, 163, 2, 2, 0x0);
 		}
 		if (frame == 2)
 		{
-			screen->Print(frostVeil, 329 - 4, 163, 0x0);
+			screen->PrintScaled(frostVeil, 329 - 11, 163, 2, 2, 0x0);
 		}
 	}
 	void Crafting::Draw(Surface* screen)

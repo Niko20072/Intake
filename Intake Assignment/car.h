@@ -11,6 +11,7 @@ namespace Tmpl8
 		Car(Inventory& inv) : inventory(inv) {};
 		int CarInvIsOpen();
 		int getFrame();
+		bool CheckIfAnySeedButtonPressed();
 		void UpdateOrderDays();
 		void CarInventoryLogic(int& coinCounter);
 		void DrawCarText(Surface* screen);
@@ -26,5 +27,7 @@ namespace Tmpl8
 		int daysUntilOrderReset = 0;
 		Sprite carinventory = Sprite(new Surface("assets/inventory.png"), 6);
 		std::vector<Order> orders;
+		// Buying seeds buttons
+		bool button1 = false, button2 = false, button3 = false, button4 = false, button5 = false;
 	};
 }

@@ -3,7 +3,7 @@
 
 namespace Tmpl8
 {
-	//fix static camera xy
+	//fix static TileSize
 	class Map
 	{
 	public:

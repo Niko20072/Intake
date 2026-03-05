@@ -63,21 +63,21 @@ namespace Tmpl8
 		WateringCan& wateringCan; // Reference to player's watering can
 		Sprite inventory = Sprite(new Surface("assets/inventory.png"), 6);
 		std::unordered_map<Item, int> items = {
-			{ Item::VitalTonic, 10 },
-			{ Item::CalmMind, 10 },
-			{ Item::DreamDraught, 10 },
-			{ Item::FireHeart, 10 },
-			{ Item::FrostVeil, 10 },
-			{ Item::Sunblossom, 10 },
-			{ Item::Emberroot, 10 }, 
-			{ Item::Moonleaf, 10 }, 
-			{ Item::Frostmint, 10 }, 
-			{ Item::Berry, 10 },
-			{ Item::SeedSunblossom, 10 },
-			{ Item::SeedEmberroot, 10 },
-			{ Item::SeedMoonleaf, 10 },
-			{ Item::SeedFrostmint, 10 },
-			{ Item::SeedBerry, 10 }
+			{ Item::VitalTonic, 0 },
+			{ Item::CalmMind, 0 },
+			{ Item::DreamDraught, 0 },
+			{ Item::FireHeart, 0 },
+			{ Item::FrostVeil, 0 },
+			{ Item::Sunblossom, 1 },
+			{ Item::Emberroot, 1 }, 
+			{ Item::Moonleaf, 0 }, 
+			{ Item::Frostmint, 0 }, 
+			{ Item::Berry, 0 },
+			{ Item::SeedSunblossom, 2 },
+			{ Item::SeedEmberroot, 1 },
+			{ Item::SeedMoonleaf, 2 },
+			{ Item::SeedFrostmint, 1 },
+			{ Item::SeedBerry, 0 }
 		}; // Map to store item counts
 	};
 }

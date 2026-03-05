@@ -13,6 +13,7 @@ namespace Tmpl8
 		void setState(bool state);
 		int getFrame();
 		void setFrame(int state);
+		bool getTutorialCraft() { return tutorialCraft; }
 
 		void ManageFrames(); // Manage frame selection
 		//----update----
@@ -31,6 +32,7 @@ namespace Tmpl8
 		Sprite crafting = Sprite(new Surface("assets/crafting.png"), 3);
 		bool craftingisopen = false; // Crafting screen open state
 		int frame = 0; // Current crafting frame
+		bool tutorialCraft = false;
 		Inventory& inventory;
 		void CraftingDraw(Surface* screen); // Draw crafting screen and ingredient counts
 	};
