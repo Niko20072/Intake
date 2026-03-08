@@ -62,7 +62,7 @@ namespace Tmpl8
 		bool inventoryisopen = false; // Inventory open state
 		bool seedsisopen = false; // Seed inventory open state
 		WateringCan& wateringCan; // Reference to player's watering can
-		Sprite inventory = Sprite(new Surface("assets/inventory.png"), 6);
+		Sprite inventory = Sprite(new Surface("assets/inv.png"), 6);
 		std::unordered_map<Item, int> items = {
 			{ Item::VitalTonic, 0 },
 			{ Item::CalmMind, 0 },

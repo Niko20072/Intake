@@ -10,22 +10,18 @@ namespace Tmpl8
 {
 	void Tutorial::Update()
 	{
-        bool clickedOnPlantButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 323 && WorldState::mouseX <= 366 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
-        bool clickedOnPotionButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 375 && WorldState::mouseX <= 510 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
-        bool clickedOnSeedButton = Input::GetMouseButtonPressed(1) && WorldState::mouseX >= 430 && WorldState::mouseX <= 475 && WorldState::mouseY >= 471 && WorldState::mouseY <= 510;
-        bool clickedOutsideInv = Input::GetMouseButtonPressed(1) && !(WorldState::mouseX >= 207 && WorldState::mouseX <= 579 && WorldState::mouseY >= 78 && WorldState::mouseY <= 519);
 		// Tutorial logic here
         switch (tutorialState)
         {
         case TutorialState::Move:
-            sprintf(tutorialText, "Use WASD to move");
+            sprintf(tutorialText, "How to play: Use WASD to move");
             tutorialText2[0] = '\0';
             if (Input::GetKey(SDL_SCANCODE_W) || Input::GetKey(SDL_SCANCODE_A) || Input::GetKey(SDL_SCANCODE_S) || Input::GetKey(SDL_SCANCODE_D))
                 tutorialState = TutorialState::OpenInventory;
             break;
 
         case TutorialState::OpenInventory:
-            sprintf(tutorialText, "Press E to open inventory");
+            sprintf(tutorialText, "Press E to open the inventory");
             if (Input::GetKeyPressed(SDL_SCANCODE_E))
                 tutorialState = TutorialState::InteractInventory;
             break;
@@ -33,13 +29,13 @@ namespace Tmpl8
         case TutorialState::InteractInventory:
             sprintf(tutorialText, "Click on the inventory buttons");
             sprintf(tutorialText2, "to interact with it");
-            if(clickedOnPlantButton || clickedOnPotionButton || clickedOnSeedButton)
+            if(inventory.getFrame()!=0)
                 tutorialState = TutorialState::ExitInventory;
             break;
 
 		case TutorialState::ExitInventory:
-            sprintf(tutorialText, "Press E, Q or click outside of");
-			sprintf(tutorialText2, "the inventory screen to close it");
+            sprintf(tutorialText, "Press E, Q or click outside");
+			sprintf(tutorialText2, "the inventory to close it");
             if (!inventory.MainInvIsOpen())
                 tutorialState = TutorialState::GoToCar;
 			break;
@@ -67,13 +63,13 @@ namespace Tmpl8
 
         case TutorialState::HowOrdersWork:
             sprintf(tutorialText, "You can complete orders by crafting");
-            sprintf(tutorialText2, "the required potions, then sending them to make money");
+			sprintf(tutorialText2, "the required potions (send them to earn money)");
             if(!car.CarInvIsOpen())
                 tutorialState = TutorialState::ClickFarmTile;
             break;
         case TutorialState::ClickFarmTile:
             sprintf(tutorialText, "Go to the field and click on a");
-            sprintf(tutorialText2, "farm tile to that's close to you");
+            sprintf(tutorialText2, "farm tile that's close to you");
             if (inventory.SeedInvIsOpen())
                 tutorialState = TutorialState::PlantSeed;
 			break;
@@ -84,19 +80,19 @@ namespace Tmpl8
 				tutorialState = TutorialState::WaterSeed;
             break;
 		case TutorialState::WaterSeed:
-            sprintf(tutorialText, "Water the plant by pressing R to equipt");
-            sprintf(tutorialText2, "the wateringcan, then clicking on the plant");
+            sprintf(tutorialText, "Water the plant by pressing R to equip");
+            sprintf(tutorialText2, "the watering can, then click on the plant");
             if(wateringCan.getState() && Input::GetMouseButtonPressed(1))
 				tutorialState = TutorialState::ClickHouse;
             break;
         case TutorialState::ClickHouse:
             sprintf(tutorialText, "Good job! Don't forget to water the plants");
-            sprintf(tutorialText2, "everyday! Now go inside the house");
+            sprintf(tutorialText2, "every day! Now go inside the house");
             if (house.IsOpen())
-				tutorialState = TutorialState::IntercatTable;
+				tutorialState = TutorialState::InteractTable;
 			break;
-        case TutorialState::IntercatTable:
-            sprintf(tutorialText, "Click on the crafting table");
+        case TutorialState::InteractTable:
+            sprintf(tutorialText, "Click on the potion table");
             tutorialText2[0] = '\0';
 			if (house.hCrafting().CraftingIsOpen())
 				tutorialState = TutorialState::ExplainTable;
@@ -109,7 +105,7 @@ namespace Tmpl8
 			break;
         case TutorialState::ExitTable:
             sprintf(tutorialText, "Exit the crafting menu by pressing Q. Remember that");
-            sprintf(tutorialText2, "you can quit any interface by pressing Q!");
+            sprintf(tutorialText2, "you can close any interface by pressing Q!");
             if (!house.hCrafting().CraftingIsOpen())
 				tutorialState = TutorialState::ClickNightstand;
 			break;
@@ -132,15 +128,15 @@ namespace Tmpl8
 				tutorialState = TutorialState::ExplainBed;
             break;
 		case TutorialState::ExplainBed:
-            sprintf(tutorialText, "Sleeping will progress the day, which will");
-            sprintf(tutorialText2, "cause your plants to grow and orders to refresh (every 5 days)");
+            sprintf(tutorialText, "Sleeping will advance the day, causing");
+            sprintf(tutorialText2, "your plants to grow and orders to refresh (every 5 days)");
 			if (!house.BedIsOpen() || house.ConfirmedToSleep())
 				tutorialState = TutorialState::HaveFun;
             break;
         case TutorialState::HaveFun:
-            sprintf(tutorialText, "That's all you need to know!");
+            sprintf(tutorialText, "That's all you need to know.");
             sprintf(tutorialText2, "Have fun playing!");
-            if (!house.IsOpen() || house.hCrafting().CraftingIsOpen() || house.NightstandIsOpen())
+            if (!house.IsOpen() || house.hCrafting().CraftingIsOpen() || house.NightstandIsOpen() || house.BedIsOpen())
                 tutorialState = TutorialState::Done;
 			break;
         case TutorialState::Done:
@@ -153,6 +149,10 @@ namespace Tmpl8
 	}
     void Tutorial::Draw(Surface* screen)
     {
+        if (tutorialState == TutorialState::InteractInventory)
+        {
+			screen->PrintScaled("here:", 260, 488, 2, 2, 0xff0000);
+        }
         if (tutorialState == TutorialState::ExplainTable || tutorialState == TutorialState::ExitTable)
         {
             screen->CentreScaled(tutorialText, 409 + 15, 2, 2, 0xff0000);
@@ -168,6 +168,6 @@ namespace Tmpl8
             screen->CentreScaled(tutorialText2, 30, 2, 2, 0xff0000);
         }
         if(tutorialState == TutorialState::Move || tutorialState == TutorialState::OpenInventory || tutorialState == TutorialState::InteractInventory)
-		    screen->PrintScaled("Press X to skip the tutorial", 10, 580, 2, 2, 0x08f0d7d);
+		    screen->PrintScaled("Press X to skip the tutorial", 10, 580, 2, 2, 0x8f0d7d);
 	}
 }

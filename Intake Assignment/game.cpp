@@ -302,6 +302,8 @@ namespace Tmpl8
 			for (auto& x : farmTiles)
 			{
 				x.Draw(screen);
+				if (AllInventoriesClosed())
+					x.DrawHover(screen);
 				x.DrawPlant(screen);
 			}
 				

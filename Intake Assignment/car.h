@@ -25,7 +25,7 @@ namespace Tmpl8
 		bool carisopen = false; // Car inventory open state
 		int frame = 4;
 		int daysUntilOrderReset = 0;
-		Sprite carinventory = Sprite(new Surface("assets/inventory.png"), 6);
+		Sprite carinventory = Sprite(new Surface("assets/inv.png"), 6);
 		std::vector<Order> orders;
 		// Buying seeds buttons
 		bool button1 = false, button2 = false, button3 = false, button4 = false, button5 = false;

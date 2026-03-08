@@ -113,11 +113,11 @@ namespace Tmpl8
 		// Display when car shop inventory is open
 		if (CarInvIsOpen() && frame == 4)
 		{
-			screen->Print(counterSeedSunBlossom, 350 + 160, 236, 0x0);
-			screen->Print(counterSeedMoonLeaf, 350 + 160, 280, 0x0);
-			screen->Print(counterSeedEmberRoot, 350 + 160, 321, 0x0);
-			screen->Print(counterSeedFrostMint, 350 + 160, 367, 0x0);
-			screen->Print(counterSeedBerry, 350 + 160, 411, 0x0);
+			screen->PrintScaled(counterSeedSunBlossom, 350 + 160, 236, 2, 2, 0x0);
+			screen->PrintScaled(counterSeedMoonLeaf, 350 + 160, 278, 2, 2, 0x0);
+			screen->PrintScaled(counterSeedEmberRoot, 350 + 160, 321, 2, 2, 0x0);
+			screen->PrintScaled(counterSeedFrostMint, 350 + 160, 364, 2, 2, 0x0);
+			screen->PrintScaled(counterSeedBerry, 350 + 160, 405, 2, 2, 0x0);
 		}
 	}
 	void Car::Draw(Surface* screen)

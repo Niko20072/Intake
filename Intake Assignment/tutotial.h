@@ -28,7 +28,7 @@ namespace Tmpl8
 			PlantSeed,
 			WaterSeed,
 			ClickHouse,
-			IntercatTable,
+			InteractTable,
 			ExplainTable,
 			ExitTable,
 			ClickNightstand,

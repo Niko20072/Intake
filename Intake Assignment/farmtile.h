@@ -19,6 +19,7 @@ namespace Tmpl8
 		void setWatered(bool state) { watered = state; }
 
 		void Draw(Surface* screen);// Draw farm tile at its position
+		void DrawHover(Surface* screen);
 		void SetFrame(int frame); // Set the current frame of the farm tile sprite
 		void Update(); // Update tile state based on interaction
 

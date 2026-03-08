@@ -86,7 +86,7 @@ namespace Tmpl8//sterge
 			char counterSeedSunBlossom[32], counterSeedMoonLeaf[32], counterSeedEmberRoot[32], counterSeedFrostMint[32], counterSeedBerry[32];
 
 			// Format strings with current counts
-			sprintf(sunBlossom, "Sunblossom x%d", items[Item::Sunblossom]);
+			sprintf(sunBlossom, "Sunblossom  x%d", items[Item::Sunblossom]);
 			sprintf(moonLeaf, "Moonleaf            x%d", items[Item::Moonleaf]);
 			sprintf(emberRoot, "Emberroot           x%d", items[Item::Emberroot]);
 			sprintf(frostMint, "Frostmint           x%d", items[Item::Frostmint]);
@@ -113,11 +113,11 @@ namespace Tmpl8//sterge
 			// Display when ingredients inventory is open
 			if (MainInvIsOpen() && frame == 0)
 			{
-				screen->PrintScaled(sunBlossom, 350, 236, 2, 2, 0x0);
-				screen->Print(moonLeaf, 350, 280, 0x0);
-				screen->Print(emberRoot, 350, 321, 0x0);
-				screen->Print(frostMint, 350, 367, 0x0);
-				screen->Print(berry, 350, 411, 0x0);
+				screen->PrintScaled(sunBlossom, 350-20, 236, 2, 2, 0x0);
+				screen->PrintScaled(moonLeaf, 350-20, 280, 2, 2, 0x0);
+				screen->PrintScaled(emberRoot, 350 - 20, 321, 2, 2, 0x0);
+				screen->PrintScaled(frostMint, 350 - 20, 367, 2, 2, 0x0);
+				screen->PrintScaled(berry, 350 - 20, 411, 2, 2, 0x0);
 			}
 			// Display when potions inventory is open
 			if (MainInvIsOpen() && frame == 1)
