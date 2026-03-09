@@ -7,7 +7,7 @@
 
 namespace Tmpl8
 {
-	FarmTile::FarmTile(float x,float y, WateringCan& wa, Inventory& inv) : farmTileX(x * WorldState::mapTileSize), farmTileY(y * WorldState::mapTileSize), wateringCan(wa), inventory(inv), farmTile(std::make_unique<Sprite>(new Surface("assets/tiles.png"), 3)), hover(std::make_unique<Sprite>(new Surface("assets/tiles_hover.png"), 1)) {}
+	FarmTile::FarmTile(float x, float y, WateringCan& wa, Inventory& inv) : farmTileX(x * WorldState::mapTileSize), farmTileY(y * WorldState::mapTileSize), wateringCan(wa), inventory(inv), farmTile(std::make_unique<Sprite>(new Surface("assets/tiles.png"), 3)), hover(std::make_unique<Sprite>(new Surface("assets/tiles_hover.png"), 1)) {}
 	void FarmTile::Draw(Surface* screen)
 	{
 		farmTile->Draw(screen, static_cast<int>(farmTileX - WorldState::cameraX), static_cast<int>(farmTileY - WorldState::cameraY));

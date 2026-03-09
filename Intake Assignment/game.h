@@ -36,7 +36,7 @@ namespace Tmpl8
 		void Tick(float deltaTime);
 		void MouseUp(int button) { Input::onMouseButtonUp(button); }
 		void MouseDown(int button) { Input::onMouseButtonDown(button); }
-		void MouseMove(int x, int y) { /*implement if you want to detect mouse movement */ }
+		void MouseMove(int , int ) { /*implement if you want to detect mouse movement */ }
 		void KeyUp(SDL_Scancode key) { Input::onKeyUp(key); }
 		void KeyDown(SDL_Scancode key) { Input::onKeyDown(key); }
 		

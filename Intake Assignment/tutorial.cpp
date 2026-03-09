@@ -129,7 +129,7 @@ namespace Tmpl8
             break;
 		case TutorialState::ExplainBed:
             sprintf(tutorialText, "Sleeping will advance the day, causing");
-            sprintf(tutorialText2, "your plants to grow and orders to refresh (every 5 days)");
+            sprintf(tutorialText2, "your plants to grow and orders to refresh (every 5 days) (Q to exit)");
 			if (!house.BedIsOpen() || house.ConfirmedToSleep())
 				tutorialState = TutorialState::HaveFun;
             break;
@@ -157,15 +157,18 @@ namespace Tmpl8
         {
             screen->CentreScaled(tutorialText, 409 + 15, 2, 2, 0xff0000);
             screen->CentreScaled(tutorialText2, 409 + 35, 2, 2, 0xff0000);
+			screen->Bar(103, 331, 294, 476, 0xff0000); // Highlight crafting table
         }
         else if (tutorialText2[0] == '\0')
         {
             screen->CentreScaled(tutorialText, 20, 2, 2, 0xff0000);
+			screen->Bar(0, 0, 800, 600, 0x7f000000); // Semi-transparent background for better readability
         }
         else
         {
             screen->CentreScaled(tutorialText, 10, 2, 2, 0xff0000);
             screen->CentreScaled(tutorialText2, 30, 2, 2, 0xff0000);
+			screen->Bar(0, 0, 800, 600, 0x7f000000); // Semi-transparent background for better readability
         }
         if(tutorialState == TutorialState::Move || tutorialState == TutorialState::OpenInventory || tutorialState == TutorialState::InteractInventory)
 		    screen->PrintScaled("Press X to skip the tutorial", 10, 580, 2, 2, 0x8f0d7d);

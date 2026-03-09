@@ -298,7 +298,7 @@ void swap()
 
 #endif
 
-int main( int argc, char **argv ) 
+int main( int , char ** ) 
 {  
 #ifdef _MSC_VER
     if (!redirectIO())
@@ -346,11 +346,11 @@ int main( int argc, char **argv )
 		}
 		else
 		{
-			unsigned char* t = (unsigned char*)target;
+			unsigned char* tgt = (unsigned char*)target;
 			for( int i = 0; i < ScreenHeight; i++ )
 			{
-				memcpy( t, surface->GetBuffer() + i * ScreenWidth, ScreenWidth * 4 );
-				t += pitch;
+				memcpy( tgt, surface->GetBuffer() + i * ScreenWidth, ScreenWidth * 4 );
+				tgt += pitch;
 			}
 		}
 		SDL_UnlockTexture( frameBuffer );

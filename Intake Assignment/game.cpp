@@ -1,27 +1,18 @@
 #include "game.h"
 
 ///to do list:
-//sterge tile clicked?
-//sterge includurile useless
 //verifica ca toate variabilele sa fie folosite
-//fa mai logic
 //make stuff private
 
-
-//change map
 //improve buttons
 //make namespace class
 
 //change crafting frame
-//change tiles hover box
 //add hovering for all obsects
 
 namespace Tmpl8
 {
 	//ask:
-	//should i make a world class?
-	//how many connections between classes are allowed?
-	//schiba hover. gen pune sa se puna pe ecran patratul cand mouseul e in zona. e mai easy
 	//fa s pot pierde daca nu mai ai potiuni sau iteme sa poti crafta potiunile
 	//deltatime = the time between frames
 
@@ -53,6 +44,10 @@ namespace Tmpl8
 	//fix all errors (holy errors btw)
 	//make plants
 
+
+	//black box over text
+	//add sound when plant is not ready
+	//hotbar for seeds
 
 	Game::Game() : player(gameMap), house(player.pInventory()), car(player.pInventory()), tutorial(player.pInventory(), car, house, player.pWateringCan())
 	{
@@ -334,12 +329,12 @@ namespace Tmpl8
 		for (int x = 3; x <= 23; x++)
 		{
 			for (int y = 7; y <= 17; y++)
-				farmTiles.emplace_back(x, y, player.pWateringCan(), player.pInventory());
+				farmTiles.emplace_back(static_cast<float>(x), static_cast<float>(y), player.pWateringCan(), player.pInventory());
 		}
 		for (int x = 3; x <= 19; x++)
 		{
 			for (int y = 18; y <= 20; y++)
-				farmTiles.emplace_back(x, y, player.pWateringCan(), player.pInventory());
+				farmTiles.emplace_back(static_cast<float>(x), static_cast<float>(y), player.pWateringCan(), player.pInventory());
 		}
 		car.MakeNewOrders();
 	}

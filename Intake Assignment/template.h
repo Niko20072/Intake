@@ -1,3 +1,7 @@
+#pragma warning( push )
+#pragma warning( disable : 4201 )
+// Some code
+
 // Template, BUAS version https://www.buas.nl/games
 // IGAD/BUAS(NHTV)/UU - Jacco Bikker - 2006-2020
 
@@ -266,3 +270,4 @@ inline bool BadFloat(float x)
 }
 	
 }; // namespace Tmpl8
+#pragma warning( pop )
