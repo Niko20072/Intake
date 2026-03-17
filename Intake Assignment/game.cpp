@@ -3,6 +3,7 @@
 ///to do list:
 //verifica ca toate variabilele sa fie folosite
 //make stuff private
+//unsigned int?
 
 //change crafting frame
 
@@ -42,10 +43,7 @@ namespace Tmpl8
 	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera() {};
 	void Game::UpdateWorldState()
 	{
-		// Transform screen coordinates -> world coordinates -> mouse screen position
-		mouseWorldX = camera.getCameraX() + Input::GetMouseX(); //asta ar trebui sa fie invers si cu minus
-		mouseWorldY = camera.getCameraY() + Input::GetMouseY();
-		//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
+		
 	}
 	void Game::GodMode()
 	{
@@ -189,7 +187,7 @@ namespace Tmpl8
 		car.UpdateOrderDays();
 		car.MakeNewOrders();
 	}
-	void Game::Logic()
+	void Game::Logic(float deltaTime)
 	{
 		//check if godmode is activated (press G)
 		GodMode();
@@ -209,6 +207,7 @@ namespace Tmpl8
 			player.pInventory().MainInventoryLogic();
 			car.CarInventoryLogic(coinCounter, mouseWorldX, mouseWorldY);
 			player.pInventory().SeedInventoryLogic(tileClicked);
+			player.HandleMovement(deltaTime);
 			
 		}
 		else // Inside house
@@ -227,14 +226,19 @@ namespace Tmpl8
 				ProgressToNextDay();
 		}
 	}
-	void Game::UpdateWorld()
+	void Game::UpdateWorld(float deltaTime)
 	{
+		ResetFarmTilesClick();
+		// Transform screen coordinates -> world coordinates -> mouse screen position
+		mouseWorldX = camera.getCameraX() + Input::GetMouseX(); //asta ar trebui sa fie invers si cu minus
+		mouseWorldY = camera.getCameraY() + Input::GetMouseY();
+		//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
 		player.Update();
 		UpdateWorldState();
 		UpdateFarmTiles();
 		UpdatePlants();
 		car.UpdateOrders(coinCounter);
-		Logic();
+		Logic(deltaTime);
 		tutorial.Update();
 	}
 	void Game::DrawUI()
@@ -263,7 +267,7 @@ namespace Tmpl8
 				x.Draw(screen);
 				if (AllInventoriesClosed())
 					x.DrawHover(screen, mouseWorldX, mouseWorldY);
-				x.DrawPlant(screen,time);
+				x.DrawPlant(screen,0.016);
 			}
 				
 			// Player
@@ -319,21 +323,16 @@ namespace Tmpl8
 	void Game::Tick(float deltaTime)
 	{
 		deltaTime /= 1000.0f; // convert to seconds.
-		time = deltaTime;
 
 		Input::Update();
-		UpdateWorldState();
 
 		// Update and draw the world
-		UpdateWorld();
-		DrawGame();
-		ResetFarmTilesClick();
 
-		// Handle player movement only when outside
-		if (!house.IsOpen())
-			player.HandleMovement(deltaTime);
+		UpdateWorld(deltaTime);
+		DrawGame();
+		
 
 		// Check for game completion
-		house.GameCompleted(screen, coinCounter, gameCompleted);
+		house.GameCompleted(screen, coinCounter, gameCompleted); //move to update
 	}
 };

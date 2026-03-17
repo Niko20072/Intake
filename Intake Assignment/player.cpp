@@ -5,7 +5,7 @@
 
 namespace Tmpl8
 {
-	void Player::Update()
+	void Player::Update()//make 1 function
 	{
 		// Player world position
 		worldPlayerX = camera.getCameraX() + playerX;
@@ -23,9 +23,11 @@ namespace Tmpl8
 		playerColisionX2 = worldPlayerX + 46.0f;
 		playerColisionY2 = worldPlayerY + 94.0f;
 
+		//handle movement here
+
 		//std::cout << "Player world position: X=" << worldPlayerX << ", Y=" << worldPlayerY << std::endl;
 	}
-	void Player::HandleMovement(float deltaTime)
+	void Player::HandleMovement(float deltaTime)//make 1 function
 	{
 		// -----------------------------------------------------------
 		// Movement and collision

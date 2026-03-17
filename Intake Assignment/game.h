@@ -49,7 +49,6 @@ namespace Tmpl8
 		Car car;
 		Tutorial tutorial;
 		std::vector<FarmTile> farmTiles;
-		float time = 0;
 		int dayCounter = 0;
 		int coinCounter = 250;
 		char day[32] = "", coins[32] = "";
@@ -69,8 +68,8 @@ namespace Tmpl8
 		void UpdateFarmTiles();
 		void ResetFarmTilesClick();
 		void ProgressToNextDay();
-		void Logic();
-		void UpdateWorld();
+		void Logic(float deltaTime);
+		void UpdateWorld(float deltaTime);
 		void DrawUI();
 		void DrawGame();
 
