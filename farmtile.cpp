@@ -59,7 +59,7 @@ namespace Tmpl8
 			if (plantType == 4) // Nightshade Berry
 				plant = std::make_unique<Plant>(farmTileX, farmTileY, 4, 14, inventory, camera);
 			planted = true;
-			time = 10; // Set time to a high value to prevent "Not ready!" message from showing immediately after planting
+			time = 10; // Set time to 10 to prevent "Not ready!" message from showing immediately after planting
 		}
 	}
 	void FarmTile::DeletePlant()
@@ -67,7 +67,7 @@ namespace Tmpl8
 		plant = nullptr;
 		planted = false;
 	}
-	void FarmTile::CollectPlant()
+	void FarmTile::CollectPlant(float deltaTime)
 	{
 		if (planted) // avoid null pointer access
 		{
@@ -76,6 +76,15 @@ namespace Tmpl8
 				plant->Collect();
 				DeletePlant();
 			}
+			if (!plant->getGrown() && clicked && !wateringCan.getState()) // If the plant is not ready and the tile has been clicked, start accumulating time
+				time = 0;
+			if (time <= 2)
+			{
+				time += deltaTime;
+				printNotReady = true;
+			}
+			else
+				printNotReady = false;
 		}
 	}
 	void FarmTile::UpdatePlant()
@@ -87,19 +96,13 @@ namespace Tmpl8
 		}
 		
 	}
-	void FarmTile::DrawPlant(Surface* screen, float deltaTime)
+	void FarmTile::DrawPlant(Surface* screen)
 	{
 		if (planted) // avoid null pointer access
 		{
 			plant->Draw(screen);
-			//std::cout << time << std::endl;
-			if (!plant->getGrown() && clicked && !wateringCan.getState())
-				time = 0;
-			if (time <= 2)
-			{
-				time += deltaTime;
+			if(printNotReady)
 				screen->PrintScaled("Not ready!", static_cast<int>(farmTileX - camera.getCameraX() - 25), static_cast<int>(farmTileY - camera.getCameraY() - 20), 2, 2, 0xffff00);
-			}
 		}
 			
 	}

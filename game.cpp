@@ -40,10 +40,23 @@ namespace Tmpl8
 
 	//add sound when plant is not ready
 	//hotbar for seeds
-	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera() {};
-	void Game::UpdateWorldState()
+
+
+	//ask about what to delete when game closed
+	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera() , endScreen(house){};
+	void Game::States()
 	{
-		
+		switch (gameState)
+		{
+		case GameStates::MainMenu:
+			if (gameStarted)
+				gameState = GameStates::InGame;
+			break;
+		case GameStates::InGame:
+			if(gameCompleted)
+				gameState = GameStates::EndScreen;
+			break;
+		}
 	}
 	void Game::GodMode()
 	{
@@ -150,10 +163,10 @@ namespace Tmpl8
 		}
 			
 	}
-	void Game::UpdatePlants()
+	void Game::UpdatePlants(float deltaTime)
 	{
 		for (auto& x : farmTiles)
-			x.CollectPlant();
+			x.CollectPlant(deltaTime);
 	}
 	void Game::UpdateFarmTiles()
 	{
@@ -228,18 +241,32 @@ namespace Tmpl8
 	}
 	void Game::UpdateWorld(float deltaTime)
 	{
-		ResetFarmTilesClick();
-		// Transform screen coordinates -> world coordinates -> mouse screen position
-		mouseWorldX = camera.getCameraX() + Input::GetMouseX(); //asta ar trebui sa fie invers si cu minus
-		mouseWorldY = camera.getCameraY() + Input::GetMouseY();
-		//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
-		player.Update();
-		UpdateWorldState();
-		UpdateFarmTiles();
-		UpdatePlants();
-		car.UpdateOrders(coinCounter);
-		Logic(deltaTime);
-		tutorial.Update();
+		States();
+		if (gameState == GameStates::MainMenu)
+		{
+			menu.Logic(gameStarted);
+		}
+		if (gameState == GameStates::InGame)
+		{
+			// Transform screen coordinates -> world coordinates -> mouse screen position
+			mouseWorldX = camera.getCameraX() + Input::GetMouseX(); //asta ar trebui sa fie invers si cu minus
+			mouseWorldY = camera.getCameraY() + Input::GetMouseY();
+			//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
+
+			ResetFarmTilesClick();
+			player.Update();
+			UpdateFarmTiles();
+			UpdatePlants(deltaTime);
+			car.UpdateOrders(coinCounter);
+			Logic(deltaTime);
+			tutorial.Update();
+			endScreen.CheckGameCompleted(coinCounter, gameCompleted); //move to update
+		}
+		if (gameState == GameStates::EndScreen)
+		{
+			endScreen.ManageFrames();
+		}
+		
 	}
 	void Game::DrawUI()
 	{
@@ -255,35 +282,49 @@ namespace Tmpl8
 	void Game::DrawGame()
 	{
 		screen->Clear(0);
-		if (!house.IsOpen()) // Outside
+		if (gameState == GameStates::MainMenu)
 		{
-			gameMap.Draw(screen);
-			if(AllInventoriesClosed())
-				HoverOutsideObjects();
-
-			// Tiles & Plants
-			for (auto& x : farmTiles)
+			menu.Draw(screen);
+		}
+		if (gameState == GameStates::InGame)
+		{
+			if (!house.IsOpen()) // Outside
 			{
-				x.Draw(screen);
+				gameMap.Draw(screen);
 				if (AllInventoriesClosed())
-					x.DrawHover(screen, mouseWorldX, mouseWorldY);
-				x.DrawPlant(screen,0.016);
-			}
-				
-			// Player
-			player.Draw(screen);
+					HoverOutsideObjects();
 
-			//Inventory
-			DrawInventory();
-			car.DrawOrders(screen);
+				// Tiles & Plants
+				for (auto& x : farmTiles)
+				{
+					x.Draw(screen);
+					if (AllInventoriesClosed())
+						x.DrawHover(screen, mouseWorldX, mouseWorldY);
+				}
+				for (auto& x : farmTiles)
+				{
+					x.DrawPlant(screen);
+				}
+
+				// Player
+				player.Draw(screen);
+
+				//Inventory
+				DrawInventory();
+				car.DrawOrders(screen);
+			}
+			else // Inside house
+			{
+				house.Draw(screen);
+				if (house.hCrafting().CraftingIsOpen())
+					house.hCrafting().Draw(screen);
+			}
+			DrawUI();
 		}
-		else // Inside house
+		if (gameState == GameStates::EndScreen)
 		{
-			house.Draw(screen);
-			if (house.hCrafting().CraftingIsOpen())
-				house.hCrafting().Draw(screen);
+			endScreen.DrawGameCompletedScreen(screen);
 		}
-		DrawUI();
 		
 	}
 
@@ -322,17 +363,9 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Tick(float deltaTime)
 	{
-		deltaTime /= 1000.0f; // convert to seconds.
-
+		deltaTime /= 1000.0f; // convert to seconds
 		Input::Update();
-
-		// Update and draw the world
-
 		UpdateWorld(deltaTime);
 		DrawGame();
-		
-
-		// Check for game completion
-		house.GameCompleted(screen, coinCounter, gameCompleted); //move to update
 	}
 };

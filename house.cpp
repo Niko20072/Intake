@@ -134,30 +134,4 @@ namespace Tmpl8
 		if (nightstandisopen)
 			nightstand.Draw(screen, 0, 0);
 	}
-	void House::GameCompleted(Surface* screen, int coinCounter, bool& gameCompleted) 
-	{
-		// Check if player clicked on send money button
-		bool sendMoney = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 336 && Input::GetMouseX() <= 468 && Input::GetMouseY() >= 446 && Input::GetMouseY() <= 498; //say youre gonna improve this later
-
-		// Complete game if send money button is clicked, nightstand is open, and player has enough coins
-		if (sendMoney && nightstandisopen && coinCounter >= 2000 && !gameCompleted)
-		{
-			gameCompleted = true;
-			gameframe = 0;
-		}
-
-		// Draw game end screen
-		if (gameCompleted)
-		{
-			if (Input::GetMouseButtonPressed(1))
-			{
-				gameframe++;
-				gameendscreen.SetFrame(gameframe);
-			}
-			if (gameframe <= 6)
-				gameendscreen.Draw(screen, 0, 0);
-		}
-		if (House::gameframe > 6)
-			exit(0);
-	}
 }

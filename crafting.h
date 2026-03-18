@@ -24,7 +24,7 @@ namespace Tmpl8
 		void CraftPotions(); // Handle crafting logic
 		void Draw(Surface* screen);
 	private:
-		Sprite crafting = Sprite(new Surface("assets/crafting.png"), 3);
+		Sprite crafting = Sprite(new Surface("assets/craftinga.png"), 3);
 		bool craftingisopen = false; // Crafting screen open state
 		int frame = 0; // Current crafting frame
 		bool tutorialCraft = false;

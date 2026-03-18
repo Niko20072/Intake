@@ -21,6 +21,8 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
+    <ClCompile Include="endScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -43,6 +45,8 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="tutotial.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="endScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

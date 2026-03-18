@@ -26,11 +26,9 @@ namespace Tmpl8
 		bool ConfirmedToSleep();
 		void NightstandLogic(); // Handle nightstand click
 		void Draw(Surface* screen);
-		void GameCompleted(Surface* screen, int coinCounter, bool& gameCompleted); // Show game completed screen
 	private:
 		Sprite house = Sprite(new Surface("assets/house.png"), 3);
 		Sprite nightstand = Sprite(new Surface("assets/nightstand.png"), 1);
-		Sprite gameendscreen = Sprite(new Surface("assets/endgame.png"), 7);
 		Sprite bed_hover = Sprite(new Surface("assets/bed_hover.png"), 1);
 		Sprite table_hover = Sprite(new Surface("assets/table_hover.png"), 1);
 		Sprite nightstand_hover = Sprite(new Surface("assets/nightstand_hover.png"), 1);
@@ -42,7 +40,6 @@ namespace Tmpl8
 		bool nightstandisopen = false; // Is the nightstand menu open?
 		bool bedisopen = false; // Is the bed menu open?
 		int frame = 0; // Current frame of the house
-		int gameframe = 0; // Current frame of the game end screen
 		bool clickedYes = 0;
 		bool clickedNo = 0;
 		void DrawHover(Surface* screen);

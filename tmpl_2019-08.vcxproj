@@ -225,11 +225,13 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="car.cpp" />
     <ClCompile Include="crafting.cpp" />
+    <ClCompile Include="endScreen.cpp" />
     <ClCompile Include="farmtile.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="house.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inventory.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="orders.cpp" />
     <ClCompile Include="plant.cpp" />
@@ -243,11 +245,13 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="car.h" />
     <ClInclude Include="crafting.h" />
+    <ClInclude Include="endScreen.h" />
     <ClInclude Include="farmtile.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="house.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="inventory.h" />
+    <ClInclude Include="mainMenu.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="orders.h" />
     <ClInclude Include="plant.h" />

@@ -22,6 +22,8 @@
 #include "input.h"
 #include "tutotial.h"
 #include "camera.h"
+#include "mainMenu.h"
+#include "endScreen.h"
 
 namespace Tmpl8
 {
@@ -30,6 +32,7 @@ namespace Tmpl8
 	{
 	public:
 		Game();
+		void States();
 		void SetTarget(Surface* surface) { screen = surface; }
 		void Init();
 		void Shutdown();
@@ -48,23 +51,31 @@ namespace Tmpl8
 		House house;
 		Car car;
 		Tutorial tutorial;
+		MainMenu menu;
+		EndScreen endScreen;
 		std::vector<FarmTile> farmTiles;
 		int dayCounter = 0;
 		int coinCounter = 250;
 		char day[32] = "", coins[32] = "";
 		bool gameCompleted = false;
+		bool gameStarted = false;
 		bool tileClicked = false;
-		//float mouseX = 0, mouseY = 0; //mouse position on screen
 		float mouseWorldX, mouseWorldY; //mouse position in world coordinates
 		FarmTile* selectedTile = nullptr;
+		enum class GameStates
+		{
+			MainMenu,
+			InGame,
+			EndScreen
+		};
+		GameStates gameState = GameStates::MainMenu;
 		void GodMode();
 		bool AllInventoriesClosed(); // Check if all inventories are closed
 		void DrawInventory();
 		void HoverOutsideObjects();
-		void UpdateWorldState();
 		void HandleMovement(float deltaTime);
 		void PlantSeed(FarmTile& farmtile);
-		void UpdatePlants();
+		void UpdatePlants(float deltaTime);
 		void UpdateFarmTiles();
 		void ResetFarmTilesClick();
 		void ProgressToNextDay();

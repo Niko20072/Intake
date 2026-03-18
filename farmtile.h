@@ -27,9 +27,9 @@ namespace Tmpl8
 		//planting and plant management
 		void CreatePlant(int plantType); // Create a plant on this tile based on the plant type (1-5)
 		void DeletePlant(); // Delete the plant on this tile
-		void CollectPlant(); // Update the plant's state each day
+		void CollectPlant(float deltaTime); // Update the plant's state each day
 		void UpdatePlant(); // Progress the plant to the next day
-		void DrawPlant(Surface* screen, float DeltaTime);
+		void DrawPlant(Surface* screen);
 	private:
 		WateringCan& wateringCan; // reference to existing watering can state
 		Inventory& inventory;
@@ -44,6 +44,7 @@ namespace Tmpl8
 		bool planted = false; // Whether a plant is planted on this tile
 		bool clicked = false;
 		bool watered = false;
-		float time = 0;
+		float time = 0; // Time accumulator for plant growth
+		bool printNotReady = false; // Whether the "Not ready!" message is being printed for this tile
 	};
 };
