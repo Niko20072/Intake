@@ -7,6 +7,19 @@ namespace Tmpl8
 	{
 		main.Draw(screen, 0, 0);
 	}
+	void MainMenu::ManageFrames()
+	{
+		if (Input::GetMouseButtonPressed(1))
+		{
+			cutSceneFrame++;
+			cutScene.SetFrame(cutSceneFrame);
+		}
+	}
+	void MainMenu::DrawCutScene(Surface* screen)
+	{
+		if (cutSceneFrame < 16)
+			cutScene.Draw(screen, 0, 0);
+	}
 	void MainMenu::Logic(bool &gameStarted)
 	{
 		bool button1 = Input::GetMouseX() >= 313 && Input::GetMouseX() <= 499 && Input::GetMouseY() >= 274 && Input::GetMouseY() <= 349;
@@ -26,5 +39,12 @@ namespace Tmpl8
 		else
 			frame = 0;
 		main.SetFrame(frame);	
+	}
+	void MainMenu::CutSceneLogic(bool& cutScenePlayed)
+	{
+		if (cutSceneFrame < 16)
+			ManageFrames();
+		else
+			cutScenePlayed = true;
 	}
 }

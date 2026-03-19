@@ -43,13 +43,18 @@ namespace Tmpl8
 
 
 	//ask about what to delete when game closed
-	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera() , endScreen(house){};
+	//check assets licence
+	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera(), endScreen(house){};
 	void Game::States()
 	{
 		switch (gameState)
 		{
 		case GameStates::MainMenu:
 			if (gameStarted)
+				gameState = GameStates::CutScene;
+			break;
+		case GameStates::CutScene:
+			if (cutScenePlayed || Input::GetKeyPressed(SDL_SCANCODE_X))
 				gameState = GameStates::InGame;
 			break;
 		case GameStates::InGame:
@@ -246,6 +251,10 @@ namespace Tmpl8
 		{
 			menu.Logic(gameStarted);
 		}
+		if(gameState == GameStates::CutScene)
+		{
+			menu.CutSceneLogic(cutScenePlayed);
+		}
 		if (gameState == GameStates::InGame)
 		{
 			// Transform screen coordinates -> world coordinates -> mouse screen position
@@ -260,7 +269,7 @@ namespace Tmpl8
 			car.UpdateOrders(coinCounter);
 			Logic(deltaTime);
 			tutorial.Update();
-			endScreen.CheckGameCompleted(coinCounter, gameCompleted); //move to update
+			house.CheckGameCompleted(coinCounter, gameCompleted); //move to update
 		}
 		if (gameState == GameStates::EndScreen)
 		{
@@ -281,10 +290,14 @@ namespace Tmpl8
 	}
 	void Game::DrawGame()
 	{
-		screen->Clear(0);
+		screen->Clear(0); //83924c  b0905d
 		if (gameState == GameStates::MainMenu)
 		{
 			menu.Draw(screen);
+		}
+		if(gameState == GameStates::CutScene)
+		{
+			menu.DrawCutScene(screen);
 		}
 		if (gameState == GameStates::InGame)
 		{

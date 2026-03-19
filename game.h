@@ -52,19 +52,21 @@ namespace Tmpl8
 		Car car;
 		Tutorial tutorial;
 		MainMenu menu;
-		EndScreen endScreen;
+		EndGame endScreen;
 		std::vector<FarmTile> farmTiles;
 		int dayCounter = 0;
 		int coinCounter = 250;
 		char day[32] = "", coins[32] = "";
 		bool gameCompleted = false;
 		bool gameStarted = false;
+		bool cutScenePlayed = false;
 		bool tileClicked = false;
 		float mouseWorldX, mouseWorldY; //mouse position in world coordinates
 		FarmTile* selectedTile = nullptr;
 		enum class GameStates
 		{
 			MainMenu,
+			CutScene,
 			InGame,
 			EndScreen
 		};

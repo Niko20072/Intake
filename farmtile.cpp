@@ -76,7 +76,7 @@ namespace Tmpl8
 				plant->Collect();
 				DeletePlant();
 			}
-			if (!plant->getGrown() && clicked && !wateringCan.getState()) // If the plant is not ready and the tile has been clicked, start accumulating time
+			else if (!plant->getGrown() && clicked && !wateringCan.getState()) // If the plant is not ready and the tile has been clicked, start accumulating time
 				time = 0;
 			if (time <= 2)
 			{
