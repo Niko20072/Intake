@@ -25,6 +25,8 @@
 #include "mainMenu.h"
 #include "endScreen.h"
 
+#include <Audio/Sound.hpp>
+
 namespace Tmpl8
 {
 	//class Surface;
@@ -53,6 +55,7 @@ namespace Tmpl8
 		Tutorial tutorial;
 		MainMenu menu;
 		EndGame endScreen;
+		Audio::Sound backgroundMusic;
 		std::vector<FarmTile> farmTiles;
 		int dayCounter = 0;
 		int coinCounter = 250;

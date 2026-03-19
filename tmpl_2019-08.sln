@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36915.13 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tmpl_2019-08", "tmpl_2019-08.vcxproj", "{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{297CA8CB-2FED-4C72-8ED5-5ACB6ED6EFCA} = {297CA8CB-2FED-4C72-8ED5-5ACB6ED6EFCA}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "lib\Audio\Audio.vcxproj", "{297CA8CB-2FED-4C72-8ED5-5ACB6ED6EFCA}"
 EndProject

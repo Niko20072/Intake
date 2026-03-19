@@ -19,6 +19,8 @@ public:
     /// <param name="volume">The master volume.</param>
     static void setMasterVolume( float volume );
 
+    static float getMasterVolume();
+
     /// <summary>
     /// Get an audio listener at a particular index.
     /// </summary>

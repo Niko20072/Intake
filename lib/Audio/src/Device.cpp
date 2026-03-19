@@ -47,6 +47,8 @@ public:
 
     void setMasterVolume( float volume );
 
+    float getMasterVolume() const;
+
     Sound loadSound( const std::filesystem::path& filePath );
 
     Sound loadMusic( const std::filesystem::path& filePath );
@@ -97,7 +99,12 @@ Listener DeviceImpl::getListener( uint32_t listenerIndex )
 
 void DeviceImpl::setMasterVolume( float volume )
 {
-    ma_engine_set_volume( &engine, volume );
+    ma_engine_set_volume( &engine, std::max(volume, 0.0f) );
+}
+
+float DeviceImpl::getMasterVolume() const
+{
+    return ma_engine_get_volume(const_cast<ma_engine*>(&engine));
 }
 
 Sound DeviceImpl::loadSound( const std::filesystem::path& filePath )
@@ -129,6 +136,11 @@ Waveform DeviceImpl::createWaveform( Waveform::Type type, float amplitude, float
 void Device::setMasterVolume( float volume )
 {
     DeviceImpl::get()->setMasterVolume( volume );
+}
+
+float Device::getMasterVolume()
+{
+    return DeviceImpl::get()->getMasterVolume();
 }
 
 Listener Device::getListener( uint32_t listenerIndex )

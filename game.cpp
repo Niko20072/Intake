@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <Audio/Device.hpp>
+
 ///to do list:
 //verifica ca toate variabilele sa fie folosite
 //make stuff private
@@ -358,6 +360,11 @@ namespace Tmpl8
 				farmTiles.emplace_back(static_cast<float>(x), static_cast<float>(y), player.pWateringCan(), player.pInventory(), camera, player);
 		}
 		car.MakeNewOrders();
+
+		backgroundMusic.loadMusic("assets/audio/Rondo_Alla_Turka.ogg");
+		backgroundMusic.setLooping(true);
+		backgroundMusic.setVolume(0.2f);
+		backgroundMusic.play();
 	}
 
 	// -----------------------------------------------------------
@@ -378,6 +385,18 @@ namespace Tmpl8
 	{
 		deltaTime /= 1000.0f; // convert to seconds
 		Input::Update();
+
+		// Adjust game volume with +/- keys.
+		if (Input::GetKey(SDL_SCANCODE_EQUALS))
+		{
+			float volume = Audio::Device::getMasterVolume();
+			Audio::Device::setMasterVolume(volume + 0.1f);
+		}
+		if (Input::GetKey(SDL_SCANCODE_MINUS))
+		{
+			float volume = Audio::Device::getMasterVolume();
+			Audio::Device::setMasterVolume(volume - 0.1f);
+		}
 		UpdateWorld(deltaTime);
 		DrawGame();
 	}
