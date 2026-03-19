@@ -78,7 +78,7 @@ namespace Tmpl8
 	{
 		// Player reach box
 		//screen->Box(WorldState::reachX1 - camera.getCameraX(), WorldState::reachY1 - camera.getCameraY(), WorldState::reachX2 - camera.getCameraX(), WorldState::reachY2 - camera.getCameraY(), 0x00ff00);
-		screen->Box(static_cast<int>(playerColisionX1 - camera.getCameraX()), static_cast<int>(playerColisionY1 - camera.getCameraY()), static_cast<int>(playerColisionX2 - camera.getCameraX()), static_cast<int>(playerColisionY2 - camera.getCameraY()), 0xff0000);
+		//screen->Box(static_cast<int>(playerColisionX1 - camera.getCameraX()), static_cast<int>(playerColisionY1 - camera.getCameraY()), static_cast<int>(playerColisionX2 - camera.getCameraX()), static_cast<int>(playerColisionY2 - camera.getCameraY()), 0xff0000);
 		player1.Draw(screen, playerX, playerY);
 	}
 	float Player::getReachX1()

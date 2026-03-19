@@ -246,7 +246,6 @@ namespace Tmpl8
 	}
 	void Game::UpdateWorld(float deltaTime)
 	{
-		States();
 		if (gameState == GameStates::MainMenu)
 		{
 			menu.Logic(gameStarted);
@@ -275,6 +274,7 @@ namespace Tmpl8
 		{
 			endScreen.ManageFrames();
 		}
+		States();
 		
 	}
 	void Game::DrawUI()
