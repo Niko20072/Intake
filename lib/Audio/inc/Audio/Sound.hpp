@@ -7,7 +7,6 @@
 #include <chrono>
 #include <filesystem>
 #include <memory>
-#include <iostream>
 
 namespace Audio
 {
