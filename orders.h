@@ -13,14 +13,15 @@ namespace Tmpl8
 		void Logic(int& coinCounter); // Logic for order processing
 		void Draw(Surface* screen); // Draw order on screen
 	private:
-		// Potion types and their prices
-		std::vector<const char*> potionsTypes = { "Vital Tonic", "Calm Mind", "Dream Draught", "FireHeart", "FrostVeil" };
-		std::vector<int> priceNumbers = { 60,45,70,95,85 };
 		Inventory& inventory; // Reference to player's inventory
+		// Potion types and their prices
+		const std::vector<const char*> potionsTypes = { "Vital Tonic", "Calm Mind", "Dream Draught", "FireHeart", "FrostVeil" };
+		const std::vector<int> priceNumbers = { 60,45,70,95,85 };
+
 		int orderNumber; // Which order it is
 		int potionNumber; // How many potions ordered
-		int potionTypeNumber1; // How many of first potion ordered
-		int potionTypeNumber2; // How many of second potion ordered
+		int numberPotionType1; // How many of first potion ordered
+		int numberOfPotionType2; // How many of second potion ordered
 		int potionType1; // Type of potion1 ordered
 		int potionType2; // Type of potion2 ordered
 		int price; // Price of the order

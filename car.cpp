@@ -96,7 +96,6 @@ namespace Tmpl8
 		//Toggle car inventory
 		if (Input::GetMouseButtonPressed(1) && mouseOnCar && playerCloseToCar && !carisopen)
 		{
-			//inventoryisopen = false;
 			carisopen = true;
 			frame = 4;
 		}
@@ -110,7 +109,7 @@ namespace Tmpl8
 		sprintf(counterSeedFrostMint, "x%d", inventory.GetItemCount(Inventory::Item::SeedFrostmint));
 		sprintf(counterSeedBerry, "x%d", inventory.GetItemCount(Inventory::Item::SeedBerry));
 		// Display when car shop inventory is open
-		if (CarInvIsOpen() && frame == 4)
+		if (carisopen && frame == 4)
 		{
 			screen->PrintScaled(counterSeedSunBlossom, 350 + 160, 236, 2, 2, 0x0);
 			screen->PrintScaled(counterSeedMoonLeaf, 350 + 160, 278, 2, 2, 0x0);
@@ -130,8 +129,7 @@ namespace Tmpl8
 	}
 	void Car::MakeNewOrders()
 	{
-		//check if all orders are completed
-		if (daysUntilOrderReset == 0) ///or CheckAllCompleted()
+		if (daysUntilOrderReset == 0)
 		{
 			//generate new orders
 			daysUntilOrderReset = 5;
@@ -144,8 +142,8 @@ namespace Tmpl8
 	void Car::UpdateOrders(int &coinCounter)
 	{
 		if (carisopen && frame == 5)
-			for (auto& x : orders)
-				x.Logic(coinCounter);
+			for (auto& order : orders)
+				order.Logic(coinCounter);
 	}
 	void Car::DrawOrders(Surface* screen)
 	{
@@ -155,8 +153,8 @@ namespace Tmpl8
 			char daysUntilResetText[64];
 			sprintf(daysUntilResetText, "Days until orders reset: %d", daysUntilOrderReset);
 			screen->PrintScaled(daysUntilResetText, 245, 92, 2, 2, 0x870101);
-			for (auto& x : orders)
-				x.Draw(screen);
+			for (auto& order : orders)
+				order.Draw(screen);
 		}
 	}
 }

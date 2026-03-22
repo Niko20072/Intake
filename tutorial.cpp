@@ -11,7 +11,8 @@ namespace Tmpl8
     Tutorial::Tutorial(Player &pl, Car &c, House &h) : player(pl), car(c), house(h), inventory(pl.pInventory()), wateringCan(pl.pWateringCan()) {};
 	void Tutorial::Update()
 	{
-		// Tutorial logic here
+        if (Input::GetKeyPressed(SDL_SCANCODE_X))
+            tutorialState = TutorialState::Done;
         switch (tutorialState)
         {
         case TutorialState::Move:
@@ -145,8 +146,6 @@ namespace Tmpl8
             tutorialText2[0] = '\0';
             break;
         }
-        if(Input::GetKeyPressed(SDL_SCANCODE_X))
-			tutorialState = TutorialState::Done;
 	}
     void Tutorial::Draw(Surface* screen)
     {
@@ -155,9 +154,7 @@ namespace Tmpl8
             if (tutorialState != TutorialState::ExplainBed)
                 screen->Bar(box[0], box[1], box[2], box[3], 0x0);
             if (tutorialState == TutorialState::InteractInventory)
-            {
                 screen->PrintScaled("here:", 260, 488, 2, 2, 0xff0000);
-            }
             if (tutorialState == TutorialState::ExplainTable || tutorialState == TutorialState::ExitTable)
             {
                 screen->CentreScaled(tutorialText, 409 + 15, 2, 2, 0xff0000);

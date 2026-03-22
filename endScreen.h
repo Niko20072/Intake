@@ -5,18 +5,13 @@
 
 namespace Tmpl8
 {
-	class House;
-
 	class EndGame
 	{
 	public:
-		EndGame(House& h);
-		void DrawGameCompletedScreen(Surface* screen);
-		void ManageFrames();
-		void CheckGameCompleted(int coinCounter, bool& gameCompleted);
+		void DrawGameCompletedScreen(Surface* screen); // Draw cutscene frames or exit game if cutscene is finished
+		void ManageFrames(); // Handle input to advance cutscene frames
 	private:
-		Sprite cutScene = Sprite(new Surface("assets/endgame.png"), 7);
+		Sprite cutScene = Sprite(new Surface("assets/image/endgame.png"), 7);
 		int frame = 0; // Current frame of the game end screen
-		House& house;
 	};
 }

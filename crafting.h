@@ -8,13 +8,14 @@ namespace Tmpl8
 	{
 	public:
 		Crafting(Inventory& inv) : inventory(inv) {};
-
+		//---Getters---
 		bool CraftingIsOpen();
-		void setState(bool state);
 		int getFrame();
-		void setFrame(int state);
 		bool getTutorialCraft() { return tutorialCraft; }
-
+		//---Setters---
+		void setFrame(int state);
+		void setState(bool state);
+		//---Main functions---
 		void ManageFrames(); // Manage frame selection
 		void CraftVitalTonic(); // Craft Vital Tonic
 		void CraftCalmMind(); // Craft Calm Mind Elixir
@@ -24,11 +25,11 @@ namespace Tmpl8
 		void CraftPotions(); // Handle crafting logic
 		void Draw(Surface* screen);
 	private:
-		Sprite crafting = Sprite(new Surface("assets/craftinga.png"), 3);
+		Inventory& inventory;
+		Sprite crafting = Sprite(new Surface("assets/image/crafting.png"), 3);
 		bool craftingisopen = false; // Crafting screen open state
 		int frame = 0; // Current crafting frame
-		bool tutorialCraft = false;
-		Inventory& inventory;
+		bool tutorialCraft = false; // Tutorial state to check if the player has crafted a potion for the first time
 		void CraftingDraw(Surface* screen); // Draw crafting screen and ingredient counts
 	};
 }

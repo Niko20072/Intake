@@ -13,6 +13,10 @@ namespace Tmpl8
 		doorClose.loadMusic("assets/audio/closedoor.mp3");
 		doorClose.setVolume(0.3f);
 	};
+	Crafting& House::hCrafting() 
+	{ 
+		return crafting; 
+	}
 	bool House::IsOpen()
 	{
 		return houseisopen;
@@ -21,9 +25,21 @@ namespace Tmpl8
 	{
 		return frame;
 	}
+	bool House::NightstandIsOpen() 
+	{ 
+		return nightstandisopen; 
+	}
+	bool House::BedIsOpen() 
+	{ 
+		return bedisopen;
+	}
+	bool House::getClickedYes()
+	{ 
+		return clickedYes; 
+	}
 	int House::MainScreenOpen()
 	{
-		if(IsOpen() && frame == 0 && !nightstandisopen)
+		if(houseisopen && !nightstandisopen && !bedisopen && !crafting.CraftingIsOpen())
 			return 1;
 		return 0;
 	}
@@ -43,7 +59,7 @@ namespace Tmpl8
 		}
 
 		// Close house if Q is pressed and crafting menu is not open
-		if (Input::GetKeyPressed(SDL_SCANCODE_Q) && !crafting.CraftingIsOpen() && !bedisopen && !nightstandisopen)
+		if (Input::GetKeyPressed(SDL_SCANCODE_Q) && MainScreenOpen())
 		{
 			doorClose.play();
 			houseisopen = false;
@@ -55,11 +71,10 @@ namespace Tmpl8
 		bool clickedOnTable = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 103 && Input::GetMouseX() <= 294 && Input::GetMouseY() >= 331 && Input::GetMouseY() <= 476;
 
 		// Open crafting interface when clicking on crafting table inside house
-		if (clickedOnTable && houseisopen && frame == 0) //fix this
+		if (clickedOnTable && houseisopen && frame == 0)
 		{
 			crafting.setState(true);
-			frame = 0;
-			crafting.setFrame(frame);
+			crafting.setFrame(0);
 		}
 		// Close crafting interface when pressing Q
 		if (Input::GetKeyPressed(SDL_SCANCODE_Q) && crafting.CraftingIsOpen())
@@ -76,6 +91,10 @@ namespace Tmpl8
 	}
 	void House::BedLogic(int& dayCounter)
 	{
+		// Frame 0: Normal house view
+		// Frame 1: Sleep confirmation view
+		// Frame 2: Day passed view
+		
 		// Check if player clicked on bed
 		bool clickedOnBed = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 511 && Input::GetMouseX() <= 742 && Input::GetMouseY() >= 320 && Input::GetMouseY() <= 565;
 		
@@ -100,11 +119,6 @@ namespace Tmpl8
 				frame = 0;
 			}
 		}
-		
-		// Frame 0: Normal house view
-		// Frame 1: Sleep confirmation view
-		// Frame 2: Day passed view
-
 		house.SetFrame(frame);
 	}
 	void House::NightstandLogic()
@@ -153,9 +167,6 @@ namespace Tmpl8
 
 		// Complete game if send money button is clicked, nightstand is open, and player has enough coins
 		if (sendMoney && nightstandisopen && coinCounter >= 2000)
-		{
 			gameCompleted = true;
-			frame = 0;
-		}
 	}
 }

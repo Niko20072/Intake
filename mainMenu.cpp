@@ -9,6 +9,7 @@ namespace Tmpl8
 	}
 	void MainMenu::ManageFrames()
 	{
+		// Advance to the next frame of the cutscene
 		if (Input::GetMouseButtonPressed(1))
 		{
 			cutSceneFrame++;
@@ -42,9 +43,9 @@ namespace Tmpl8
 	}
 	void MainMenu::CutSceneLogic(bool& cutScenePlayed)
 	{
-		if (cutSceneFrame < 16)
-			ManageFrames();
-		else
+		if (cutSceneFrame >= 16 || Input::GetKeyPressed(SDL_SCANCODE_X))
 			cutScenePlayed = true;
+		else
+			ManageFrames();
 	}
 }

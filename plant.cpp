@@ -4,6 +4,18 @@
 namespace Tmpl8
 {
 	Plant::Plant(float x, float y, int harvestDay, int frame, Inventory& inv, Camera& cam) : x(x), y(y), harvestDay(harvestDay), frame(frame), inventory(inv), camera(cam){}
+	int Plant::getGrown() 
+	{ 
+		return grown; 
+	}
+	int Plant::getAlive() 
+	{ 
+		return alive; 
+	}
+	void Plant::setWatered(bool state) 
+	{ 
+		watered = state; 
+	}
 	void Plant::Draw(Surface* screen)
 	{
 		plant.SetFrame(frame);
@@ -14,7 +26,7 @@ namespace Tmpl8
 		if (alive)
 		{
 			daysPassed++;
-			if (watered) // check if the plant is watered
+			if (watered) // Check if the plant is watered
 			{
 				if (daysPassed <= harvestDay)
 					frame++;
@@ -24,7 +36,7 @@ namespace Tmpl8
 			else
 			{
 				alive = false;
-				frame = 19; // withered plant frame
+				frame = 19; // Withered plant frame
 			}
 		}
 	}

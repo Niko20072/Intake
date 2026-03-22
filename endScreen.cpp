@@ -5,13 +5,9 @@
 
 namespace Tmpl8
 {
-
-	EndGame::EndGame(House& h) : house(h)//late constructor
-	{
-		//gamescreen = std::make_unique<Sprite>(new Surface("assets/endgame.png"), 7);
-	};
 	void EndGame::ManageFrames()
 	{
+		// Advance to the next frame of the cutscene
 		if (Input::GetMouseButtonPressed(1))
 		{
 			frame++;

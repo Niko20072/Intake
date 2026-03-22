@@ -1,5 +1,4 @@
 #include "game.h"
-
 #include <Audio/Device.hpp>
 
 ///to do list:
@@ -14,23 +13,6 @@ namespace Tmpl8
 	//fa sa pot pierde daca nu mai ai potiuni sau iteme sa poti crafta potiunile
 	//deltatime = the time between frames
 
-	/*
-	// Convert farm tile (x,y) to index in farmTiles vector
-	int farmTileToIndex(int x, int y)
-	{
-		assert(x < Map::MapWidth);
-		assert(y < Map::MapHeight);
-		return  x + y * Map::MapWidth;
-	}
-
-	// Get reference to farm tile at (x,y)
-	FarmTile& getFarmTile(int x, int y)
-	{
-		int idx = farmTileToIndex(x, y);
-		assert(idx < farmTiles.size());
-		return farmTiles[idx];
-	}*/
-
 	//add state
 	//learn aabb cuz its important
 	//modify crafting recepie 18 feb update on discord
@@ -39,6 +21,8 @@ namespace Tmpl8
 	//to do:
 	//add forward declaration of classes in game.h
 	//fix plants and crafting sprites
+	//make text white in the cutscene
+	//add selected inventory
 
 	//add sound when plant is not ready
 	//hotbar for seeds
@@ -46,7 +30,15 @@ namespace Tmpl8
 
 	//ask about what to delete when game closed
 	//check assets licence
-	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera(), endScreen(house){};
+
+	//make player class -> game has player -> inv
+	//map -> house
+	//namespace to class de ce
+
+	//learn stuff from player,car(forward declaration),endscreen(default constructor?),farmtile(uniqueptr),input(bittset),inv(maps),map(why -camerax),orders(const* ceva in header,convertion to item),plant(draw poz),player(map poz), why make sprite in constructor in farmtile?
+
+	//update:: button class, split inv and seed inv, states for inv, be able to hold the seeds so you dont need to click "plant" every time (annoying), fix collision and drawing for map (improve collision)
+	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera(){};
 	void Game::States()
 	{
 		switch (gameState)
@@ -56,7 +48,7 @@ namespace Tmpl8
 				gameState = GameStates::CutScene;
 			break;
 		case GameStates::CutScene:
-			if (cutScenePlayed || Input::GetKeyPressed(SDL_SCANCODE_X))
+			if (cutScenePlayed)
 				gameState = GameStates::InGame;
 			break;
 		case GameStates::InGame:
@@ -87,23 +79,25 @@ namespace Tmpl8
 			coinCounter = 9999;
 		}
 	}
+	void Game::UpdateWorldMousePosition()
+	{
+		// worldX = screenX + cameraX;
+		// screenX = worldX - cameraX;
+	
+		// Transform screen coordinates -> world coordinates
+		mouseWorldX = camera.getCameraX() + Input::GetMouseX();
+		mouseWorldY = camera.getCameraY() + Input::GetMouseY();
+		//std::cout << "World X: " << mouseWorldX << ", Y: " << mouseWorldY << std::endl;
+	}
 	bool Game::AllInventoriesClosed()
 	{
 		// Check if all inventories are closed
 		if (!player.pInventory().MainInvIsOpen() && !car.CarInvIsOpen() && !player.pInventory().SeedInvIsOpen())
-			return 1;
-		return 0;
-	}
-	void Game::DrawInventory()
-	{
-		player.pInventory().Draw(screen);
-		if(!player.pInventory().MainInvIsOpen())
-			car.Draw(screen);
+			return true;
+		return false;
 	}
 	void Game::HoverOutsideObjects()
 	{
-		Sprite car_hover = Sprite(new Surface("assets/car_hover2.png"), 1);
-		Sprite door_hover = Sprite(new Surface("assets/door_hover2.png"), 1);
 		bool carHover = mouseWorldX >= 528 && mouseWorldX <= 686 && mouseWorldY >= 175 && mouseWorldY <= 220;
 		bool doorHover = mouseWorldX >= 196 && mouseWorldX <= 233 && mouseWorldY >= 183 && mouseWorldY <= 234;
 		if (carHover)
@@ -113,71 +107,65 @@ namespace Tmpl8
 	}
 	void Game::PlantSeed(FarmTile &farmtile)
 	{
-		
 		// Planting seeds buttons
 		bool button1 = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 458 && Input::GetMouseX() <= 499 && Input::GetMouseY() >= 224 && Input::GetMouseY() <= 250;
 		bool button2 = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 458 && Input::GetMouseX() <= 499 && Input::GetMouseY() >= 267 && Input::GetMouseY() <= 293;
 		bool button3 = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 458 && Input::GetMouseX() <= 499 && Input::GetMouseY() >= 310 && Input::GetMouseY() <= 337;
 		bool button4 = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 458 && Input::GetMouseX() <= 499 && Input::GetMouseY() >= 355 && Input::GetMouseY() <= 379;
 		bool button5 = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 458 && Input::GetMouseX() <= 499 && Input::GetMouseY() >= 394 && Input::GetMouseY() <= 420;
-		if (player.pInventory().SeedInvIsOpen())
+		// Planting Sunblossom seed
+		if (button1 && player.pInventory().GetItemCount(Inventory::Item::SeedSunblossom) > 0)
 		{
-			// Planting Sunblossom seed
-			if (button1 && player.pInventory().GetItemCount(Inventory::Item::SeedSunblossom) > 0)
-			{
-				tutorial.setPlanted(true); // Set tutorial state to seed planted
-				farmtile.CreatePlant(0); // Create plant on farm tile
-				player.pInventory().AddItem(Inventory::Item::SeedSunblossom, -1);
-				player.pInventory().setSeedState(false);
-				selectedTile = nullptr;
-			}
-			// Planting Moonleaf seed
-			if (button2 && player.pInventory().GetItemCount(Inventory::Item::SeedMoonleaf) > 0)
-			{
-				tutorial.setPlanted(true); // Set tutorial state to seed planted
-				farmtile.CreatePlant(1); // Create plant on farm tile
-				player.pInventory().AddItem(Inventory::Item::SeedMoonleaf, -1);
-				player.pInventory().setSeedState(false);
-				selectedTile = nullptr;
-			}
-			// Planting Emberroot seed
-			if (button3 && player.pInventory().GetItemCount(Inventory::Item::SeedEmberroot) > 0)
-			{
-				tutorial.setPlanted(true); // Set tutorial state to seed planted
-				farmtile.CreatePlant(2); // Create plant on farm tile
-				player.pInventory().AddItem(Inventory::Item::SeedEmberroot, -1);
-				player.pInventory().setSeedState(false);
-				selectedTile = nullptr;
-			}
-			// Planting Frostmint seed
-			if (button4 && player.pInventory().GetItemCount(Inventory::Item::SeedFrostmint) > 0)
-			{
-				tutorial.setPlanted(true); // Set tutorial state to seed planted
-				farmtile.CreatePlant(3); // Create plant on farm tile
-				player.pInventory().AddItem(Inventory::Item::SeedFrostmint, -1);
-				player.pInventory().setSeedState(false);
-				selectedTile = nullptr;
-			}
-			// Planting Nightshade Berry seed
-			if (button5 && player.pInventory().GetItemCount(Inventory::Item::SeedBerry) > 0)
-			{
-				tutorial.setPlanted(true); // Set tutorial state to seed planted
-				farmtile.CreatePlant(4); // Create plant on farm tile
-				player.pInventory().AddItem(Inventory::Item::SeedBerry, -1);
-				player.pInventory().setSeedState(false);
-				selectedTile = nullptr;
-			}
+			tutorial.setPlanted(true); // Set tutorial state to seed planted
+			farmtile.CreatePlant(0); // Create plant on farm tile
+			player.pInventory().AddItem(Inventory::Item::SeedSunblossom, -1);
+			player.pInventory().setSeedState(false);
+			selectedTile = nullptr;
 		}
-			
+		// Planting Moonleaf seed
+		if (button2 && player.pInventory().GetItemCount(Inventory::Item::SeedMoonleaf) > 0)
+		{
+			tutorial.setPlanted(true); // Set tutorial state to seed planted
+			farmtile.CreatePlant(1); // Create plant on farm tile
+			player.pInventory().AddItem(Inventory::Item::SeedMoonleaf, -1);
+			player.pInventory().setSeedState(false);
+			selectedTile = nullptr;
+		}
+		// Planting Emberroot seed
+		if (button3 && player.pInventory().GetItemCount(Inventory::Item::SeedEmberroot) > 0)
+		{
+			tutorial.setPlanted(true); // Set tutorial state to seed planted
+			farmtile.CreatePlant(2); // Create plant on farm tile
+			player.pInventory().AddItem(Inventory::Item::SeedEmberroot, -1);
+			player.pInventory().setSeedState(false);
+			selectedTile = nullptr;
+		}
+		// Planting Frostmint seed
+		if (button4 && player.pInventory().GetItemCount(Inventory::Item::SeedFrostmint) > 0)
+		{
+			tutorial.setPlanted(true); // Set tutorial state to seed planted
+			farmtile.CreatePlant(3); // Create plant on farm tile
+			player.pInventory().AddItem(Inventory::Item::SeedFrostmint, -1);
+			player.pInventory().setSeedState(false);
+			selectedTile = nullptr;
+		}
+		// Planting Nightshade Berry seed
+		if (button5 && player.pInventory().GetItemCount(Inventory::Item::SeedBerry) > 0)
+		{
+			tutorial.setPlanted(true); // Set tutorial state to seed planted
+			farmtile.CreatePlant(4); // Create plant on farm tile
+			player.pInventory().AddItem(Inventory::Item::SeedBerry, -1);
+			player.pInventory().setSeedState(false);
+			selectedTile = nullptr;
+		}
 	}
-	void Game::UpdatePlants(float deltaTime)
+	void Game::CollectPlants(float deltaTime)
 	{
-		for (auto& x : farmTiles)
-			x.CollectPlant(deltaTime);
+		for (auto& farmtile : farmTiles)
+			farmtile.CollectPlant(deltaTime);
 	}
 	void Game::UpdateFarmTiles()
 	{
-		// Tiles
 		tileClicked = false;
 		
 		for (auto& farmtile : farmTiles)
@@ -193,56 +181,62 @@ namespace Tmpl8
 	}
 	void Game::ResetFarmTilesClick()
 	{
-		// reset farmtile clicked state
-		for (auto& x : farmTiles)
-			x.setClicked(false);
+		for (auto& farmtile : farmTiles)
+			farmtile.setClicked(false);
 	}
 	void Game::ProgressToNextDay()
 	{
-		for (auto& x : farmTiles)
+		// ---Plants---
+		for (auto& farmtile : farmTiles)
 		{
-			x.UpdatePlant();
-			x.setWatered(false);
+			farmtile.UpdatePlant();
+			farmtile.setWatered(false);
 		}
+
+		// ---Orders---
 		car.UpdateOrderDays();
 		car.MakeNewOrders();
 	}
 	void Game::Logic(float deltaTime)
 	{
-		//check if godmode is activated (press G)
-		GodMode();
-
-		// House interaction
-		house.HouseLogic(mouseWorldX, mouseWorldY);
+		GodMode(); // Check if godmode is activated (press G)
+		house.HouseLogic(mouseWorldX, mouseWorldY); // House interaction
 
 		if (!house.IsOpen()) // Outside
 		{
-			// WateringCan
-			player.pWateringCan().WateringCanLogic();
-			if (!AllInventoriesClosed())
-				player.pWateringCan().setState(false);
-			// Inventory
-			if (player.pInventory().SeedInvIsOpen()) //check this before update to avoid double click bug
-				PlantSeed(*selectedTile);
+			//---FarmTiles & Plants---
+			UpdateFarmTiles();
+			CollectPlants(deltaTime);
+
+			// ---Inventory---
 			player.pInventory().MainInventoryLogic();
 			car.CarInventoryLogic(coinCounter, mouseWorldX, mouseWorldY);
 			player.pInventory().SeedInventoryLogic(tileClicked);
-			player.HandleMovement(deltaTime);
+			if (player.pInventory().SeedInvIsOpen())
+				PlantSeed(*selectedTile);
+
+			// ---WateringCan---
+			player.pWateringCan().WateringCanLogic();
+			if (!AllInventoriesClosed())
+				player.pWateringCan().setState(false);
 			
+			// ---Orders---
+			car.UpdateOrders(coinCounter);
 		}
 		else // Inside house
 		{
+			// ---WateringCan---
 			player.pWateringCan().setState(false); // Disable watering can when house is open
 
-			// Crafting
+			// ---Crafting---
 			house.Craftinglogic();
 			if (house.hCrafting().CraftingIsOpen())
 				house.hCrafting().CraftPotions();
 
-			// House Interactions
+			// ---Nightstand & Bed---
 			house.NightstandLogic();
 			house.BedLogic(dayCounter);
-			if (house.ConfirmedToSleep()) // Player confirmed to sleep, update day and progress plants
+			if (house.ConfirmedToSleep())
 				ProgressToNextDay();
 		}
 	}
@@ -267,6 +261,8 @@ namespace Tmpl8
 	}
 	void Game::UpdateWorld(float deltaTime)
 	{
+		States();
+		Audio(); 
 		if (gameState == GameStates::MainMenu)
 		{
 			menu.Logic(gameStarted);
@@ -277,27 +273,28 @@ namespace Tmpl8
 		}
 		if (gameState == GameStates::InGame)
 		{
-			// Transform screen coordinates -> world coordinates -> mouse screen position
-			mouseWorldX = camera.getCameraX() + Input::GetMouseX(); //asta ar trebui sa fie invers si cu minus
-			mouseWorldY = camera.getCameraY() + Input::GetMouseY();
-			//std::cout << "World X: " << worldX << ", Y: " << worldY << std::endl;
+			// ---Player---
+			player.HandleMovement(deltaTime);
 
+			// ---Mouse World Coordinates---
+			UpdateWorldMousePosition();
+
+			// ---Check Game Completed---
+			house.CheckGameCompleted(coinCounter, gameCompleted);
+
+			// ---FarmTiles---
 			ResetFarmTilesClick();
-			player.Update();
-			UpdateFarmTiles();
-			UpdatePlants(deltaTime);
-			car.UpdateOrders(coinCounter);
-			Logic(deltaTime);
+
+			// ---Tutorial---
 			tutorial.Update();
-			house.CheckGameCompleted(coinCounter, gameCompleted); //move to update
+
+			// ---Core Logic---
+			Logic(deltaTime);
 		}
 		if (gameState == GameStates::EndScreen)
 		{
 			endScreen.ManageFrames();
 		}
-		Audio();
-		States();
-		
 	}
 	void Game::DrawUI()
 	{
@@ -307,12 +304,12 @@ namespace Tmpl8
 		sprintf(coins, "COINS: %d", coinCounter);
 		screen->PrintScaled(day, 710, 10, 2, 2, 0x0389afc);
 		screen->PrintScaled(coins, 10, 10, 2, 2, 0xffff00);
-		if (!house.IsOpen() && AllInventoriesClosed()) // Draw watering can only when outside and inventory is closed
+		if (!house.IsOpen() && AllInventoriesClosed())// Draw watering can only when outside and inventory is closed
 			player.pWateringCan().Draw(screen);
 	}
 	void Game::DrawGame()
 	{
-		screen->Clear(0); //83924c  b0905d
+		screen->Clear(0xb0905d); //83924c  b0905d
 		if (gameState == GameStates::MainMenu)
 		{
 			menu.Draw(screen);
@@ -330,22 +327,24 @@ namespace Tmpl8
 					HoverOutsideObjects();
 
 				// Tiles & Plants
-				for (auto& x : farmTiles)
+				for (auto& farmtile : farmTiles)
 				{
-					x.Draw(screen);
+					farmtile.Draw(screen);
 					if (AllInventoriesClosed())
-						x.DrawHover(screen, mouseWorldX, mouseWorldY);
+						farmtile.DrawHover(screen, mouseWorldX, mouseWorldY);
 				}
-				for (auto& x : farmTiles)
+				for (auto& farmtile : farmTiles)
 				{
-					x.DrawPlant(screen);
+					farmtile.DrawPlant(screen);
 				}
 
 				// Player
 				player.Draw(screen);
 
-				//Inventory
-				DrawInventory();
+				// Inventory
+				player.pInventory().Draw(screen);
+				if (!player.pInventory().MainInvIsOpen())
+					car.Draw(screen);
 				car.DrawOrders(screen);
 			}
 			else // Inside house
@@ -370,6 +369,9 @@ namespace Tmpl8
 	
 	void Game::Init()
 	{
+		std::cout<<"You can ajust the game volume with +/- keys.\nOther instructions are in the readMe file.\n";
+
+		// ---FarmTiles---
 		for (int x = 3; x <= 23; x++)
 		{
 			for (int y = 7; y <= 17; y++)
@@ -380,8 +382,11 @@ namespace Tmpl8
 			for (int y = 18; y <= 20; y++)
 				farmTiles.emplace_back(static_cast<float>(x), static_cast<float>(y), player.pWateringCan(), player.pInventory(), camera, player);
 		}
+
+		// ---Orders---
 		car.MakeNewOrders();
 
+		// ---Audio---
 		backgroundMusic.loadMusic("assets/audio/background.mp3");
 		backgroundMusic.setLooping(true);
 		backgroundMusic.setVolume(0.2f);

@@ -14,4 +14,12 @@ namespace Tmpl8
 	{
 		return cameraY;
 	}
+	void Camera::setCameraX(float x) 
+	{ 
+		cameraX = x; 
+	}
+	void Camera::setCameraY(float y) 
+	{ 
+		cameraY = y; 
+	}
 }

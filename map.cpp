@@ -3,11 +3,13 @@
 namespace Tmpl8
 {
 	const int Map::TileSize = 48;
+	Map::Map(Camera& cam) : camera(cam) {}
 	bool Map::IsBlocked(int x,int y)
 	{
 		//Transform screen coordinates to tile coordinates
 		int tx = x / TileSize;
 		int ty = y / TileSize;
+
 		//return true if tile is blocked/ false if not
 		return map[ty][tx] == 'X';
 	}
@@ -30,7 +32,6 @@ namespace Tmpl8
 	void Map::Draw(Surface*screen)
 	{
 		tiles.CopyTo(screen, static_cast<int>(-camera.getCameraX()), static_cast<int>(-camera.getCameraY()));
-		return;
 	}
 	/*
 	void Map::DrawTile(Surface* screen, int tx, int ty, int x, int y)

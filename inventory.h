@@ -5,15 +5,13 @@
 namespace Tmpl8
 {
 	/*
-	//make player class -> game has player -> inv
-	//map -> house
-	//reference to house (player)*/
 	// Frame 0 : Ingredients
 	// Frame 1 : Potions
 	// Frame 2 : Seeds
 	// Frame 3 : Planting seeds
 	// Frame 4 : Car Shop
 	// Frame 5 : Car Orders
+	*/
 
 	class WateringCan; // Forward declaration of WateringCan class
 
@@ -39,30 +37,27 @@ namespace Tmpl8
 			SeedFrostmint,
 			SeedBerry
 		};
-		
 		Inventory(WateringCan& wa) : wateringCan(wa) {}
-		void update();
+		//---Getters---
 		int getFrame();
 		int MainInvIsOpen();
 		int SeedInvIsOpen();
+		//---Setters---
 		void setSeedState(bool state);
-
+		//---Items management---
 		int AddItem(Item item, int quantity = 1); // Add item to inventory
 		int SetItemTo(Item item, int quantity);
 		int GetItemCount(Item item); // Get count of specific item in inventory
-
-		void InventoryText(Surface* screen);
-
+		//--Main functions---
 		void MainInventoryLogic(); // Normal inventory management
 		void SeedInventoryLogic(bool tileClicekd); // Seed inventory management
 		void Draw(Surface* screen);
-
 	private:
 		int frame = 0; // Inventory frame
 		bool inventoryisopen = false; // Inventory open state
 		bool seedsisopen = false; // Seed inventory open state
 		WateringCan& wateringCan; // Reference to player's watering can
-		Sprite inventory = Sprite(new Surface("assets/inv.png"), 6);
+		Sprite inventory = Sprite(new Surface("assets/image/inventory.png"), 6);
 		std::unordered_map<Item, int> items = {
 			{ Item::VitalTonic, 0 },
 			{ Item::CalmMind, 0 },
@@ -80,5 +75,6 @@ namespace Tmpl8
 			{ Item::SeedFrostmint, 1 },
 			{ Item::SeedBerry, 0 }
 		}; // Map to store item counts
+		void InventoryText(Surface* screen);
 	};
 }

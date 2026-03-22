@@ -6,35 +6,30 @@
 #include <windows.h>
 #include <iostream>
 #include <vector>
+#include "input.h"
 #include "farmtile.h"
-//#include <cassert>
 #include "inventory.h"
 #include "crafting.h"
 #include "plant.h"
 #include "house.h"
-#include "buttons.h"
 #include "orders.h"
 #include "nightstand.h"
 #include "wateringCan.h"
 #include "player.h"
 #include "car.h"
 #include "SDL_scancode.h"
-#include "input.h"
 #include "tutotial.h"
 #include "camera.h"
 #include "mainMenu.h"
 #include "endScreen.h"
-
 #include <Audio/Sound.hpp>
 
 namespace Tmpl8
 {
-	//class Surface;
 	class Game
 	{
 	public:
 		Game();
-		void States();
 		void SetTarget(Surface* surface) { screen = surface; }
 		void Init();
 		void Shutdown();
@@ -57,15 +52,6 @@ namespace Tmpl8
 		EndGame endScreen;
 		Audio::Sound backgroundMusic;
 		std::vector<FarmTile> farmTiles;
-		int dayCounter = 0;
-		int coinCounter = 250;
-		char day[32] = "", coins[32] = "";
-		bool gameCompleted = false;
-		bool gameStarted = false;
-		bool cutScenePlayed = false;
-		bool tileClicked = false;
-		float mouseWorldX, mouseWorldY; //mouse position in world coordinates
-		float volume;
 		FarmTile* selectedTile = nullptr;
 		enum class GameStates
 		{
@@ -75,25 +61,39 @@ namespace Tmpl8
 			EndScreen
 		};
 		GameStates gameState = GameStates::MainMenu;
-		void GodMode();
-		bool AllInventoriesClosed(); // Check if all inventories are closed
-		void DrawInventory();
-		void HoverOutsideObjects();
+		Sprite car_hover = Sprite(new Surface("assets/image/car_hover.png"), 1);
+		Sprite door_hover = Sprite(new Surface("assets/image/door_hover.png"), 1);
+		int dayCounter = 0;
+		int coinCounter = 250;
+		char day[32] = "", coins[32] = "";
+		bool gameCompleted = false;
+		bool gameStarted = false;
+		bool cutScenePlayed = false;
+		bool tileClicked = false;
+		float mouseWorldX, mouseWorldY; //mouse position in world coordinates
+		float volume;
+		// --- Core ---
+		void UpdateWorldMousePosition();
+		void UpdateWorld(float deltaTime);
+		void Logic(float deltaTime);
+		void DrawGame();
+		void DrawUI();
+		// --- Systems ---
+		void Audio();
+		void DrawAudioBar();
+		// --- Gameplay ---
 		void HandleMovement(float deltaTime);
 		void PlantSeed(FarmTile& farmtile);
-		void UpdatePlants(float deltaTime);
+		void CollectPlants(float deltaTime);
 		void UpdateFarmTiles();
 		void ResetFarmTilesClick();
 		void ProgressToNextDay();
-		void Logic(float deltaTime);
-		void DrawAudioBar();
-		void Audio();
-		void UpdateWorld(float deltaTime);
-		void DrawUI();
-		void DrawGame();
-
-		//how to use mouse?
-		//how to use in other files?
+		void HoverOutsideObjects();
+		bool AllInventoriesClosed(); // Check if all inventories are closed
+		// --- Debug ---
+		void GodMode();
+		// --- State ---
+		void States();
 	};
 
 }; // namespace Tmpl8

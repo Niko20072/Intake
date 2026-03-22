@@ -4,29 +4,31 @@
 namespace Tmpl8
 {
 	class Camera;
+
+	//Map hight and width = 26 tiles, each tile is 48 pixels, so total size of map is 1248 pixels
 	class Map
 	{
 	public:
-		//make constructor
-		Map(Camera& cam) : camera(cam) {}
 		static const int TileSize; // Size of each tile in pixels
+		Map(Camera& cam);
 		bool CheckCollision(float x1, float y1, float x2, float y2);
 		void Draw(Surface* screen);
 	private:
-		//Map hight and width = 26 tiles, each tile is 48 pixels, so total size of map is 1248 pixels
-		Surface tiles = ("assets/MediumMap2.png");
-		bool IsBlocked(int x, int y); // Check if tile at (x,y) is blocked
 		Camera& camera; // Reference to game camera
+		Surface tiles = ("assets/image/map.png");
+		bool IsBlocked(int x, int y); // Check if tile at (x,y) is blocked
+
 		//Collision map
 		char map[26][27] =
 		{
+		   //12345678901234567890123456
 			"XXXXXXXXXXXXXXXXXXXXXXXXXX",
-			"XXXXXXXX000X000000XX00000X",
-			"XXXXXX00000XXX00000000000X",
-			"XXXXXX00000XXX00000000X00X",
-			"X0000000000000XX000000000X",
-			"X000000000000000000000000X",
-			"X000000000000000000000000X",
+			"X0XXXXXXXX0XX0XXX0XX000XXX",
+			"X0XXXXXXX00XX0X000XXXX000X",
+			"X0XXXXXX000XXX00000000000X",
+			"X0XXXXX0000XXX00000000X00X",
+			"X0000000000000XXX00000X00X",
+			"X0000000000000XXX00000000X",
 			"X000000000000000000000000X",
 			"X000000000000000000000000X",
 			"X000000000000000000000000X",
@@ -43,10 +45,13 @@ namespace Tmpl8
 			"X00000000000000000000XXXXX",
 			"X00000000000000000000XXXXX",
 			"XXX000000000000000000XXXXX",
-			"XXX000000000000000000XXXXX",
-			"XXX000000000000000000XXXXX",
+			"XXX00000000000000000XXXXXX",
+			"XXX00000000000000000XXXXXX",
 			"XXXXXXXXXXXXXXXXXXXXXXXXXX"
+		   //12345678901234567890123456
 		};
+
+		//old map
 		/*
 		char map[26][79] =
 		{

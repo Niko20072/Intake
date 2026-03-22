@@ -15,19 +15,20 @@ namespace Tmpl8
 	{
 	public:
 		FarmTile(float x, float y, WateringCan& wa, Inventory& inv, Camera& cam, Player& pl);
-		bool getPlanted() { return planted; }
-		int getClicked() { return clicked; }
-		void setClicked(bool state) { clicked = state; }
-		void setWatered(bool state) { watered = state; }
-
+		//---Getters---
+		bool getPlanted();
+		int getClicked();
+		//---Setters---
+		void setClicked(bool state);
+		void setWatered(bool state);
+		//---Farmtile---
 		void Draw(Surface* screen);// Draw farm tile at its position
 		void DrawHover(Surface* screen, float mouseWorldX, float mouseWorldY);
 		void Update(float mouseWorldX, float mouseWorldY); // Update tile state based on interaction
-
-		//planting and plant management
+		//---Plant---
 		void CreatePlant(int plantType); // Create a plant on this tile based on the plant type (1-5)
 		void DeletePlant(); // Delete the plant on this tile
-		void CollectPlant(float deltaTime); // Update the plant's state each day
+		void CollectPlant(float deltaTime); // Collect the plant if it's ready and the player interacts with it
 		void UpdatePlant(); // Progress the plant to the next day
 		void DrawPlant(Surface* screen);
 	private:

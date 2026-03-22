@@ -13,9 +13,6 @@ namespace Tmpl8
 	{
 	public:
 		Tutorial(Player& pl, Car& c, House& h);
-		void Update();
-		void Draw(Surface* screen);
-		void setPlanted(bool state) { planted = state; }
 		enum class TutorialState
 		{
 			Move,
@@ -40,16 +37,21 @@ namespace Tmpl8
 			HaveFun,
 			Done
 		};
+		//---Setters---
+		void setPlanted(bool state) { planted = state; }
+		//--Main functions---
+		void Update();
+		void Draw(Surface* screen);
 	private:
-		TutorialState tutorialState = TutorialState::Move;
-		char tutorialText[256] = "";
-		char tutorialText2[256] = "";
-		int box[4] = { 0,0,0,0 }; //xyxy
-		bool planted = false;
 		Player& player; // Reference to player
 		Inventory& inventory; // Reference to Inventory
 		Car& car; // Reference to Car
 		House& house; // Reference to House
 		WateringCan& wateringCan; // Reference to Watering Can from Inventory
+		TutorialState tutorialState = TutorialState::Move;
+		char tutorialText[256] = "";
+		char tutorialText2[256] = "";
+		int box[4] = { 0,0,0,0 }; //xyxy
+		bool planted = false;
 	};
 }

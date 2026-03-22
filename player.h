@@ -12,33 +12,36 @@ namespace Tmpl8
 	class Player
 	{
 	public:
-		Player(Map &m, Camera &c) : map(m), camera(c), wateringCan(), inventory(wateringCan) {};
-		Inventory& pInventory() { return inventory; }
-		WateringCan& pWateringCan() { return wateringCan; }
-		void Update();
-		void HandleMovement(float deltaTime);
-		void Draw(Surface* screen);
+		Player(Map &m, Camera &c);
+		//---Getters---
+		Inventory& pInventory();
+		WateringCan& pWateringCan();
 		float getReachX1();
 		float getReachY1();
 		float getReachX2();
 		float getReachY2();
-
+		//--Main functions---
+		void HandleMovement(float deltaTime);
+		void Draw(Surface* screen);
 	private:
 		Map &map; // reference to game map
 		Camera& camera; // reference to game camera
 		WateringCan wateringCan;
 		Inventory inventory; // depends on wateringCan
-		Sprite player1 = Sprite(new Surface("assets/Vera.png"), 4);
-		const int playerX = 648 / 2 + 48, playerY = 512 / 2 + 22; //player position
-		float playerColisionX1 = 0, playerColisionY1 = 0, playerColisionX2 = 0, playerColisionY2 = 0; //player collision box (rectangle around player)
+		Sprite player1 = Sprite(new Surface("assets/image/Vera.png"), 4);
+		//player sprite size
+		const int pHeight = player1.GetHeight();
+		const int pWidth = player1.GetWidth();
+		//player position
+		const int playerX = (ScreenWidth - player1.GetWidth()) / 2;
+		const int playerY = (ScreenHeight - player1.GetHeight()) / 2;
 		//player position in world coordinates
-		float worldPlayerX;
-		float worldPlayerY;
+		float worldPlayerX = 0.0f;
+		float worldPlayerY = 0.0f;
 		//player reach area (rectangle around player)
-		float reachX1;
-		float reachY1;
-		float reachX2;
-		float reachY2;
-
+		float reachX1 = 0.0f;
+		float reachY1 = 0.0f;
+		float reachX2 = 0.0f;
+		float reachY2 = 0.0f;
 	};
 }
