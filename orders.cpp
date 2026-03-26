@@ -17,6 +17,15 @@ namespace Tmpl8
 		while (potionType1 == potionType2) // Ensure different potion types
 			potionType2 = IRand(5);
 
+		if (number == 0)
+		{
+			potionNumber = 1;
+			potionType1 = 0;
+			potionType2 = 1;
+			numberPotionType1 = 1;
+			numberOfPotionType2 = 2;
+		}
+
 		// Create order text and calculate price
 		if (potionNumber == 1)
 		{

@@ -90,9 +90,9 @@ namespace Tmpl8
 	void Player::Draw(Surface* screen)
 	{
 		// Player reach box
-		screen->Box(static_cast<int>(playerX - 50.0f), static_cast<int>(playerY - 25.0f), static_cast<int>(playerX + pWidth + 50.0f), static_cast<int>(playerY + pHeight + 25.0f), 0x00ff00);
+		//screen->Box(static_cast<int>(playerX - 50.0f), static_cast<int>(playerY - 25.0f), static_cast<int>(playerX + pWidth + 50.0f), static_cast<int>(playerY + pHeight + 25.0f), 0x00ff00);
 		// Player bounding box
-		screen->Box(static_cast<int>(playerX), static_cast<int>(playerY + pHeight / 2), static_cast<int>(playerX + pWidth), static_cast<int>(playerY + pHeight), 0xff0000);
+		//screen->Box(static_cast<int>(playerX), static_cast<int>(playerY + pHeight / 2), static_cast<int>(playerX + pWidth), static_cast<int>(playerY + pHeight), 0xff0000);
 		player1.Draw(screen, playerX, playerY);
 	}
 }

@@ -23,7 +23,6 @@ namespace Tmpl8
 	//add sound when plant is not ready
 	//hotbar for seeds
 
-	//ask about what to delete when game closed
 	//check assets licence
 
 	//make player class -> game has player -> inv
@@ -33,6 +32,8 @@ namespace Tmpl8
 	//learn stuff from player,car(forward declaration),endscreen(default constructor?),farmtile(uniqueptr),input(bittset),inv(maps),map(why -camerax),orders(const* ceva in header,convertion to item),plant(draw poz),player(map poz), why make sprite in constructor in farmtile?
 
 	//update:: button class, split inv and seed inv, states for inv, be able to hold the seeds so you dont need to click "plant" every time (annoying), fix collision and drawing for map (improve collision)
+
+	//vs,git - nu pun in fisier, -> pptx format prezentare
 	Game::Game() : gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house), camera(){};
 	void Game::States()
 	{
@@ -281,11 +282,11 @@ namespace Tmpl8
 			// ---FarmTiles---
 			ResetFarmTilesClick();
 
-			// ---Tutorial---
-			tutorial.Update();
-
 			// ---Core Logic---
 			Logic(deltaTime);
+
+			// ---Tutorial---
+			tutorial.Update();
 		}
 		if (gameState == GameStates::EndScreen)
 		{
@@ -386,7 +387,7 @@ namespace Tmpl8
 		backgroundMusic.loadMusic("assets/audio/background.mp3");
 		backgroundMusic.setLooping(true);
 		backgroundMusic.setVolume(0.2f);
-		backgroundMusic.play();
+		//backgroundMusic.play();
 	}
 
 	// -----------------------------------------------------------
@@ -395,8 +396,6 @@ namespace Tmpl8
 
 	void Game::Shutdown()
 	{
-		farmTiles.clear(); // do i need to do this?
-		//orders.clear();??
 	}
 
 	// -----------------------------------------------------------

@@ -72,7 +72,7 @@ namespace Tmpl8
 		bool tileClicked = false;
 		float mouseWorldX, mouseWorldY; //mouse position in world coordinates
 		float volume;
-		// --- Main functions ---
+		// --- Core ---
 		void States();
 		void UpdateWorld(float deltaTime);
 		void Logic(float deltaTime);

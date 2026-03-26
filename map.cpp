@@ -22,10 +22,14 @@ namespace Tmpl8
 		int bottom = static_cast<int>(y2);
 
 		//check all corners for collision
-		if (IsBlocked(left, top)) return false;
-		if (IsBlocked(right, top)) return false;
-		if (IsBlocked(left, bottom)) return false;
-		if (IsBlocked(right, bottom)) return false;
+		if (IsBlocked(left, top)) 
+			return false;
+		if (IsBlocked(right, top)) 
+			return false;
+		if (IsBlocked(left, bottom)) 
+			return false;
+		if (IsBlocked(right, bottom)) 
+			return false;
 
 		return true; //no collision
 	}
