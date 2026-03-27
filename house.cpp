@@ -3,7 +3,6 @@
 #include "Windows.h"
 #include "player.h"
 
-
 namespace Tmpl8
 {
 	House::House(Player& pl) : player(pl), inventory(player.pInventory()), crafting(inventory) 
@@ -65,14 +64,13 @@ namespace Tmpl8
 			doorClose.play();
 			houseisopen = false;
 		}
-			
 	}
 	void House::Craftinglogic()
 	{
 		bool clickedOnTable = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 103 && Input::GetMouseX() <= 294 && Input::GetMouseY() >= 331 && Input::GetMouseY() <= 476;
 
 		// Open crafting interface when clicking on crafting table inside house
-		if (clickedOnTable && houseisopen && frame == 0)
+		if (clickedOnTable && houseisopen && frame == 0 && !nightstandisopen && !bedisopen)
 		{
 			crafting.setState(true);
 			crafting.setFrame(0);
@@ -83,10 +81,7 @@ namespace Tmpl8
 	}
 	bool House::ConfirmedToSleep()
 	{
-		// Check if player clicked yes or no buttons
-		clickedYes = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 235 && Input::GetMouseX() <= 389 && Input::GetMouseY() >= 310 && Input::GetMouseY() <= 385;
-		clickedNo = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 405 && Input::GetMouseX() <= 557 && Input::GetMouseY() >= 310 && Input::GetMouseY() <= 383;
-		if (bedisopen && clickedYes && frame == 1) // Player confirmed to sleep
+		if (clickedYes) // Player confirmed to sleep
 			return true;
 		return false;
 	}
@@ -96,9 +91,12 @@ namespace Tmpl8
 		// Frame 1: Sleep confirmation view
 		// Frame 2: Day passed view
 		
+		// Check if player clicked yes or no buttons
+		clickedYes = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 235 && Input::GetMouseX() <= 389 && Input::GetMouseY() >= 310 && Input::GetMouseY() <= 385 && bedisopen && frame == 1;
+		clickedNo = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 405 && Input::GetMouseX() <= 557 && Input::GetMouseY() >= 310 && Input::GetMouseY() <= 383 && bedisopen && frame == 1;
 		// Check if player clicked on bed
 		bool clickedOnBed = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 511 && Input::GetMouseX() <= 742 && Input::GetMouseY() >= 320 && Input::GetMouseY() <= 565;
-		
+
 		// Open bed menu if clicked on bed
 		if (clickedOnBed && !crafting.CraftingIsOpen() && !nightstandisopen && frame == 0)
 		{
@@ -127,11 +125,7 @@ namespace Tmpl8
 		// Check if player clicked on nightstand
 		bool clickedOnNightstand = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 386 && Input::GetMouseX() <= 497 && Input::GetMouseY() >= 351 && Input::GetMouseY() <= 445;
 		if (clickedOnNightstand && !crafting.CraftingIsOpen() && !bedisopen && frame == 0)
-		{
 			nightstandisopen = true;
-			frame = 0;
-			nightstand.SetFrame(frame);
-		}
 		// Close nightstand if Q is pressed and crafting menu is not open
 		if (Input::GetKeyPressed(SDL_SCANCODE_Q) && !crafting.CraftingIsOpen() && !bedisopen)
 			nightstandisopen = false;
@@ -164,7 +158,7 @@ namespace Tmpl8
 	void House::CheckGameCompleted(int coinCounter, bool& gameCompleted)
 	{
 		// Check if player clicked on send money button
-		bool sendMoney = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 336 && Input::GetMouseX() <= 468 && Input::GetMouseY() >= 446 && Input::GetMouseY() <= 498; //say youre gonna improve this later
+		bool sendMoney = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 336 && Input::GetMouseX() <= 468 && Input::GetMouseY() >= 446 && Input::GetMouseY() <= 498;
 
 		// Complete game if send money button is clicked, nightstand is open, and player has enough coins
 		if (sendMoney && nightstandisopen && coinCounter >= 2000)

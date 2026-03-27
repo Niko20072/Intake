@@ -4,11 +4,11 @@
 namespace Tmpl8
 {
 	Plant::Plant(float x, float y, int harvestDay, int frame, Inventory& inv, Camera& cam) : x(x), y(y), harvestDay(harvestDay), frame(frame), inventory(inv), camera(cam){}
-	int Plant::getGrown() 
+	bool Plant::getGrown()
 	{ 
 		return grown; 
 	}
-	int Plant::getAlive() 
+	bool Plant::getAlive()
 	{ 
 		return alive; 
 	}
@@ -30,7 +30,7 @@ namespace Tmpl8
 			{
 				if (daysPassed <= harvestDay)
 					frame++;
-				if (daysPassed >= harvestDay)
+				if (daysPassed == harvestDay)
 					grown = true;
 			}
 			else

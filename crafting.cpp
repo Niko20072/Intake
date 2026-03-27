@@ -4,6 +4,7 @@
 
 namespace Tmpl8
 {
+	Crafting::Crafting(Inventory& inv) : inventory(inv) {};
 	bool Crafting::CraftingIsOpen()
 	{
 		return craftingisopen;
@@ -19,6 +20,10 @@ namespace Tmpl8
 	void Crafting::setFrame(int state)
 	{
 		frame = state;
+	}
+	bool Crafting::getTutorialCraft()
+	{ 
+		return tutorialCraft; 
 	}
 	void Crafting::ManageFrames()
 	{
@@ -111,10 +116,8 @@ namespace Tmpl8
 				CraftFrostVeil();
 		}
 	}
-	void Crafting::CraftingDraw(Surface* screen)
+	void Crafting::CraftingTextDraw(Surface* screen)
 	{
-		crafting.Draw(screen, 0, 0);
-
 		// Display ingredient counts
 		char sunBlossom[32], moonLeaf[32], emberRoot[32], frostMint[32], berry[32];
 		char vitalTonic[32], calmMind[32], dreamDraught[32], fireHeart[32], frostVeil[32];
@@ -158,6 +161,10 @@ namespace Tmpl8
 	void Crafting::Draw(Surface* screen)
 	{
 		if (craftingisopen)
-			CraftingDraw(screen);
+		{
+			crafting.Draw(screen, 0, 0);
+			CraftingTextDraw(screen);
+		}
+			
 	}
 }

@@ -1,11 +1,7 @@
 #pragma once
 #include "surface.h"
-#include <cstdio> //printf
 #include "template.h"
 #include "map.h"
-#include <windows.h>
-#include <iostream>
-#include <vector>
 #include "input.h"
 #include "farmtile.h"
 #include "inventory.h"
@@ -22,6 +18,9 @@
 #include "camera.h"
 #include "mainMenu.h"
 #include "endScreen.h"
+#include <windows.h>
+#include <iostream>
+#include <vector>
 #include <Audio/Sound.hpp>
 
 namespace Tmpl8

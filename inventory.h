@@ -38,7 +38,7 @@ namespace Tmpl8
 			SeedBerry,
 			COUNT
 		};
-		Inventory(WateringCan& wa) : wateringCan(wa) {}
+		Inventory(WateringCan& wa);
 		//---Getters---
 		int getFrame();
 		bool MainInvIsOpen();
@@ -54,10 +54,10 @@ namespace Tmpl8
 		void SeedInventoryLogic(bool tileClicekd); // Seed inventory management
 		void Draw(Surface* screen);
 	private:
+		WateringCan& wateringCan; // Reference to player's watering can
 		int frame = 0; // Inventory frame
 		bool inventoryisopen = false; // Inventory open state
 		bool seedsisopen = false; // Seed inventory open state
-		WateringCan& wateringCan; // Reference to player's watering can
 		Sprite inventory = Sprite(new Surface("assets/image/inventory.png"), 6);
 		std::unordered_map<Item, int> items = {
 			{ Item::VitalTonic, 0 },

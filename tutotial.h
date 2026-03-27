@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include "surface.h"
+
 namespace Tmpl8
 {
 	class Inventory;
@@ -47,7 +47,7 @@ namespace Tmpl8
 		Inventory& inventory; // Reference to Inventory
 		Car& car; // Reference to Car
 		House& house; // Reference to House
-		WateringCan& wateringCan; // Reference to Watering can from Inventory
+		WateringCan& wateringCan; // Reference to Watering can
 		TutorialState tutorialState = TutorialState::Move;
 		char tutorialText[256] = "";
 		char tutorialText2[256] = "";

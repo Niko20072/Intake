@@ -1,8 +1,9 @@
 #pragma once
 #include "surface.h"
-#include <iostream>
 #include "plant.h"
+#include <iostream>
 #include <Audio/Sound.hpp>
+#include <memory>
 
 namespace Tmpl8
 {
@@ -10,6 +11,7 @@ namespace Tmpl8
 	class WateringCan;
 	class Camera;
 	class Player;
+	class Plant;
 
 	class FarmTile
 	{
@@ -27,7 +29,6 @@ namespace Tmpl8
 		void Update(float mouseWorldX, float mouseWorldY); // Update tile state based on interaction
 		//---Plant---
 		void CreatePlant(int plantType); // Create a plant on this tile based on the plant type (1-5)
-		void DeletePlant(); // Delete the plant on this tile
 		void CollectPlant(float deltaTime); // Collect the plant if it's ready and the player interacts with it
 		void UpdatePlant(); // Progress the plant to the next day
 		void DrawPlant(Surface* screen);
@@ -48,5 +49,7 @@ namespace Tmpl8
 		bool watered = false;
 		float time = 0; // Time accumulator for plant growth
 		bool printNotReady = false; // Whether the "Not ready!" message is being printed for this tile
+		//---Plant---
+		void DeletePlant(); // Delete the plant on this tile
 	};
 };

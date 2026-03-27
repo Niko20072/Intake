@@ -7,14 +7,14 @@ namespace Tmpl8
 	{
 	public:
 		void Logic(bool &gameStarted); // Menu logic
-		void CutSceneLogic(bool& cutScenePlayed); // Cutscene logic
+		void CutsceneLogic(bool& cutScenePlayed); // Cutscene logic
 		void Draw(Surface* screen); // Draw menu
-		void DrawCutScene(Surface* screen); // Draw cutscene
+		void DrawCutscene(Surface* screen); // Draw cutscene
 	private:
 		Sprite main = Sprite(new Surface("assets/image/mainMenu.png"),3);
-		Sprite cutScene = Sprite(new Surface("assets/image/startgame.png"), 16);
-		int frame = 0;
-		int cutSceneFrame = 0;
+		Sprite cutscene = Sprite(new Surface("assets/image/startgame.png"), 16);
+		int frame = 0; // Frames for animation
+		int cutsceneFrame = 0;
 		void ManageFrames();// Handle input to advance cutscene frames
 	};
 }

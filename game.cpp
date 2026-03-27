@@ -1,37 +1,9 @@
 #include "game.h"
 #include <Audio/Device.hpp>
 
-///to do list:
-//verifica ca toate variabilele sa fie folosite
-//make stuff private
-//unsigned int?
-
 namespace Tmpl8
 {
-	//fa sa pot pierde daca nu mai ai potiuni sau iteme sa poti crafta potiunile
-	
-	//add state
-	//learn aabb cuz its important
-	//modify crafting recepie 18 feb update on discord
-
-	//to do:
-	//add forward declaration of classes in game.h
-	//fix plant sprite
-
-	//add sound when plant is not ready
-	//hotbar for seeds
-
-	//check assets licence
-
-	//make player class -> game has player -> inv
-	//map -> house
-	//namespace to class de ce
-
-	//learn stuff from player,car(forward declaration),endscreen(default constructor?),farmtile(uniqueptr),input(bittset),inv(maps),map(why -camerax),orders(const* ceva in header,convertion to item),plant(draw poz),player(map poz), why make sprite in constructor in farmtile?
-
-	//update:: button class, split inv and seed inv, states for inv, be able to hold the seeds so you dont need to click "plant" every time (annoying), fix collision and drawing for map (improve collision)
-
-	//vs,git - nu pun in fisier, -> pptx format prezentare
+	//cheched player, camera
 	Game::Game() : camera(), gameMap(camera), player(gameMap, camera), house(player), car(player), tutorial(player, car, house) {};
 	void Game::States()
 	{
@@ -192,8 +164,9 @@ namespace Tmpl8
 
 			// ---Inventory---
 			player.pInventory().MainInventoryLogic();
-			car.CarInventoryLogic(coinCounter, mouseWorldX, mouseWorldY);
-			if (player.pInventory().SeedInvIsOpen()) // do this before inventory seed logic to avoid double click
+			car.BuySeeds(coinCounter);
+			car.CarInventoryLogic(mouseWorldX, mouseWorldY);
+			if (player.pInventory().SeedInvIsOpen()) // Do this before seed inventory logic to avoid double click
 				PlantSeed(*selectedTile);
 			player.pInventory().SeedInventoryLogic(tileClicked);
 			
@@ -253,7 +226,7 @@ namespace Tmpl8
 		}
 		if(gameState == GameStates::CutScene)
 		{
-			menu.CutSceneLogic(cutScenePlayed);
+			menu.CutsceneLogic(cutScenePlayed);
 		}
 		if (gameState == GameStates::InGame)
 		{
@@ -298,7 +271,7 @@ namespace Tmpl8
 		}
 		if(gameState == GameStates::CutScene)
 		{
-			menu.DrawCutScene(screen);
+			menu.DrawCutscene(screen);
 		}
 		if (gameState == GameStates::InGame)
 		{

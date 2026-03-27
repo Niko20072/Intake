@@ -32,7 +32,7 @@ namespace Tmpl8
 		return reachY2;
 	}
 
-	void Player::HandleMovement(float deltaTime)//make 1 function
+	void Player::HandleMovement(float deltaTime)
 	{
 		// New camera position
 		float newCameraX = camera.getCameraX();

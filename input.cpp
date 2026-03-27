@@ -1,6 +1,7 @@
 #include "input.h"
 #include <bitset>
 #include <iostream>
+
 namespace //internal 
 {
     std::bitset<SDL_NUM_SCANCODES> keys; // store key states here

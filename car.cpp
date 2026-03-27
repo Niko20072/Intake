@@ -6,7 +6,7 @@
 namespace Tmpl8
 {
 	Car::Car(Player& pl) : player(pl), inventory(player.pInventory()) {};
-	int Car::CarInvIsOpen()
+	bool Car::CarInvIsOpen()
 	{
 		return carisopen;
 	}
@@ -68,7 +68,7 @@ namespace Tmpl8
 			}
 		}
 	}
-	void Car::CarInventoryLogic(int& coinCounter, float mouseWorldX, float mouseWorldY)
+	void Car::CarInventoryLogic(float mouseWorldX, float mouseWorldY)
 	{
 		// Detect clicks and player proximity
 		bool clickedOutsideInv = Input::GetMouseButtonPressed(1) && !(Input::GetMouseX() >= 207 && Input::GetMouseX() <= 579 && Input::GetMouseY() >= 78 && Input::GetMouseY() <= 519);
@@ -76,7 +76,14 @@ namespace Tmpl8
 		bool clickedOnOrdersButton = Input::GetMouseButtonPressed(1) && Input::GetMouseX() >= 399 && Input::GetMouseX() <= 444 && Input::GetMouseY() >= 471 && Input::GetMouseY() <= 510;
 		bool playerCloseToCar = player.getReachX2() >= 528 && player.getReachX1() <= 686 && player.getReachY2() >= 175 && player.getReachY1() <= 220;
 		bool mouseOnCar = mouseWorldX >= 528 && mouseWorldX <= 686 && mouseWorldY >= 175 && mouseWorldY <= 220;
-		bool moved = Input::GetKeyPressed(SDL_SCANCODE_W) || Input::GetKeyPressed(SDL_SCANCODE_A) || Input::GetKeyPressed(SDL_SCANCODE_S) || Input::GetKeyPressed(SDL_SCANCODE_D);
+		bool moved = Input::GetKey(SDL_SCANCODE_W) || Input::GetKey(SDL_SCANCODE_A) || Input::GetKey(SDL_SCANCODE_S) || Input::GetKey(SDL_SCANCODE_D);
+
+		//Toggle car inventory
+		if (Input::GetMouseButtonPressed(1) && mouseOnCar && playerCloseToCar && !carisopen)
+		{
+			carisopen = true;
+			frame = 4;
+		}
 
 		//Click car inventory
 		if (carisopen) //This condition is first because we don't want to instantly buy seeds when opening the car inventory, only after its open
@@ -88,17 +95,9 @@ namespace Tmpl8
 				frame = 5;
 			if (moved || clickedOutsideInv || Input::GetKeyPressed(SDL_SCANCODE_E) || Input::GetKeyPressed(SDL_SCANCODE_Q) || inventory.MainInvIsOpen())
 				carisopen = false;
-			// Buy seeds logic
-			BuySeeds(coinCounter);
 		}
+		
 		carinventory.SetFrame(frame);
-
-		//Toggle car inventory
-		if (Input::GetMouseButtonPressed(1) && mouseOnCar && playerCloseToCar && !carisopen)
-		{
-			carisopen = true;
-			frame = 4;
-		}
 	}
 	void Car::DrawCarText(Surface* screen)
 	{
@@ -108,6 +107,7 @@ namespace Tmpl8
 		sprintf(counterSeedEmberRoot, "x%d", inventory.GetItemCount(Inventory::Item::SeedEmberroot));
 		sprintf(counterSeedFrostMint, "x%d", inventory.GetItemCount(Inventory::Item::SeedFrostmint));
 		sprintf(counterSeedBerry, "x%d", inventory.GetItemCount(Inventory::Item::SeedBerry));
+
 		// Display when car shop inventory is open
 		if (carisopen && frame == 4)
 		{
@@ -125,7 +125,6 @@ namespace Tmpl8
 			carinventory.Draw(screen, 140, 20);
 			DrawCarText(screen);
 		}
-			
 	}
 	void Car::MakeNewOrders()
 	{

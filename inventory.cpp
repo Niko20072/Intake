@@ -4,6 +4,7 @@
 
 namespace Tmpl8//sterge
 {
+	Inventory::Inventory(WateringCan& wa) : wateringCan(wa) {}
 	int Inventory::getFrame()
 	{
 		return frame;
@@ -20,7 +21,6 @@ namespace Tmpl8//sterge
 	{
 		seedsisopen = state;
 	}
-
 	void Inventory::AddItem(Item item, int quantity)
 	{
 		items[item] += quantity; // Add quantity to the specified item in the inventory
@@ -138,12 +138,14 @@ namespace Tmpl8//sterge
 			if (clickedOutsideInv || Input::GetKeyPressed(SDL_SCANCODE_Q))
 				inventoryisopen = false;
 		}
+
+		inventory.SetFrame(frame);
 	}
 	void Inventory::SeedInventoryLogic(bool tileClicekd)
 	{
 		// Detect clicks
 		bool clickedOutsideInv = Input::GetMouseButtonPressed(1) && !(Input::GetMouseX() >= 207 && Input::GetMouseX() <= 579 && Input::GetMouseY() >= 78 && Input::GetMouseY() <= 519);
-		bool moved = Input::GetKeyPressed(SDL_SCANCODE_W) || Input::GetKeyPressed(SDL_SCANCODE_A) || Input::GetKeyPressed(SDL_SCANCODE_S) || Input::GetKeyPressed(SDL_SCANCODE_D);
+		bool moved = Input::GetKey(SDL_SCANCODE_W) || Input::GetKey(SDL_SCANCODE_A) || Input::GetKey(SDL_SCANCODE_S) || Input::GetKey(SDL_SCANCODE_D);
 
 		//Toggle seed inventory
 		if (tileClicekd && !seedsisopen && !wateringCan.getState())
@@ -152,16 +154,17 @@ namespace Tmpl8//sterge
 			frame = 3;
 		}
 
-		//Click seed inventory
+		//Close seed inventory
 		if (seedsisopen)
 		{
 			if (clickedOutsideInv || Input::GetKeyPressed(SDL_SCANCODE_Q) || Input::GetKeyPressed(SDL_SCANCODE_E) || moved)
 				seedsisopen = false;
 		}
+
+		inventory.SetFrame(frame);
 	}
 	void Inventory::Draw(Surface* screen)
 	{
-		inventory.SetFrame(frame);
 		if (inventoryisopen || seedsisopen)
 		{
 			inventory.Draw(screen, 140, 20);

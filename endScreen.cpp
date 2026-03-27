@@ -11,13 +11,13 @@ namespace Tmpl8
 		if (Input::GetMouseButtonPressed(1))
 		{
 			frame++;
-			cutScene.SetFrame(frame);
+			cutscene.SetFrame(frame);
 		}
 	}
 	void EndGame::DrawGameCompletedScreen(Surface* screen)
 	{
-		if (frame < 7)
-			cutScene.Draw(screen, 0, 0);
+		if (frame < 7) // There are still frames to draw
+			cutscene.Draw(screen, 0, 0);
 		else
 			exit(0);
 	}

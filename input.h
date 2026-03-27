@@ -1,5 +1,4 @@
 #pragma once
-
 #include <SDL_scancode.h>
 #include <SDL_mouse.h>
 

@@ -6,12 +6,13 @@
 #include "camera.h"
 #include "player.h"
 
-
-
 namespace Tmpl8
 {
-	FarmTile::FarmTile(float x, float y, Player& pl, Camera& cam) : farmTileX(x * Map::TileSize), farmTileY(y * Map::TileSize), player(pl), camera(cam), wateringCan(player.pWateringCan()), inventory(player.pInventory()), farmTile(std::make_unique<Sprite>(new Surface("assets/image/tiles.png"), 3)), hover(std::make_unique<Sprite>(new Surface("assets/image/tiles_hover.png"), 1))
+	FarmTile::FarmTile(float x, float y, Player& pl, Camera& cam) : farmTileX(x * Map::TileSize), farmTileY(y * Map::TileSize), player(pl), camera(cam), wateringCan(player.pWateringCan()), inventory(player.pInventory())
 	{
+		// Create sprites for the farm tile and its hover state
+		farmTile = (std::make_unique<Sprite>(new Surface("assets/image/tiles.png"), 3));
+		hover = (std::make_unique<Sprite>(new Surface("assets/image/tiles_hover.png"), 1));
 		// Load Audio
 		itemCollect.loadMusic("assets/audio/itempickup.mp3");
 		itemCollect.setVolume(2.2f);

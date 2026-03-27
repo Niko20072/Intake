@@ -8,22 +8,13 @@ namespace Tmpl8
 	Order::Order(int number, Inventory& inv) : inventory(inv)
 	{
 		orderNumber = number;
-		potionNumber = 1 + IRand(3); // 1 to 2 potions (bigger chance for 2)
+		potionNumber = 1 + IRand(3); // 1 or 2 potions (bigger chance for 2, so it generates a number between 1-3 -> 1 = order with 1 potion, 2 or 3 = order with 2 potions)
 		potionType1 = IRand(5); // Type of first potion (0-5)
 		potionType2 = IRand(5); // Type of second potion (0-5)
-		numberPotionType1 = 1 + IRand(3); // How many potions of the first type are generated (1-3)
-		numberPotionType2 = 1 + IRand(3); // // How many potions of the first type are generated (1-3)
+		numberPotionType1 = 1 + IRand(3); // Quantity of the first potion type (1-3)
+		numberPotionType2 = 1 + IRand(3); // Quantity of the second potion type (1-3)
 		while (potionType1 == potionType2) // Ensure different potion types
 			potionType2 = IRand(5);
-
-		if (number == 0)
-		{
-			potionNumber = 1;
-			potionType1 = 0;
-			potionType2 = 1;
-			numberPotionType1 = 1;
-			numberPotionType2 = 2;
-		}
 
 		// Create order text and calculate price
 		if (potionNumber == 1)
@@ -40,9 +31,9 @@ namespace Tmpl8
 			price = (priceNumbers[potionType1] * numberPotionType1) + (priceNumbers[potionType2] * numberPotionType2) + rewardBonus;
 		}
 
-		// Create send and complete texts
+		// Create send text
 		sprintf(send, "send(%d)", price);
-		sprintf(complete, "completed");
+
 		//std::cout <<" Potion number: " << potionNumber << std::endl;
 	}
 	void Order::Update(int& coinCounter)
@@ -99,7 +90,7 @@ namespace Tmpl8
 		if (completed)
 		{
 			screen->Print(order, 265, 236 + orderNumber * 35, 0x0);
-			screen->Print(complete, 475, 236 + orderNumber * 35, 0x00ff00);
+			screen->Print("completed", 475, 236 + orderNumber * 35, 0x00ff00);
 		}
 		else
 		{

@@ -158,8 +158,8 @@ namespace Tmpl8
             if (tutorialState == TutorialState::ExplainTable || tutorialState == TutorialState::ExitTable)
             {
                 // Tutorial text
-                screen->CentreScaled(tutorialText, 409 + 15, 2, 2, 0xff0000);
-                screen->CentreScaled(tutorialText2, 409 + 35, 2, 2, 0xff0000);
+                screen->CentreScaled(tutorialText, 424, 2, 2, 0xff0000);
+                screen->CentreScaled(tutorialText2, 424, 2, 2, 0xff0000);
 
                 // Move black background for text
                 box[0] = 85;

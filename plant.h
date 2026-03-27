@@ -1,9 +1,7 @@
 #pragma once
 #include "surface.h"
-#include <vector>
 #include "camera.h"
-
-
+#include <vector>
 
 namespace Tmpl8
 {
@@ -15,8 +13,8 @@ namespace Tmpl8
 	public:
 		Plant(float x, float y, int harvestDay, int frame, Inventory& inv, Camera& cam);
 		//---Getters---
-		int getGrown();
-		int getAlive();
+		bool getGrown();
+		bool getAlive();
 		//---Setters---
 		void setWatered(bool state);
 		//--Main functions---
@@ -27,7 +25,7 @@ namespace Tmpl8
 		Inventory& inventory;
 		Camera& camera;
 		Sprite plant = Sprite(new Surface("assets/image/plants.png"), 20);
-		int harvestDay; // The day when the plant is grown
+		int harvestDay; // The day the plant will be ready for harvest
 		int daysPassed = 0; // Plant age
 		int frame; // Sprite frame
 		float x, y;

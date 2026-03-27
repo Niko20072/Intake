@@ -6,16 +6,18 @@ namespace Tmpl8
 {
 	class Inventory;
 	class Player;
+
 	class Car
 	{
 	public:
 		Car(Player& pl);
 		//---Getters---
-		int CarInvIsOpen(); // Returns whether the car inventory is open
+		bool CarInvIsOpen(); // Returns whether the car inventory is open
 		int getFrame(); // Returns the current frame of the car
 		//---Main functions---
-		void CarInventoryLogic(int& coinCounter, float mouseWorldX, float mouseWorldY); // Logic for handling car inventory interactions
-		bool CheckIfAnySeedButtonPressed(); // Checks if any of the seed buying buttons are pressed
+		void CarInventoryLogic(float mouseWorldX, float mouseWorldY); // Logic for handling car inventory interactions
+		void BuySeeds(int& coinCounter); // Logic for buying seeds from the car inventory
+		bool CheckIfAnySeedButtonPressed(); // Checks if any of the seed buying buttons are pressed (for tutorial)
 		void UpdateOrderDays(); // Updates the days until order reset
 		void MakeNewOrders(); // Creates new orders for the car inventory
 		void UpdateOrders(int& coinCounter); // Updates the orders in the car inventory
@@ -31,6 +33,5 @@ namespace Tmpl8
 		int daysUntilOrderReset = 0;
 		bool button1 = false, button2 = false, button3 = false, button4 = false, button5 = false;// Buying seeds buttons
 		void DrawCarText(Surface* screen); // Draws the text for the car inventory (seed counts)
-		void BuySeeds(int& coinCounter); // Logic for buying seeds from the car inventory
 	};
 }

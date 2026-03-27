@@ -1,6 +1,7 @@
 #include "mainMenu.h"
 #include "input.h"
 #include "Windows.h"
+
 namespace Tmpl8
 {
 	void MainMenu::Draw(Surface* screen)
@@ -12,14 +13,14 @@ namespace Tmpl8
 		// Advance to the next frame of the cutscene
 		if (Input::GetMouseButtonPressed(1))
 		{
-			cutSceneFrame++;
-			cutScene.SetFrame(cutSceneFrame);
+			cutsceneFrame++;
+			cutscene.SetFrame(cutsceneFrame);
 		}
 	}
-	void MainMenu::DrawCutScene(Surface* screen)
+	void MainMenu::DrawCutscene(Surface* screen)
 	{
-		if (cutSceneFrame < 16)
-			cutScene.Draw(screen, 0, 0);
+		if (cutsceneFrame < 16) // There are still frames to draw
+			cutscene.Draw(screen, 0, 0);
 	}
 	void MainMenu::Logic(bool &gameStarted)
 	{
@@ -42,10 +43,10 @@ namespace Tmpl8
 			frame = 0;
 		main.SetFrame(frame);	
 	}
-	void MainMenu::CutSceneLogic(bool& cutScenePlayed)
+	void MainMenu::CutsceneLogic(bool& cutScenePlayed)
 	{
 		// Check if the cutscene is over
-		if (cutSceneFrame >= 16 || Input::GetKeyPressed(SDL_SCANCODE_X))
+		if (cutsceneFrame >= 16 || Input::GetKeyPressed(SDL_SCANCODE_X))
 			cutScenePlayed = true;
 		else
 			ManageFrames();

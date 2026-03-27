@@ -4,7 +4,6 @@
 #include "inventory.h"
 #include "wateringCan.h"
 
-
 namespace Tmpl8
 {
 	class Map;
@@ -26,7 +25,7 @@ namespace Tmpl8
 		void Draw(Surface* screen); // Draw player (+ range + bounding box)
 	private:
 		Map &map; // reference to game map
-		Camera& camera; // reference to game camera
+		Camera &camera; // reference to game camera
 		WateringCan wateringCan;
 		Inventory inventory; // depends on wateringCan
 		Sprite player1 = Sprite(new Surface("assets/image/Vera.png"), 4);
