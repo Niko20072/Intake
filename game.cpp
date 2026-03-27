@@ -292,6 +292,10 @@ namespace Tmpl8
 				{
 					farmtile.DrawPlant(screen);
 				}
+				for (auto& farmtile : farmTiles)
+				{
+					farmtile.DrawNotReadyText(screen);
+				}
 
 				// Player
 				player.Draw(screen);

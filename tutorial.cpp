@@ -89,7 +89,7 @@ namespace Tmpl8
             break;
         case TutorialState::ClickHouse:
             sprintf(tutorialText, "Good job! Don't forget to water the plants");
-            sprintf(tutorialText2, "every day! Now go inside the house");
+            sprintf(tutorialText2, "every day. Now go inside the house");
             if (house.IsOpen())
 				tutorialState = TutorialState::InteractTable;
 			break;
@@ -119,7 +119,7 @@ namespace Tmpl8
 			break;
         case TutorialState::ExplainNightstand:
             sprintf(tutorialText, "Here is how you can finish the game:");
-            sprintf(tutorialText2, "Make 2000 coins and get your broom back!");
+            sprintf(tutorialText2, "Make 2000 coins and get your broom back.");
             if(!house.NightstandIsOpen())
 				tutorialState = TutorialState::ClickBed;
             break;
@@ -131,7 +131,7 @@ namespace Tmpl8
             break;
 		case TutorialState::ExplainBed:
             sprintf(tutorialText, "Sleeping will advance the day, causing");
-            sprintf(tutorialText2, "your plants to grow and orders to refresh (every 5 days)");
+            sprintf(tutorialText2, "your plants to grow and orders to reset (every 5 days)");
 			if (!house.BedIsOpen() || house.ConfirmedToSleep())
 				tutorialState = TutorialState::HaveFun;
             break;
@@ -159,7 +159,7 @@ namespace Tmpl8
             {
                 // Tutorial text
                 screen->CentreScaled(tutorialText, 424, 2, 2, 0xff0000);
-                screen->CentreScaled(tutorialText2, 424, 2, 2, 0xff0000);
+                screen->CentreScaled(tutorialText2, 444, 2, 2, 0xff0000);
 
                 // Move black background for text
                 box[0] = 85;

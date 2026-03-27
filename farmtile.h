@@ -32,6 +32,7 @@ namespace Tmpl8
 		void CollectPlant(float deltaTime); // Collect the plant if it's ready and the player interacts with it
 		void UpdatePlant(); // Progress the plant to the next day
 		void DrawPlant(Surface* screen);
+		void DrawNotReadyText(Surface* screen);
 	private:
 		Player& player; // reference to existing player
 		Camera& camera;

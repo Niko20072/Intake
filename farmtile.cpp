@@ -120,11 +120,11 @@ namespace Tmpl8
 	void FarmTile::DrawPlant(Surface* screen)
 	{
 		if (planted) // avoid null pointer access
-		{
 			plant->Draw(screen);
-			if(printNotReady)
-				screen->PrintScaled("Not ready!", static_cast<int>(farmTileX - camera.getCameraX() - 25), static_cast<int>(farmTileY - camera.getCameraY() - 20), 2, 2, 0xffff00);
-		}
-			
+	}
+	void FarmTile::DrawNotReadyText(Surface* screen)
+	{
+		if (planted && printNotReady) // avoid null pointer access
+			screen->PrintScaled("Not ready!", static_cast<int>(farmTileX - camera.getCameraX() - 25), static_cast<int>(farmTileY - camera.getCameraY() - 20), 2, 2, 0xffff00);
 	}
 };
